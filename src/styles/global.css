@@ -1,3 +1,86 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --dcp-orange: #db691b;
+  --dcp-orange-dark: #833E10;
+  --dcp-orange-light: #FBEFE8;
+  --contrast-blue: #287bd9;
+  --contrast-blue-darker: #246fc3;
+  --contrast-blue-darkest: #08192b;
+  --transparent-white: rgba(255, 255, 255, 0);
+}
+
+p, ul, ol {
+  color: var(--contrast-blue-darker);
+  margin-bottom: 1.15rem;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--contrast-blue-darker);
+  margin: 2.75rem 0 1.05rem;
+  font-weight: bold;
+  line-height: 1.15;
+  margin-bottom: 0.5em;
+}
+
+code {
+  color: var(--dcp-orange);
+  background: var(--dcp-orange-light);
+  font-size: 0.95em;
+  border-radius: 0.5em;
+  padding-left: 0.125em;
+  padding-right: 0.125em;
+}
+
+.title {
+  color: var(--contrast-blue-darker);
+  padding: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-left: -0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: var(--contrast-blue-darker);
+}
+
+.a-active {
+  font-weight: bold;
+  /* background: var(--contrast-blue-darker);
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  color: white; */
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.125em;
+  font-size: 2em;
+}
+
+h2 {font-size: 1.602em;}
+
+h3 {font-size: 1.424em;}
+
+h4 {font-size: 1.266em;}
+
+h5 {font-size: 1.125em;}
+
+small, .text_small {font-size: 0.889em;}
+
+ol {
+  list-style-type: decimal;
+  padding-left: 1em;
+}
+
+ul {
+  list-style-type: square;
+  padding-left: 1em;
+}
+
+.highlight {
+  background: yellow;
+}
