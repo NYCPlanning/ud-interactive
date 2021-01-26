@@ -25,15 +25,6 @@ h1, h2, h3, h4, h5 {
   margin-bottom: 0.5em;
 }
 
-code {
-  color: var(--dcp-orange);
-  background: var(--dcp-orange-light);
-  font-size: 0.95em;
-  border-radius: 0.5em;
-  padding-left: 0.125em;
-  padding-right: 0.125em;
-}
-
 .title {
   color: var(--contrast-blue-darker);
   padding: 0.25em;

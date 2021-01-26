@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 const Header = ({ siteTitle }) => (
-  <header className='bg-white fixed top-0 left-0'>
+  <header className='bg-white fixed top-0 left-0 w-full p-4'>
     <div>
       <h1>{siteTitle}</h1>
     </div>

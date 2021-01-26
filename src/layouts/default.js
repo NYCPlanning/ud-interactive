@@ -16,7 +16,7 @@ const Layout = ({ title, children }) => {
   `)
 
   return (
-    <div className='w-full h-full flex flex-col bg-red-100'>
+    <div className='w-full h-full flex flex-col'>
       <Header siteTitle={
         data.site.siteMetadata?.title || title || `Title`
       }/>

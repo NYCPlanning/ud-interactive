@@ -1,10 +1,12 @@
 import React from 'react'
 
 import Layout from '../layouts/default'
+import SEO from '../components/seo'
 import Preview3D from '../components/Preview3D'
 
 const ResidentialBuildings = () => (
   <Layout>
+    <SEO title='Residential Buildings' />
     <Preview3D />
     <style>{`
       .three-canvas {
