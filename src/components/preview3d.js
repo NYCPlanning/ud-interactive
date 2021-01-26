@@ -11,9 +11,9 @@ import Considerations from './considerations'
 import Draft from './draft'
 
 // 3d scene elements
-import Broadway from '../scenes/Broadway'
-import Building from '../scenes/BroadwayBldg'
-import Solarpanels from '../scenes/Solarpanels'
+import Broadway from '../scenes/broadway'
+import Building from '../scenes/broadwaybldg'
+import Solarpanels from '../scenes/solarpanels'
 
 // activate controls
 extend({ OrbitControls });
