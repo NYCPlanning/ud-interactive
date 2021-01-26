@@ -2,7 +2,7 @@ import React from 'react'
 
 import Layout from '../layouts/default'
 import SEO from '../components/seo'
-import Preview3D from '../components/Preview3D'
+import Preview3D from '../components/preview3d'
 
 const ResidentialBuildings = () => (
   <Layout>
