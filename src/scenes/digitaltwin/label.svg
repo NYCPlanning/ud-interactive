@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.09 57.43">
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <line x1="82.55" y1="23.75" x2="82.55" y2="57.43" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+      <tspan x="35" y="63">
+        ${hovered}
+      </tspan>
+    </g>
+  </g>
+</svg>
