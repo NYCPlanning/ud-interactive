@@ -25,12 +25,18 @@ exports.onCreateWebpackConfig = ({
              }
             }
            ],
-          // use: loaders.null(),
-          // use: [
-          //   {
-          //     loader: `url-loader`,
-          //   },
-          // ],
+        },
+        {
+          test: /\.(fbx)$/i,
+          use: [
+            {
+             loader: 'file-loader',
+             options: {
+              outputPath: 'assets/models',
+              sourceMap: true
+             }
+            }
+           ],
         },
       ],
     },
