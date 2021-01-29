@@ -167,7 +167,7 @@ export default ({ buildings, fogStart }) => {
               <Suspense fallback={null}>
                 <Model3D set={set} />
                 <Model2D set={set} />
-                <SceneLabels labels={labels} />
+                {/* <SceneLabels labels={labels} /> */}
               </Suspense>
               <fog attach='fog' args={['#e4e3be', 400, 900]} />
             </Canvas>
