@@ -8,6 +8,7 @@
 
 // set custom webpack config to bundle .glb files 
 exports.onCreateWebpackConfig = ({
+  loaders,
   actions,
 }) => {
   actions.setWebpackConfig({
@@ -17,11 +18,26 @@ exports.onCreateWebpackConfig = ({
           test: /\.(glb)$/i,
           use: [
             {
-              loader: "url-loader",
-            },
-          ],
+             loader: 'file-loader',
+             options: {
+              outputPath: 'assets/models',
+              sourceMap: true
+             }
+            }
+           ],
         },
-
+        {
+          test: /\.(fbx)$/i,
+          use: [
+            {
+             loader: 'file-loader',
+             options: {
+              outputPath: 'assets/models',
+              sourceMap: true
+             }
+            }
+           ],
+        },
       ],
     },
   })
