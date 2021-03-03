@@ -12,6 +12,14 @@
   --transparent-white: rgba(255, 255, 255, 0);
 }
 
+html, 
+body, 
+#__gatsby,
+#gatsby-focus-wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
 p, ul, ol {
   color: var(--contrast-blue-darker);
   margin-bottom: 1.15rem;

@@ -5,27 +5,27 @@ import Blank from '../layouts/blank'
 
 
 const POINTS = gql`
-subscription GetPoints {
-  pts {
-    geom
-    id
-    good
+  subscription GetPoints {
+    pts {
+      geom
+      id
+      good
+    }
   }
-}
 `
 
 const CHANGE_POINT = gql`
-mutation UpdateStatus($id: Int!, $status: Boolean!) {
-  update_pts_by_pk(
-    pk_columns: {id: $id}, 
-    _set: {
-      good: $status
-    }
+  mutation UpdateStatus($id: Int!, $status: Boolean!) {
+    update_pts_by_pk(
+      pk_columns: {id: $id}, 
+      _set: {
+        good: $status
+      }
     ) {
       good
     }
   }
-  `
+`
   
   function Point({id, status}) {
     const [ changePoint, { newPoint }] = useMutation(CHANGE_POINT)
@@ -57,8 +57,10 @@ function Points() {
 export default () => (
   <ApolloProvider client={client}>
     <Blank>
-      REALTIME TEST
-      <Points />
+      <div className='bg-green-100 w-full h-full'>
+        REALTIME TEST
+        <Points />
+      </div>
     </Blank>
   </ApolloProvider >
 )
