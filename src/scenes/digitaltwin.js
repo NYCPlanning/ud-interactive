@@ -1,4 +1,4 @@
-import React, { useRef, Suspense, useState, useMemo } from 'react';
+import React, { useEffect, useRef, Suspense, useState, useMemo } from 'react';
 import { Canvas, useFrame, useThree, extend } from 'react-three-fiber';
 import * as THREE from 'three';
 import { AxesHelper } from 'three';
@@ -7,13 +7,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { ContactShadows, Environment, Sky } from '@react-three/drei';
 
 // DOM elements
-import Considerations from './considerations'
-import Draft from './draft'
+// import Considerations from './considerations'
+// import Draft from './draft'
 
 // 3d scene elements
-import Broadway from '../scenes/broadway'
-import Building from '../scenes/broadwaybldg'
-import Solarpanels from '../scenes/solarpanels'
+import Model2D from './digitaltwin/model2d'
+import Model3D from './digitaltwin/model3d'
+import SceneLabels from './digitaltwin/scenelabels'
 
 // activate controls
 extend({ OrbitControls });
@@ -25,7 +25,8 @@ extend({ OrbitControls });
 const state = proxy({
   sunParam: 0.5,
   autoRotate: false,
-  currentScene: null
+  currentScene: null,
+  current: null,
 });
 
 const Controls = () => {
@@ -38,12 +39,12 @@ const Controls = () => {
   });
 
   return (
-    <orbitControls 
+    <orbitControls
       autoRotate
       autoRotateSpeed={0.25}
       maxPolarAngle={Math.PI/2} // use to restrict movement of the camera
       // minPolarAngle={Math.PI/4} // use to restrict movement of the camera
-      target={[45, 40, 0]}
+      target={[0, 0, 0]}
       args={[camera, gl.domElement]}
       ref={orbitRef}
     />
@@ -76,20 +77,20 @@ function Sun() {
   const p = sunPath.getPoint(snap.sunParam);
   const { x, y, z } = p;
 
-  const light = useMemo(() => new THREE.DirectionalLight(0xfff9ab, 1.0), [])
+  const light = useMemo(() => new THREE.DirectionalLight(0xfff9ab, 0.75), [])
   light.position.set( x, y, z )
   light.castShadow = true
   light.shadow.mapSize.width = 512
   light.shadow.mapSize.height = 512
-  light.shadow.camera.near = 1
+  light.shadow.camera.near = 50
   light.shadow.camera.far = 400
   light.shadow.camera.left = -300;
   light.shadow.camera.right = 300;
   light.shadow.camera.top = 300;
   light.shadow.camera.bottom = -300;
-  light.shadow.radius = 4
+  light.shadow.radius = 0.1
 
-  //const cameraHelper = new THREE.CameraHelper(light.shadow.camera);
+  // const cameraHelper = new THREE.CameraHelper(light.shadow.camera);
   
   const sunPathMaterial = new THREE.LineDashedMaterial({
     color: sunColor,
@@ -105,7 +106,7 @@ function Sun() {
   const sunMesh = new THREE.Mesh( sunGeom, sunMaterial )
 
   return (
-    <group scale={[0.5,0.5,0.5]}>
+    <group scale={[0.75,0.75,0.75]}>
       {/* <primitive object={cameraHelper} /> */}
       <primitive object={sunMesh} position={[ x, y, z ]} />
       <primitive object={light} />
@@ -114,8 +115,9 @@ function Sun() {
   )
 }
 
-const ResidentialBuildings = ({ buildings, fogStart }) => {
-  // const snap = useProxy(state);
+// primary scene component
+export default ({ buildings, fogStart }) => {
+  const snap = useProxy(state);
   const [scene, setScene] = useState(0);
 
   const handleSliderChange = (e) => {
@@ -127,44 +129,51 @@ const ResidentialBuildings = ({ buildings, fogStart }) => {
     setScene(newScene)
   }
 
+  const [hovered, set] = useState(null)
+  // useEffect(() => {
+  //   const cursor = `
+  //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 165.09 57.43">
+  //     <g id="Layer_2" data-name="Layer 2">
+  //       <g id="Layer_1-2" data-name="Layer 1">
+  //         <line x1="82.55" y1="23.75" x2="82.55" y2="57.43" fill="none" stroke="#231f20" stroke-miterlimit="10"/>
+  //         <tspan x="35" y="63">
+  //           ${hovered}
+  //         </tspan>
+  //       </g>
+  //     </g>
+  //   </svg>
+  //   `
+  //   const auto = `<svg width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="rgba(255, 255, 255, 0.5)" d="M29.5 54C43.031 54 54 43.031 54 29.5S43.031 5 29.5 5 5 15.969 5 29.5 15.969 54 29.5 54z" stroke="#000"/><path d="M2 2l11 2.947L4.947 13 2 2z" fill="#000"/></svg>`
+  //   document.body.style.cursor = `url('data:image/svg+xml;base64,${btoa(hovered ? cursor : auto)}'), auto`
+  // }, [hovered])
+
+  const labels = {
+    'Bus Shelters': [299, 0, 83.77]
+  }
+  
   return (
-    <>
-      <div className='w-full h-screen grid grid-cols-4 h-auto pointer-events-none overflow-y-hidden'>
-        <div className='col-span-3 h-screen flex flex-col overflow-hidden'>
-          <span className='fixed top-0 left-0 w-full p-4 bg-white z-0'><h1>Residential Buildings</h1></span>
+      <div className='w-screen h-screen pointer-events-none overflow-y-hidden'>
           <div className='w-full h-full three-canvas pointer-events-auto'>
             <Canvas
               orthographic
               shadowMap
               shadowmap-type={THREE.VSMShadowMap}
-              camera={{left: 10, right: -10, top: 10, bottom: -10, zoom: 3, position: [-400, 600, 200], near: 1, far: 1600 }}
+              camera={{left: 10, right: -10, top: 10, bottom: -10, zoom: 2, position: [-400, 200, 200], near: 100, far: 800 }}
+              antialias='true'
             >
               <Controls />
-              <ambientLight intensity={0.75} />
+              <ambientLight intensity={0.50} />
               <Sun />
               <Suspense fallback={null}>
-                <Broadway />
-                <Building setScene={handleSceneMouseOver} />
-                <Solarpanels setScene={handleSceneMouseOver} />
+                <Model3D set={set} />
+                <Model2D set={set} />
+                {/* <SceneLabels labels={labels} /> */}
               </Suspense>
-              <fog attach='fog' args={['#e4e3be', 775, 900]} />
+              <fog attach='fog' args={['#e4e3be', 400, 900]} />
             </Canvas>
-          </div>
-        </div>
-        <div className='col-start-4 p-4 bg-white shadow-md z-10 pointer-events-auto overflow-scroll'>
-          <Considerations
-            index={scene} 
-            sceneKeys={[
-              null,
-              'to plan for energy efficiency',
-              'the best placement for the vertical circulation core',
-            ]}
-          />
-        </div>
       </div>
       
       <div className='fixed bottom-0 left-0 z-50 m-4 space-x-4 flex pointer-events-auto'>
-        <Draft />
         <div id='controls' className='flex items-center justify-between space-x-4 p-2 px-4 bg-white'>
           <span>
             <label htmlFor='sunposition'>Time of Day</label>
@@ -190,8 +199,6 @@ const ResidentialBuildings = ({ buildings, fogStart }) => {
         </div>
       </div>
 
-    </>
+    </div>
   );
 }
-
-export default ResidentialBuildings
