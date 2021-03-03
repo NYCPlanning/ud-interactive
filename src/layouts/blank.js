@@ -7,7 +7,7 @@ import Header from "../components/header"
 const Layout = ({ title, children }) => {
   return (
     <div className='w-full h-full flex flex-col'>
-      <main>{children}</main>
+      {children}
     </div>
   )
 }
