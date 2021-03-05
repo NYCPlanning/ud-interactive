@@ -1,8 +1,26 @@
 import React from 'react'
-import { ApolloProvider, gql, useSubscription, useMutation } from '@apollo/client'
+import { ApolloProvider, gql, useSubscription, useMutation, useQuery } from '@apollo/client'
 import { client } from '../sources/realtime'
+import { client2 } from '../sources/udtools'
 import Blank from '../layouts/blank'
+import Basic3D from '../components/basic3d'
 
+const MOVIES = gql`
+  query GetMovies {
+    getMovies(input: { movie: { genre: DRAMA, year: 2015 } }) {
+      result {
+        name
+        year
+        rating
+        cast
+        time {
+          seconds
+        }
+        genre
+      }
+    }
+  }
+`
 
 const POINTS = gql`
   subscription GetPoints {
@@ -29,7 +47,8 @@ const CHANGE_POINT = gql`
   
   function Point({id, status}) {
     const [ changePoint, { newPoint }] = useMutation(CHANGE_POINT)
-    
+
+
     const handleClick = () => {
       changePoint({ variables: { id: id,  status: !status }})
     }
@@ -44,9 +63,14 @@ const CHANGE_POINT = gql`
 
 function Points() {
   const { loading, error, data } = useSubscription(POINTS);
+  const { loading2, error2, movies } = useQuery(MOVIES)
+
   
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error :(</p>
+  if (loading || loading2) return <p>Loading...</p>
+  if (error || error2) return <p>Error :(</p>
+
+  console.log(client2)
+  console.log(movies)
     
   return data.pts.sort((a, b) => ( a.id > b.id ))
   .map(({ id, good }) => (
@@ -55,12 +79,13 @@ function Points() {
 }
 
 export default () => (
-  <ApolloProvider client={client}>
-    <Blank>
-      <div className='bg-green-100 w-full h-full'>
-        REALTIME TEST
-        <Points />
-      </div>
-    </Blank>
-  </ApolloProvider >
+  <Blank>
+    <div className='fixed top-0 left-0 z-0 w-full h-full'>
+      <Basic3D />
+    </div>
+    <div className='w-full h-full z-10 pointer-events-none'>
+      REALTIME TEST
+      <Points />
+    </div>
+  </Blank>
 )
