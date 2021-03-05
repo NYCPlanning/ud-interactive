@@ -1,14 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-
+import { ApolloProvider, gql, useSubscription, useMutation } from '@apollo/client'
+import { client } from '../sources/realtime'
 import Header from "../components/header"
 
 const Layout = ({ title, children }) => {
   return (
-    <div className='w-full h-full flex flex-col'>
-      {children}
-    </div>
+    <ApolloProvider client={client}>
+      <div className='w-full h-full flex flex-col'>
+        {children}
+      </div>
+    </ApolloProvider>
   )
 }
 
