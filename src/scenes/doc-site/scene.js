@@ -1,19 +1,18 @@
-import React, { useRef, Suspense, useMemo, useEffect } from 'react'
+import React, { useState, Suspense, useMemo, useEffect } from 'react'
 import * as THREE from 'three'
-import { AxesHelper } from 'three'
-import { Canvas, useFrame, useThree, extend } from 'react-three-fiber'
+import { Canvas, useFrame, useThree, useResource, extend } from 'react-three-fiber'
 import { Physics, usePlane, useBox } from '@react-three/cannon'
-import { useGLTF, OrbitControls } from '@react-three/drei'
-// import { ContactShadows, Environment, Sky } from '@react-three/drei'
-import { proxy, useProxy} from 'valtio'
-// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
+import { useGLTF, OrbitControls, OrthographicCamera, Text, Html } from '@react-three/drei'
+import { format } from 'date-fns'
+// import { proxy, ref, useProxy} from 'valtio'
 
 import callbox from './callbox.glb'
 import cityrack from './cityrack.glb'
 import hydrant from './hydrant-dresser.glb'
 import barricade from './policebarricade.glb'
 import trafficdrum from './trafficdrum.glb'
+
+const dateFormatted = () => format(new Date(), 'hh:mm:ss')
 
 const GroundPlane = (props) => {
   const [ref] = usePlane(() => ({ 
@@ -23,9 +22,8 @@ const GroundPlane = (props) => {
   }))
 
   return (
-    <mesh ref={ref}>
+    <mesh visible={false} ref={ref}>
       <planeGeometry args={[50,50]} />
-      <meshBasicMaterial opacity={0} />
     </mesh>
   )
 }
@@ -50,38 +48,139 @@ const Light = () => {
   )
 }
 
-// see https://github.com/pmndrs/react-three-fiber/blob/master/markdown/recipes.md
-const Camera = (props) => {
-  const ref = useRef()
-  const { setDefaultCamera } = useThree()
-  // Make the camera known to the system
-  useEffect(() => void setDefaultCamera(ref.current), [])
-  // Update it every frame
-  useFrame(() => {
-    console.log(ref)
-    ref.current.updateMatrixWorld()
-  })
+const AdjustableCamera = () => {
+  const camera = useResource()
+  const { size: { width, height } } = useThree()
+  const aabb = new THREE.Box3(new THREE.Vector3(0, -3, -3), new THREE.Vector3(6, 3, 3))
+  
+  useEffect(() => {
+    camera.current.zoom = Math.min(
+      width / (aabb.max.x - aabb.min.x),
+      height / (aabb.max.y - aabb.min.y)
+    )
+
+    // camera.current.position.y = 2.75
+
+    camera.current.updateProjectionMatrix()
+  }, [width, height])
+
+  // useFrame(() => camera.current.updateMatrixWorld())
+
   return (
-    <orthographicCamera ref={ref} {...props} zoom={68} />
+    <>
+      <OrthographicCamera 
+        ref={camera} 
+        makeDefault
+        position={[0, 2.85, 3]}
+        near={-12} 
+        far={24} 
+      />
+      <OrbitControls 
+        camera={camera.current} 
+        autoRotate 
+        autoRotateSpeed={0.25} 
+        target={[0, 2.75, 0]} 
+      />
+    </>
+  )
+}
+
+const WeatherContent = () => {
+  const [error, setError] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [weather, setWeather] = useState({});
+
+  useEffect(() => {
+    fetch("https://api.weather.gov/stations/KNYC/observations/latest")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setWeather(result.properties)
+          setLoaded(true)
+        },
+        (error) => {
+          setError(error)
+        }
+      )
+  }, [])
+
+  if (error) return <span></span>
+  if (!loaded) return <span></span>
+  return (
+    <span>nyc_temperature: {weather.temperature.value}°C</span>
+  )
+}
+
+const WeatherLeader = ({start, end, ...props}) => {
+  const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
+  const [ref] = useBox(() => ({ mass: 1, ...props }))
+
+  return (
+    <group ref={ref} dispose={null}>
+      <line>
+        <geometry vertices={vertices} />
+        <lineBasicMaterial color="lime" />
+      </line>
+      {/* <Text
+        color="lime" // default
+        anchorX="start" // default
+        anchorY="bottom" // default
+        position={end}
+      >
+        current time, nyc: {text}
+      </Text> */}
+      <Html position={end} className='pl-2 w-48 lime opacity-60 align-top code tiny'>
+        <WeatherContent />
+      </Html>
+    </group>
+  )
+}
+
+const LeaderLine = ({start, end, text, ...props}) => {
+  const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
+  const [ref] = useBox(() => ({ mass: 1, ...props }))
+
+  return (
+    <group ref={ref} dispose={null}>
+      <line>
+        <geometry vertices={vertices} />
+        <lineBasicMaterial color="lime" />
+      </line>
+      {/* <Text
+        color="lime" // default
+        anchorX="start" // default
+        anchorY="bottom" // default
+        position={end}
+      >
+        current time, nyc: {text}
+      </Text> */}
+      <Html position={end} className='pl-2 w-48 lime opacity-60 align-top code tiny'>
+        <span>nyc_time: {text}</span>
+      </Html>
+    </group>
   )
 }
 
 export default function Scene(props) {
-  const canvasProps = {
-    'orthographic': true,
-    'camera': {
-      'bottom': 0,
-      'zoom': 68
+  const [time, setTime] = useState(dateFormatted())
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(dateFormatted())
+    }, 1000)
+  
+    return () => {
+      clearInterval(interval)
     }
-  }
+  }, [])
 
   return (
-    // <Canvas >
-    <Canvas {...canvasProps} >
-      {/* <Camera /> */}
-      <OrbitControls autoRotate autoRotateSpeed={0.25} />
+    <Canvas >
+      <AdjustableCamera />
       <Physics>
         <Suspense fallback={null}>
+          <WeatherLeader position={[-1.66, 8, 1.5]} start={[0,0,0]} end={[0,1.5,0]} />
+          <LeaderLine position={[-0.5, 7, -2]} start={[0,0,0]} end={[0,2.5,0]} text={time} />
           <Model glb={trafficdrum} position={[-2,5,0]} />
           <Model glb={hydrant} position={[-1,5,0]} />
           <Model glb={callbox} position={[0,5,0]} />
@@ -90,8 +189,8 @@ export default function Scene(props) {
         </Suspense>
         <GroundPlane />
       </Physics>
-      <axesHelper />
-      <ambientLight intensity={0.33} />
+      {/* <axesHelper /> */}
+      <ambientLight color={0xfffecc}  intensity={0.5} />
       <Light />
       {/* <fog attach='fog' args={['#e4e3be', 400, 900]} /> */}
     </Canvas>
