@@ -1,7 +1,7 @@
 import React, { useState, Suspense, useMemo, useEffect } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame, useThree, useResource, extend } from 'react-three-fiber'
-import { Physics, usePlane, useBox } from '@react-three/cannon'
+import { Physics, usePlane, useBox, useParticle } from '@react-three/cannon'
 import { useGLTF, OrbitControls, OrthographicCamera, Text, Html } from '@react-three/drei'
 import { format } from 'date-fns'
 // import { proxy, ref, useProxy} from 'valtio'
@@ -29,7 +29,7 @@ const GroundPlane = (props) => {
 }
 
 const Model = ({glb, ...props}, ) => {
-  const [ref] = useBox(() => ({ mass: 1, ...props }))
+  const [ref] = useBox(() => ({ mass: 1, angularDamping: 1, ...props }))
   const { scene } = useGLTF(glb)
   return (
     <group ref={ref} dispose={null}>
@@ -62,7 +62,7 @@ const AdjustableCamera = () => {
     // camera.current.position.y = 2.75
 
     camera.current.updateProjectionMatrix()
-  }, [width, height])
+  }, [width, height, aabb, camera])
 
   // useFrame(() => camera.current.updateMatrixWorld())
 
@@ -71,7 +71,7 @@ const AdjustableCamera = () => {
       <OrthographicCamera 
         ref={camera} 
         makeDefault
-        position={[0, 2.85, 3]}
+        position={[0, 2.85, 6]}
         near={-12} 
         far={24} 
       />
@@ -113,7 +113,7 @@ const WeatherContent = () => {
 
 const WeatherLeader = ({start, end, ...props}) => {
   const vertices = useMemo(() => [start, end].map((v) => new THREE.Vector3(...v)), [start, end])
-  const [ref] = useBox(() => ({ mass: 1, ...props }))
+  const [ref] = useParticle(() => ({ mass: 1, ...props }))
 
   return (
     <group ref={ref} dispose={null}>
@@ -129,7 +129,7 @@ const WeatherLeader = ({start, end, ...props}) => {
       >
         current time, nyc: {text}
       </Text> */}
-      <Html position={end} className='pl-2 w-48 lime opacity-60 align-top code tiny'>
+      <Html position={end} className='w-48 lime opacity-60 align-top code tiny'>
         <WeatherContent />
       </Html>
     </group>
@@ -154,7 +154,7 @@ const LeaderLine = ({start, end, text, ...props}) => {
       >
         current time, nyc: {text}
       </Text> */}
-      <Html position={end} className='pl-2 w-48 lime opacity-60 align-top code tiny'>
+      <Html position={end} className='w-48 lime opacity-60 align-top code tiny'>
         <span>nyc_time: {text}</span>
       </Html>
     </group>
@@ -179,13 +179,13 @@ export default function Scene(props) {
       <AdjustableCamera />
       <Physics>
         <Suspense fallback={null}>
-          <WeatherLeader position={[-1.66, 8, 1.5]} start={[0,0,0]} end={[0,1.5,0]} />
-          <LeaderLine position={[-0.5, 7, -2]} start={[0,0,0]} end={[0,2.5,0]} text={time} />
-          <Model glb={trafficdrum} position={[-2,5,0]} />
-          <Model glb={hydrant} position={[-1,5,0]} />
-          <Model glb={callbox} position={[0,5,0]} />
+          <WeatherLeader position={[-1.66, 18, 1.5]} start={[0,20,0]} end={[0,3.25,0]} />
+          <LeaderLine position={[1, 12, -3]} start={[0,20,0]} end={[0,3.5,0]} text={time} />
+          <Model glb={trafficdrum} position={[-2,4,-1]} />
+          <Model glb={hydrant} position={[-1,8,0]} />
+          <Model glb={callbox} position={[0,7,2]} />
           <Model glb={barricade} position={[1,5, 0]} rotation={[0, 0.1, 0]} />
-          <Model glb={cityrack} position={[2,5,0]} />
+          <Model glb={cityrack} position={[2.25,6,-1]} />
         </Suspense>
         <GroundPlane />
       </Physics>
