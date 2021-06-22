@@ -31,6 +31,8 @@ Entities responsible for the public realm, Municipal Art Society 2021
 
 - [NASA Simulation](https://eyes.nasa.gov/apps/mars2020/#/home?id=heading_alignment&time=2021-02-18T15:39:51.916-05:00)
 
+- [Spaces Gallery](https://www.spaces.gallery/)
+
 2D / Immersive Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
