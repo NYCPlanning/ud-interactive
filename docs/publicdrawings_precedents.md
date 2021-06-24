@@ -23,8 +23,6 @@ Entities responsible for the public realm, Municipal Art Society 2021
 How do we represent spatial awareness?
 What characteristics do we want visible? From an urban design perspective, what are aspects of data driven governance that are of interest to us?
 
----
-### Narrative + Visibility of Characteristics
 3D / Immersive Experiences
 
 - [NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html)
@@ -49,9 +47,6 @@ What characteristics do we want visible? From an urban design perspective, what 
 
 - [51World](https://www.51aes.com/technology/smart-city)
 
----
-### Narrative + Visibility of Characteristics
-
 2D / Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
@@ -61,9 +56,6 @@ What characteristics do we want visible? From an urban design perspective, what 
 - [Feral Atlas Map](https://feralatlas.supdigital.org/world/invasion)
 
 - [MET Museum Map](https://www.metmuseum.org/art/online-features/metkids/explore/)
-
----
-### Narrative + Visibility of Characteristics
 
 Geographic Mapping of Data
 
@@ -106,9 +98,6 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 	- NYTimes pieces ([NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html), [NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html))
 - **scroll + stop to create narrative**
 	- NYTimes pieces ([NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html), [NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html))
-
----
-### Menu of Options
 - **highlighting pieces of a drawing**
 	- NYTimes pieces ([NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html),[NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html))
 - **different paths with different "stops"/choose your own adventure**
@@ -116,9 +105,6 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 - **embedded points of interest to click into**
 	- [Feral Atlas Map](https://feralatlas.supdigital.org/world/invasion)
 	- [MET Museum Map](https://www.metmuseum.org/art/online-features/metkids/explore/)
-
----
-### Menu of Options
 - **3D model simulations**
 	- [51World](https://www.51aes.com/technology/smart-city)
 	- [Tomas Bata University](https://jenamdvacet.cz/)
@@ -129,17 +115,11 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 	- [HIGHRISE One Millionth Tower Documentary](http://highrise.nfb.ca/onemillionthtower/1mt_webgl.php)
 	- [Spaces Gallery](https://www.spaces.gallery/)
 	- [Chatham House](https://futurescape.chathamhouse.org/)
-
----
-### Menu of Options
 - **guided navigation/"tour" option**
 	- [Chatham House](https://futurescape.chathamhouse.org/)
 	- [Tomas Bata University](https://jenamdvacet.cz/)
 - **toggles to show different scenes**
 	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
-
----
-### Menu of Options
 - **visualization of data (population, traffic, etc)**
 	- [Hip Hop Word Count](https://tahirhemphill.com/champagne/)
 	- [LA Healthy Buildings, Healthy Places Design Guide](https://storymaps.arcgis.com/stories/fd221bd31cc14048b41e0a5d3362da68)
@@ -149,9 +129,6 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 	- [Chatham House](https://futurescape.chathamhouse.org/)
 - **customizable information to display**
 	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
-
----
-### Menu of Options
 - **public engagement surveys built into narrative**
 	- [Santa Monica Pocket OWL](http://www.mobileowl.co/samo/#description1)
 - **adding comments**
