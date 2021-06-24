@@ -20,8 +20,12 @@ Entities responsible for the public realm, Municipal Art Society 2021
 
 ---
 ### Narrative + Visibility of Characteristics
+How do we represent spatial awareness?
+What characteristics do we want visible? From an urban design perspective, what are aspects of data driven governance that are of interest to us?
 
-3D / Immersive Experiences, with callouts to places of note
+---
+### Narrative + Visibility of Characteristics
+3D / Immersive Experiences
 
 - [NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html)
 
@@ -31,13 +35,32 @@ Entities responsible for the public realm, Municipal Art Society 2021
 
 - [NASA Simulation](https://eyes.nasa.gov/apps/mars2020/#/home?id=heading_alignment&time=2021-02-18T15:39:51.916-05:00)
 
+- [Santa Monica Pocket OWL](http://www.mobileowl.co/samo/#description1)
+
+- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
+
 - [Spaces Gallery](https://www.spaces.gallery/)
 
-2D / Immersive Line Drawing
+- [Chatham House](https://futurescape.chathamhouse.org/)
+
+- [Tomas Bata University](https://jenamdvacet.cz/)
+
+- [Eurovision](https://www.eurovisionvillage.com/)
+
+- [51World](https://www.51aes.com/technology/smart-city)
+
+---
+### Narrative + Visibility of Characteristics
+
+2D / Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
 
 - [Refugee Republic](https://refugeerepublic.submarinechannel.com/)
+
+- [Feral Atlas Map](https://feralatlas.supdigital.org/world/invasion)
+
+- [MET Museum Map](https://www.metmuseum.org/art/online-features/metkids/explore/)
 
 ---
 ### Narrative + Visibility of Characteristics
@@ -47,6 +70,7 @@ Geographic Mapping of Data
 - [Hip Hop Word Count](https://tahirhemphill.com/champagne/)
 - [Mapper's Delight](https://www.rapresearchlab.com/mappers-delight)
 - [Manhattan Population Explorer](http://manpopex.us/)
+- [LA Healthy Buildings, Healthy Places Design Guide](https://storymaps.arcgis.com/stories/fd221bd31cc14048b41e0a5d3362da68)
 
 ---
 ### Accessibility
@@ -65,13 +89,72 @@ What is intuitive, especially for the general public?
 - NYTimes Immersive Experiences - 'scroll to explore'
 - [Manhattan Population Explorer](http://manpopex.us/) - includes both a guided sequence + exploratory aspects
 - [Bear 71](https://bear71vr.nfb.ca/) - sequenced narrative with option to jump around, exploratory aspects in each chapter
+- [Tomas Bata University](https://jenamdvacet.cz/) - 'tour' option in addition to free exploration
 - [Feral Atlas](https://feralatlas.supdigital.org/)
 
 ---
 ### Authorship
 How do we treat drawing as more collaborative, especially with web dev?
+How do we make these drawings/the website more democratic? Who can contribute? How can we create dialogue/start conversations through the drawing?
 
 - [Bear 71](https://bear71vr.nfb.ca/) - beginning scene includes film credits
 - [Refugee Republic](https://refugeerepublic.submarinechannel.com/) - credits tab
 
+---
+### Menu of Options
+- **textual overlay on important things to note**
+	- NYTimes pieces ([NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html), [NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html))
+- **scroll + stop to create narrative**
+	- NYTimes pieces ([NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html), [NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html))
 
+---
+### Menu of Options
+- **highlighting pieces of a drawing**
+	- NYTimes pieces ([NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html),[NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html))
+- **different paths with different "stops"/choose your own adventure**
+	- [Refugee Republic](https://refugeerepublic.submarinechannel.com/)
+- **embedded points of interest to click into**
+	- [Feral Atlas Map](https://feralatlas.supdigital.org/world/invasion)
+	- [MET Museum Map](https://www.metmuseum.org/art/online-features/metkids/explore/)
+
+---
+### Menu of Options
+- **3D model simulations**
+	- [51World](https://www.51aes.com/technology/smart-city)
+	- [Tomas Bata University](https://jenamdvacet.cz/)
+- **highlighting points of interest in the 3D space**
+	- [Tomas Bata University](https://jenamdvacet.cz/) 
+	- [Eurovision](https://www.eurovisionvillage.com/)
+- **video/object callout alignment in 3D space**
+	- [HIGHRISE One Millionth Tower Documentary](http://highrise.nfb.ca/onemillionthtower/1mt_webgl.php)
+	- [Spaces Gallery](https://www.spaces.gallery/)
+	- [Chatham House](https://futurescape.chathamhouse.org/)
+
+---
+### Menu of Options
+- **guided navigation/"tour" option**
+	- [Chatham House](https://futurescape.chathamhouse.org/)
+	- [Tomas Bata University](https://jenamdvacet.cz/)
+- **toggles to show different scenes**
+	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
+
+---
+### Menu of Options
+- **visualization of data (population, traffic, etc)**
+	- [Hip Hop Word Count](https://tahirhemphill.com/champagne/)
+	- [LA Healthy Buildings, Healthy Places Design Guide](https://storymaps.arcgis.com/stories/fd221bd31cc14048b41e0a5d3362da68)
+- **show change over time/timeline**
+	- [Hip Hop Word Count](https://tahirhemphill.com/champagne/)
+	- [Santa Monica Pocket OWL](http://www.mobileowl.co/samo/#description1)
+	- [Chatham House](https://futurescape.chathamhouse.org/)
+- **customizable information to display**
+	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
+
+---
+### Menu of Options
+- **public engagement surveys built into narrative**
+	- [Santa Monica Pocket OWL](http://www.mobileowl.co/samo/#description1)
+- **adding comments**
+	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
+- **run simulations**
+	- [Bus Simulation](https://setosa.io/bus/)
