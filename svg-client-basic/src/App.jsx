@@ -1,11 +1,11 @@
-import React from 'react';
-import './App.css';
-import CityBlocks from './assets/city-blocks.svg';
+import React from "react";
+import "./App.css";
+import Testing from "./components/Testing";
 
 function App() {
   return (
-    <div className="App">
-      <img alt="NYC city blocks" src={CityBlocks} />
+    <div className='App'>
+      <Testing />
     </div>
   );
 }
