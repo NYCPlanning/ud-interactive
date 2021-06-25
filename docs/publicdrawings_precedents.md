@@ -162,3 +162,11 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 
 - **run simulations**
 	- [Bus Simulation](https://setosa.io/bus/)
+
+---
+### Follow-up Questions
+What kinds of drawings are going to be communicated?
+Who is the audience of these drawings? Who will be using this platform? How will people come into contact with this platform?
+What are you hoping people get of the drawings?
+How have past drawings been used for public engagement purposes?
+What would be most exciting to see?
