@@ -47,6 +47,8 @@ What characteristics do we want visible? From an urban design perspective, what 
 
 - [51World](https://www.51aes.com/technology/smart-city)
 
+- [Jerusalem We Are Here](https://jerusalemwearehere.com/#/)
+
 2D / Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
@@ -126,8 +128,9 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 	- [Tomas Bata University](https://jenamdvacet.cz/) 
 	- [Eurovision](https://www.eurovisionvillage.com/)
 
-- **video/object callout alignment in 3D space**
+- **video/text/audio annotation in 3D space**
 	- [HIGHRISE One Millionth Tower Documentary](http://highrise.nfb.ca/onemillionthtower/1mt_webgl.php)
+	- [Jerusalem We Are Here](https://jerusalemwearehere.com/#/)
 	- [Spaces Gallery](https://www.spaces.gallery/)
 	- [Chatham House](https://futurescape.chathamhouse.org/)
 
@@ -155,6 +158,6 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 
 - **adding comments**
 	- [Philadelphia Redevelopment](https://www.arcgis.com/apps/CEWebViewer/viewer.html?3dWebScene=86f88285788a4c53bd3d5dde6b315dfe)
-	
+
 - **run simulations**
 	- [Bus Simulation](https://setosa.io/bus/)
