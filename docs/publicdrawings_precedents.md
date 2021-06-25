@@ -111,10 +111,11 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 	- NYTimes pieces ([NYTimes Chinatown Virtual Walking Tour](https://www.nytimes.com/interactive/2020/12/02/arts/design/chinatown-virtual-walk-tour.html), [NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html))
 
 - **highlighting pieces of a drawing**
-	- NYTimes pieces ([NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html),[NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html))
+	- NYTimes pieces ([NYTimes Tulsa Race Massacre](https://www.nytimes.com/interactive/2021/05/24/us/tulsa-race-massacre.html), [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html))
 
 - **different paths with different "stops"/choose your own adventure**
 	- [Refugee Republic](https://refugeerepublic.submarinechannel.com/)
+	- [Jerusalem We Are Here](https://jerusalemwearehere.com/#/)
 
 - **embedded points of interest to click into**
 	- [Feral Atlas Map](https://feralatlas.supdigital.org/world/invasion)
