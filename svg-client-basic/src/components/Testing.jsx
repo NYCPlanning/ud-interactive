@@ -14,13 +14,16 @@ const Controls = () => {
     orbitRef.current.update();
   });
   return (
-    <orbitControls
-      maxPolarAngle={Math.PI / 3}
-      minPolarAngle={Math.PI / 3}
-      autoRotate
-      args={[camera, gl.domElement]}
-      ref={orbitRef}
-    />
+    <orbitControls autoRotate args={[camera, gl.domElement]} ref={orbitRef} />
+  );
+};
+
+const Plane = () => {
+  return (
+    <mesh rotate={[Math.PI / 2]}>
+      <planeBufferGeometry attach='geometry' args={[100, 100]} />
+      <meshPhysicalMaterial attach='material' color='red' />
+    </mesh>
   );
 };
 
@@ -38,8 +41,10 @@ const Box = () => {
       onClick={() => setActive(!active)}
       scale={props.scale}
     >
+      <ambientLight />
+      <spotLight position={[0, 5, 10]} />
       <boxBufferGeometry attach='geometry' args={[1, 1, 1]} />
-      <a.meshBasicMaterial attach='material' color={props.color} />
+      <a.meshPhysicalMaterial attach='material' color={props.color} />
     </a.mesh>
   );
 };
@@ -50,6 +55,7 @@ export default function Testing() {
       <Canvas>
         <Controls />
         <Box />
+        <Plane />
       </Canvas>
     </div>
   );
