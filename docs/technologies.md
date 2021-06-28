@@ -20,7 +20,7 @@ We're using react-three-fiber, a React addon that uses Threejs, another 3D libra
 
 react-three-fiber:
 
-- [Animation and 3D in react-three-fiber `(`with Paul Henschel`)` — Learn With Jason] (https://www.youtube.com/watch?v=1rP3nNY2hTo&t=4066s)
+- [Animation and 3D in react-three-fiber %28with Paul Henschel%28 — Learn With Jason] (https://www.youtube.com/watch?v=1rP3nNY2hTo&t=4066s)
 
 Three.js:
 
