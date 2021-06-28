@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Canvas, extend, useThree, useFrame } from "react-three-fiber";
 import { boxBufferGeometry } from "three";
@@ -20,9 +21,9 @@ const Controls = () => {
 
 const Plane = () => {
   return (
-    <mesh rotate={[Math.PI / 2]}>
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.5, 0]} receiveShadow>
       <planeBufferGeometry attach='geometry' args={[100, 100]} />
-      <meshPhysicalMaterial attach='material' color='red' />
+      <meshPhysicalMaterial attach='material' color='white' />
     </mesh>
   );
 };
@@ -40,9 +41,10 @@ const Box = () => {
       onPointerOut={() => setHovered(false)}
       onClick={() => setActive(!active)}
       scale={props.scale}
+      castShadow
     >
       <ambientLight />
-      <spotLight position={[0, 5, 10]} />
+      <spotLight position={[0, 5, 10]} penumbra={[1]} castShadow />
       <boxBufferGeometry attach='geometry' args={[1, 1, 1]} />
       <a.meshPhysicalMaterial attach='material' color={props.color} />
     </a.mesh>
@@ -52,7 +54,14 @@ const Box = () => {
 export default function Testing() {
   return (
     <div>
-      <Canvas>
+      <Canvas
+        camera={{ position: [0, 0, 5] }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        }}
+      >
+        <fog attach='fog' args={["white", 5, 15]} />
         <Controls />
         <Box />
         <Plane />
