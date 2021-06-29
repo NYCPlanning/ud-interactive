@@ -1,39 +1,80 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Tooltip } from 'react-svg-tooltip';
 import './App.css';
 import { ReactComponent as CityBlocks } from './assets/city-blocks.svg';
 
-function App() {
-  const circleRef1 = useRef(null);
+const style = {
+  r: 1,
+  fill: 'red',
+  rectX: 2,
+  rectY: 2,
+  rx: 0.5,
+  ry: 0.5,
+  rectFill: 'black',
+  textX: 5,
+  textY: 5,
+  fontSize: 2,
+  textFill: 'white',
+};
 
+const jsonForTooltips = [
+  {
+    cx: 72,
+    cy: 30,
+    rectWidth: 20,
+    rectHeight: 5,
+    textContent: 'Building label',
+  },
+  {
+    cx: 35,
+    cy: 58,
+    rectWidth: 15,
+    rectHeight: 5,
+    textContent: 'Street label',
+  },
+  {
+    cx: 53,
+    cy: 44,
+    rectWidth: 15,
+    rectHeight: 5,
+    textContent: 'Park label',
+  },
+];
+
+function App() {
   return (
     <div className="App">
       <svg viewBox="0 0 100 100">
         <CityBlocks />
-
-        <circle ref={circleRef1} cx={72} cy={30} r={1} fill="red" />
-        <Tooltip triggerRef={circleRef1}>
-          <rect x={2} y={2} width={20} height={5} rx={0.5} ry={0.5} fill="black" />
-          <text x={5} y={5} fontSize={2} fill="white">
-            Building label
-          </text>
-        </Tooltip>
-
-        <circle ref={circleRef1} cx={53} cy={44} r={1} fill="red" />
-        <Tooltip triggerRef={circleRef1}>
-          <rect x={2} y={2} width={15} height={5} rx={0.5} ry={0.5} fill="black" />
-          <text x={5} y={5} fontSize={2} fill="white">
-            Park label
-          </text>
-        </Tooltip>
-
-        <circle ref={circleRef1} cx={35} cy={58} r={1} fill="red" />
-        <Tooltip triggerRef={circleRef1}>
-          <rect x={2} y={2} width={15} height={5} rx={0.5} ry={0.5} fill="black" />
-          <text x={5} y={5} fontSize={2} fill="white">
-            Street label
-          </text>
-        </Tooltip>
+        <g>
+          {jsonForTooltips.map((tip) => {
+            const newRef = React.createRef();
+            return (
+              <g>
+                <circle ref={newRef} cx={tip.cx} cy={tip.cy} r={style.r} fill={style.fill} />
+                <Tooltip triggerRef={newRef}>
+                  <rect
+                    x={style.rectX}
+                    y={style.rectY}
+                    width={tip.rectWidth}
+                    height={tip.rectHeight}
+                    rx={style.rx}
+                    ry={style.ry}
+                    fill={style.rectFill}
+                  />
+                  <text
+                    x={style.textX}
+                    y={style.textY}
+                    fontSize={style.fontSize}
+                    fill={style.textFill}
+                  >
+                    {tip.textContent}
+                  </text>
+                </Tooltip>
+              </g>
+            );
+          })}
+        </g>
       </svg>
     </div>
   );
