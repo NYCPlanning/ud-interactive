@@ -30,6 +30,18 @@ TODO
 
 ---
 
+### Annotations
+
+There are a few ways we might approach adding annotations to the project's SVG:
+
+- Using React's createRef or useRef to directly access the SVG and then add directly to it. This presents challenges because SVG manipulation is quite difficult, especially appending additional elements. As such, we might use
+- D3.js, a framework for manipulating SVG elements. D3 is not a particularly easy-to-use framework but handles JSON (useful as we translate data into points) but is still several orders of magnitude easier than manipulating the raw SVGs. Of issue here is that D3 itself does not play super nicely with React; both frameworks attempt to manipulate the DOM. One can use the two together but [setup is a bit more involved](https://wattenberger.com/blog/react-and-d3).
+- We could use SVGR, a library which converts SVGs into React Components. This is still viable but I could not get it to work after some brief tinkering.
+
+The current solution we're using is a node package called react-svg-tooltip. The package basically does exactly what we want it to: adds decoration to SVGs that tooltips can be added to. One issue I foresee is adding rich content to annotations; interfacing directly with SVG is extremely clunky and might limit our ability to add particularly rich elements as tooltips. This said, there may be a workaround or some way of combining this with other approaches. My instinct is that, if this is not viable, it may be worth trying the SVGR approach again.
+
+---
+
 ### General React/JavaScript Concepts
 
 Am trying to familiarize myself with hooks because react-three-fiber heavily uses useFrame and react-spring uses useSpring.
