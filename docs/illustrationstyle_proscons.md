@@ -8,7 +8,7 @@
 **Pros**
 - Can utilize various methods for callouts/annotations i.e. highlighting, color coding
 - Relatively easy to convert to web based drawing if vector drawing/if there are clean layers for each element
-- Can use cutouts as raster images and compose/assemble them in the browser alongside a vector drawing (inspo: zine from PDC)
+- Can use cutouts as raster images and compose/assemble them in the browser alongside a vector drawing (inspo: [zine from PDC](https://www1.nyc.gov/assets/designcommission/downloads/pdf/PDC-PARKing-Day-2020-ZINE-pages.pdf))
 - On web-side could potentially do a zoom-in into a piece of the drawing for heightened, detailed look that could be more engaging
 
 **Cons**
@@ -32,6 +32,7 @@
 
 	**Cons**
 	- Depending on how much needs to be represented, could be overwhelming on first glance
+	- Using real photos of real places may freak people out (i.e. what is DCP going to do with my building?)
 
 	**Axonometric master plan**
 
