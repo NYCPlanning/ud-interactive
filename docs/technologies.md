@@ -36,9 +36,21 @@ There are a few ways we might approach adding annotations to the project's SVG:
 
 - Using React's createRef or useRef to directly access the SVG and then add directly to it. This presents challenges because SVG manipulation is quite difficult, especially appending additional elements. As such, we might use
 - D3.js, a framework for manipulating SVG elements. D3 is not a particularly easy-to-use framework but handles JSON (useful as we translate data into points) but is still several orders of magnitude easier than manipulating the raw SVGs. Of issue here is that D3 itself does not play super nicely with React; both frameworks attempt to manipulate the DOM. One can use the two together but [setup is a bit more involved](https://wattenberger.com/blog/react-and-d3).
-- We could use SVGR, a library which converts SVGs into React Components. This is still viable but I could not get it to work after some brief tinkering.
 
-The current solution we're using is a node package called react-svg-tooltip. The package basically does exactly what we want it to: adds decoration to SVGs that tooltips can be added to. One issue I foresee is adding rich content to annotations; interfacing directly with SVG is extremely clunky and might limit our ability to add particularly rich elements as tooltips. This said, there may be a workaround or some way of combining this with other approaches. My instinct is that, if this is not viable, it may be worth trying the SVGR approach again.
+The first working solution we used was a node package called react-svg-tooltip. The package basically did exactly what we wanted it to: adds decoration to SVGs that tooltips can be added to. This approach also uses SVGR, which converts SVGs into React Components. I had no idea we were doing this, but some code I found online (importing an svg as a ReactComponent) uses this because SVGR is built into create-react app!
+
+One issue with this is the limit of adding rich content to annotations, because one must interface directly with SVG. In addition, the drawing we use may be a raster image; a solution we choose should not just support SVG.
+
+There's two thoughts here for how to approach this issue.
+
+Firstly, deal with positioning of the tooltip and the tooltip itself together; a library like [react-image-tooltips](https://www.npmjs.com/package/react-image-tooltips/v/1.0.1) would allow for 'hotspots' on images that tooltips would show up on. This said, react-image-tooltips is not a particularly popular or (seemingly) frequently maintained package.
+
+As such, I moved on from this approach, looking at figuring out absolute positioning of React components on images first and dealing with tooltips separately (and with libraries that have more flexibility). Here's where I did some of the research:
+
+- [10 Awesome React Tooltip Components - Morioh](https://morioh.com/p/fddae4cc0dec)
+- [61 Best React Tooltip Libraries](https://openbase.com/categories/js/best-react-tooltip-libraries)
+
+After some brief research, the most stylistically and feature-rich example looked like Tippy.js (based on Popper.js), which has been implemented in React as [react-tippy](https://tvkhoa.github.io/testlib/). This has more functionality than react-svg-tooltip (mostly styling) and while large popout tooltips are not already supported, one can add custom HTML to any tooltip, including features to make it interactive; the site provides documentation for adding a form element to a tooltip, for example.
 
 ---
 

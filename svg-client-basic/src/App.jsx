@@ -39,6 +39,13 @@ const jsonForTooltips = [
     rectHeight: 5,
     textContent: 'Park label',
   },
+  {
+    cx: 10,
+    cy: 30,
+    rectWidth: 15,
+    rectHeight: 5,
+    textContent: 'test',
+  },
 ];
 
 function App() {
