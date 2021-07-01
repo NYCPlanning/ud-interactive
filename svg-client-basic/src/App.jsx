@@ -2,6 +2,7 @@ import React from 'react';
 import { Tooltip } from 'react-svg-tooltip';
 import './App.css';
 import { ReactComponent as CityBlocks } from './assets/city-blocks.svg';
+import CityBlocksPNG from './assets/city-blocks.png';
 
 const style = {
   r: 1,
@@ -52,8 +53,8 @@ function App() {
   return (
     <div className="App">
       <svg viewBox="0 0 100 100">
-        <CityBlocks />
         <g>
+          <image href={CityBlocksPNG} width="100%" height="100%" x="0" y="0" />
           {jsonForTooltips.map((tip) => {
             const newRef = React.createRef();
             return (
