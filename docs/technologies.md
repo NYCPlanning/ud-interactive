@@ -30,30 +30,6 @@ TODO
 
 ---
 
-### Annotations
-
-There are a few ways we might approach adding annotations to the project's SVG:
-
-- Using React's createRef or useRef to directly access the SVG and then add directly to it. This presents challenges because SVG manipulation is quite difficult, especially appending additional elements. As such, we might use
-- D3.js, a framework for manipulating SVG elements. D3 is not a particularly easy-to-use framework but handles JSON (useful as we translate data into points) but is still several orders of magnitude easier than manipulating the raw SVGs. Of issue here is that D3 itself does not play super nicely with React; both frameworks attempt to manipulate the DOM. One can use the two together but [setup is a bit more involved](https://wattenberger.com/blog/react-and-d3).
-
-The first working solution we used was a node package called react-svg-tooltip. The package basically did exactly what we wanted it to: adds decoration to SVGs that tooltips can be added to. This approach also uses SVGR, which converts SVGs into React Components. I had no idea we were doing this, but some code I found online (importing an svg as a ReactComponent) uses this because SVGR is built into create-react app!
-
-One issue with this is the limit of adding rich content to annotations, because one must interface directly with SVG. In addition, the drawing we use may be a raster image; a solution we choose should not just support SVG.
-
-There's two thoughts here for how to approach this issue.
-
-Firstly, deal with positioning of the tooltip and the tooltip itself together; a library like [react-image-tooltips](https://www.npmjs.com/package/react-image-tooltips/v/1.0.1) would allow for 'hotspots' on images that tooltips would show up on. This said, react-image-tooltips is not a particularly popular or (seemingly) frequently maintained package.
-
-As such, I moved on from this approach, looking at figuring out absolute positioning of React components on images first and dealing with tooltips separately (and with libraries that have more flexibility). Here's where I did some of the research:
-
-- [10 Awesome React Tooltip Components - Morioh](https://morioh.com/p/fddae4cc0dec)
-- [61 Best React Tooltip Libraries](https://openbase.com/categories/js/best-react-tooltip-libraries)
-
-After some brief research, the most stylistically and feature-rich example looked like Tippy.js (based on Popper.js), which has been implemented in React as [react-tippy](https://tvkhoa.github.io/testlib/). This has more functionality than react-svg-tooltip (mostly styling) and while large popout tooltips are not already supported, one can add custom HTML to any tooltip, including features to make it interactive; the site provides documentation for adding a form element to a tooltip, for example.
-
----
-
 ### General React/JavaScript Concepts
 
 Am trying to familiarize myself with hooks because react-three-fiber heavily uses useFrame and react-spring uses useSpring.
@@ -95,5 +71,36 @@ Here are some resources that we used to set up ESLint/Prettier with the AirBNB s
 This has been a bit bumpy; setting up all of the packages together is tricky. I (Lucas, feel free to reach out if you need help with setting this stuff up) tinkered around with this for awhile and don't remember exactly how I got it all working, although installing from package.json should probably work.
 
 A great (or terrible) feature about ESLint is that it will simply not compile your code if you ignore formatting standards. I've added a few rules in .eslintrc.json to override some stuff that we use/swap it to "warn" (where it will print to the console). I have not been able to get this right. [Here](https://stackoverflow.com/questions/68167196/eslint-no-params-reassign-will-not-override-prettier-vs-code-airbnb-style)'s a StackOverflow post trying to troubleshoot this. Being completely honest I am not 100% sure I configured this whole thing correctly but it works well enough so I'm trying to run with it and slowly debug/iterate on the configuration as stuff goes wrong.
+
+---
+
+### Annotations
+
+There are a few ways we might approach adding annotations to the project's SVG:
+
+- Using React's createRef or useRef to directly access the SVG and then add directly to it. This presents challenges because SVG manipulation is quite difficult, especially appending additional elements. As such, we might use
+- D3.js, a framework for manipulating SVG elements. D3 is not a particularly easy-to-use framework but handles JSON (useful as we translate data into points) but is still several orders of magnitude easier than manipulating the raw SVGs. Of issue here is that D3 itself does not play super nicely with React; both frameworks attempt to manipulate the DOM. One can use the two together but [setup is a bit more involved](https://wattenberger.com/blog/react-and-d3).
+
+The first working solution we used was a node package called react-svg-tooltip. The package basically did exactly what we wanted it to: adds decoration to SVGs that tooltips can be added to. This approach also uses SVGR, which converts SVGs into React Components. I had no idea we were doing this, but some code I found online (importing an svg as a ReactComponent) uses this because SVGR is built into create-react app!
+
+One issue with this is the limit of adding rich content to annotations, because one must interface directly with SVG. In addition, the drawing we use may be a raster image; a solution we choose should not just support SVG.
+
+There's two thoughts here for how to approach this issue.
+
+Firstly, deal with positioning of the tooltip and the tooltip itself together; a library like [react-image-tooltips](https://www.npmjs.com/package/react-image-tooltips/v/1.0.1) would allow for 'hotspots' on images that tooltips would show up on. This said, react-image-tooltips is not a particularly popular or (seemingly) frequently maintained package.
+
+As such, I moved on from this approach, looking at figuring out absolute positioning of React components on images first and dealing with tooltips separately (and with libraries that have more flexibility). Here's where I did some of the research:
+
+- [10 Awesome React Tooltip Components - Morioh](https://morioh.com/p/fddae4cc0dec)
+- [61 Best React Tooltip Libraries](https://openbase.com/categories/js/best-react-tooltip-libraries)
+
+After some brief research, the most stylistically and feature-rich example looked like Tippy.js (based on Popper.js), which has been implemented in React as [react-tippy](https://tvkhoa.github.io/testlib/). This has more functionality than react-svg-tooltip (mostly styling) and while large popout tooltips are not already supported, one can add custom HTML to any tooltip, including features to make it interactive; the site provides documentation for adding a form element to a tooltip, for example.
+
+The issue here is positioning, which is not easily solvable; it is very difficult to set left and top properties within styling programmatically (played around with this for awhile without success) and, more than this, to get this to scale proportionally with an SVG and to be responsive to different viewport sizes. 
+
+Regardless of how we annotate, animating and scaling an SVG with React is difficult; the [best solution I found](https://codepen.io/sdras/pen/VjvGJM) that scales/moves around/tours an SVG uses plain HTML/CSS/JavaScript; their [demo](https://codepen.io/sdras/pen/VjvGJM) is almost exactly what we want, but my sense is that this would be complicated by React's manipulation of the DOM. This said, React serves an important purpose, if we are going to manipulate state in the future.
+
+Amidst all of this confusion, I messaged the developers at [CHIPS](https://chips.nyc/), the design and development studio responsible for the [MET Kids installation](https://www.metmuseum.org/art/online-features/metkids/explore) we used as reference. To paraphrase from their email: they apparently used a piece of software called [MapTiler Desktop](https://www.maptiler.com/) that converted the JPG into a many-layered set of files that they integrated into mapping software; they used coordinates, tooltips, and info windows; none of this changed with zooming and was all responsive! MapTiler apparently can generate HTML in a few formats (Leaflet, OpenLayers, and Mapbox). 
+
 
 ---
