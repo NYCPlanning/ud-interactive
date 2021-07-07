@@ -1186,7 +1186,6 @@ export default function Buggy(props) {
         rotation={[-2.03, -0.42, -0.67]}
         scale={[0, 0, 8.33]}
       />
-
     </group>
   )
 }
