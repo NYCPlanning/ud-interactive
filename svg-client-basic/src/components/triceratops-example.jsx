@@ -3,15 +3,16 @@
 import React, { Suspense } from 'react';
 import { useThree, Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from 'three';
-import { OrbitControls, Stats, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, Stats, PerspectiveCamera, OrthographicCamera } from '@react-three/drei';
 import { useSpring } from 'react-spring';
 
 // exported scene from rhino/triceratops
 import sample from '../assets/sample.json';
+import testscene from '../assets/testscene.json';
 
 const FromJSON = () => {
   const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(sample);
+  const scene = loader.parse(testscene);
 
   // make materials double-sided
   scene.traverse((o) => {
@@ -21,7 +22,7 @@ const FromJSON = () => {
   return <primitive object={scene} dispose={null} />;
 };
 
-const camPositions = [
+const camPositionsOriginal = [
   {
     x: 100,
     y: 50,
@@ -39,6 +40,34 @@ const camPositions = [
   },
   { x: -200, y: -100, z: 50 },
   { x: -300, y: 200, z: 200 },
+];
+
+const camPositions = [
+  {
+    x: 100,
+    y: 0,
+    z: -40,
+  },
+  {
+    x: 100,
+    y: 100,
+    z: -20,
+  },
+  {
+    x: 100,
+    y: 100,
+    z: -60,
+  },
+  {
+    x: 60,
+    y: 100,
+    z: -60,
+  },
+  {
+    x: 60,
+    y: 100,
+    z: -80,
+  },
 ];
 
 function calcNew(oldDim, newDim, timePer, timeFromLast) {
@@ -79,10 +108,8 @@ function givePosition(speed, elapsedTime) {
 function Dolly() {
   // This one makes the camera move in and out
   useFrame(({ clock, camera }) => {
-    let { x, y, z } = givePosition(180, clock.getElapsedTime());
-    camera.position.z = z;
-    camera.position.y = y;
-    camera.position.x = x;
+    let { x, y, z } = givePosition(500, clock.getElapsedTime());
+    camera.position.set(x, y, z);
   });
   return null;
 }
@@ -99,6 +126,7 @@ export default ({ buildings, fogStart }) => {
             <FromJSON />
           </Suspense>
           <OrbitControls />
+          <PerspectiveCamera position={[40, 0, -40]} fov={100} makeDefault={true} />
           <Dolly />
         </Canvas>
       </div>
