@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
-import Triceratops from './components/triceratops-example';
+import Triceratops from './components/Triceratops';
 import Next from './components/Next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
