@@ -3,16 +3,18 @@
 import React, { Suspense } from 'react';
 import { useThree, Canvas, useFrame } from 'react-three-fiber';
 import * as THREE from 'three';
+import { DragControls } from 'three';
 import { OrbitControls, Stats, PerspectiveCamera, OrthographicCamera } from '@react-three/drei';
 import { useSpring } from 'react-spring';
 
 // exported scene from rhino/triceratops
 import sample from '../assets/sample.json';
 import testscene from '../assets/testscene.json';
+import lightingtest from '../assets/lightingtest.json';
 
 const FromJSON = () => {
   const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(testscene);
+  const scene = loader.parse(lightingtest);
 
   // make materials double-sided
   scene.traverse((o) => {
@@ -44,29 +46,20 @@ const camPositionsOriginal = [
 
 const camPositions = [
   {
-    x: 100,
+    x: 40,
     y: 0,
     z: -40,
   },
   {
-    x: 100,
-    y: 100,
+    x: 60,
+    y: 0,
     z: -20,
   },
+  { x: 80, y: 10, z: -30 },
   {
     x: 100,
-    y: 100,
-    z: -60,
-  },
-  {
-    x: 60,
-    y: 100,
-    z: -60,
-  },
-  {
-    x: 60,
-    y: 100,
-    z: -80,
+    y: -10,
+    z: -40,
   },
 ];
 
@@ -105,29 +98,42 @@ function givePosition(speed, elapsedTime) {
   return camPositions[camPositions.length - 1];
 }
 
-function Dolly() {
+function snapPosition(posNumber) {
+  if (posNumber >= camPositions.length) {
+    const { x, y, z } = camPositions[camPositions.length - 1];
+    return { x, y, z };
+  } else {
+    const { x, y, z } = camPositions[posNumber];
+    return { x, y, z };
+  }
+}
+
+function Dolly(props) {
+  const { posNumber } = props;
   // This one makes the camera move in and out
   useFrame(({ clock, camera }) => {
-    let { x, y, z } = givePosition(500, clock.getElapsedTime());
+    // let { x, y, z } = givePosition(500, clock.getElapsedTime());
+    const { x, y, z } = snapPosition(posNumber);
     camera.position.set(x, y, z);
+    camera.lookAt(50, 5, 0);
   });
   return null;
 }
 
-export default ({ buildings, fogStart }) => {
-  const props = useSpring({});
+export default (props) => {
+  const { posNumber } = props;
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: 500, width: 400 }}>
+        <Canvas style={{ height: 400, width: 800 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <Suspense fallback={null}>
             <FromJSON />
           </Suspense>
           <OrbitControls />
-          <PerspectiveCamera position={[40, 0, -40]} fov={100} makeDefault={true} />
-          <Dolly />
+          <PerspectiveCamera fov={35} makeDefault={true} />
+          <Dolly posNumber={posNumber} />
         </Canvas>
       </div>
     </div>
