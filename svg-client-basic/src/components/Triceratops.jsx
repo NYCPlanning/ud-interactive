@@ -20,29 +20,8 @@ const FromJSON = () => {
   scene.traverse((o) => {
     if (o.material) o.material.side = THREE.DoubleSide;
   });
-
   return <primitive object={scene} dispose={null} />;
 };
-
-const camPositionsOriginal = [
-  {
-    x: 100,
-    y: 50,
-    z: 0,
-  },
-  {
-    x: 400,
-    y: 200,
-    z: 100,
-  },
-  {
-    x: 200,
-    y: 0,
-    z: 50,
-  },
-  { x: -200, y: -100, z: 50 },
-  { x: -300, y: 200, z: 200 },
-];
 
 const camPositions = [
   {
@@ -75,22 +54,10 @@ function givePosition(speed, elapsedTime) {
   const currentPos = Math.floor(elapsedTime / timePer);
   if (currentPos < camPositions.length - 1) {
     let { x, y, z } = camPositions[currentPos];
-    const diffX = camPositions[currentPos + 1].x - x;
-    const diffY = camPositions[currentPos + 1].y - y;
-    const diffZ = camPositions[currentPos + 1].z - z;
-    const speedX = diffX / timePer;
-    const speedY = diffY / timePer;
-    const speedZ = diffZ / timePer;
     const timeFromLast = elapsedTime - timePer * Math.floor(elapsedTime / timePer);
-    const ttX = speedX * timeFromLast;
-    const ttY = speedY * timeFromLast;
-    const ttZ = speedZ * timeFromLast;
-    x += ttX;
-    y += ttY;
-    z += ttZ;
-    // x = calcNew(x, camPositions[currentPos + 1].x, timePer, timeFromLast);
-    // y = calcNew(y, camPositions[currentPos + 1].y, timePer, timeFromLast);
-    // x = calcNew(z, camPositions[currentPos + 1].z, timePer, timeFromLast);
+    x = calcNew(x, camPositions[currentPos + 1].x, timePer, timeFromLast);
+    y = calcNew(y, camPositions[currentPos + 1].y, timePer, timeFromLast);
+    z = calcNew(z, camPositions[currentPos + 1].z, timePer, timeFromLast);
     return { x, y, z };
   }
   return camPositions[camPositions.length - 1];
@@ -109,8 +76,8 @@ function Dolly(props) {
   const { posNumber } = props;
   // This one makes the camera move in and out
   useFrame(({ clock, camera }) => {
-    // const { x, y, z } = givePosition(500, clock.getElapsedTime());
-    const { x, y, z } = snapPosition(posNumber);
+    const { x, y, z } = givePosition(500, clock.getElapsedTime());
+    // const { x, y, z } = snapPosition(posNumber);
     camera.position.set(x, y, z);
     camera.lookAt(50, 5, 0);
   });
