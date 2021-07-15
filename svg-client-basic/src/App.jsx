@@ -9,12 +9,13 @@ import './App.css';
 
 function App(props) {
   const { nextPos } = props;
+  const { posNumber } = props;
   return (
     <div className="App">
       <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10}>
-            <Triceratops />
+            <Triceratops posNumber={posNumber} />
             <Next nextPos={nextPos} />
           </Col>
         </Row>
@@ -24,6 +25,7 @@ function App(props) {
 }
 App.propTypes = {
   nextPos: PropTypes.func.isRequired,
+  posNumber: PropTypes.number.isRequired,
 };
 
 export default App;
