@@ -119,7 +119,7 @@ export default ({ buildings, fogStart }) => {
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: 900, width: 800 }}>
+        <Canvas style={{ height: 500, width: 400 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <Suspense fallback={null}>
