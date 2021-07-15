@@ -1,12 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { createStore } from 'redux';
+import { connect, Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import nextPos from './actions/nextPos';
+import posNumberReducer from './reducers/posNumberReducer';
+
+const store = createStore(posNumberReducer);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    posNumber: state.posNumber,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    nextPos: () => dispatch(nextPos()),
+  };
+};
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(App);
+
+function AppWrapper() {
+  return (
+    <Provider store={store}>
+      <Container />
+    </Provider>
+  );
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <AppWrapper />
   </React.StrictMode>,
   document.getElementById('root')
 );
