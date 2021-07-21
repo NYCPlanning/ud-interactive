@@ -1,6 +1,6 @@
 /* eslint-disable  */
 import React, { useState, Suspense } from 'react';
-import { useThree, Canvas, useFrame } from 'react-three-fiber';
+import { useThree, Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
 import * as THREE from 'three';
 
@@ -46,13 +46,14 @@ function Dolly(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime } = props;
 
   useFrame(({ clock, camera }) => {
+    let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
     if (animationStarted) {
       // console.log('animation started in Dolly');
       saveAnimationTime(clock.getElapsedTime());
+      currentAnimProgress = 0;
     }
     if (posNumber < camPositions.length - 1) {
       // console.log('animationTime! ' + animationTime);
-      let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
       if (currentAnimProgress > 1) {
         currentAnimProgress = 1;
       }
