@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
     animationStarted: state.animationStarted,
-    animationStartTime: state.animationStarted,
+    animationTime: state.animationTime,
   };
 };
 

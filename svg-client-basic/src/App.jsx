@@ -8,8 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 function App(props) {
-  const { nextPos, posNumber, animationStarted, animationTime, saveAnimationTime } = props;
-  console.log(animationStarted);
+  const { nextPos, saveAnimationTime, posNumber, animationStarted, animationTime } = props;
   return (
     <div className="App">
       <Container>
