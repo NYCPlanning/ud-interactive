@@ -4,17 +4,18 @@ const defaultState = {
   posNumber: 0,
   animationStarted: false,
   animationTime: null,
+  inReverse: false,
 };
 
 const posNumberReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'NEXT':
-      return { ...state, posNumber: state.posNumber + 1, animationStarted: true };
+      return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
       if (state.posNumber === 0) {
         return state;
       }
-      return { ...state, posNumber: state.posNumber - 1 };
+      return { ...state, posNumber: state.posNumber - 1, animationStarted: true, inReverse: true };
     case 'SAVEANIMATIONTIME':
       // console.log('animation time: ' + action.payload.time);
       return {

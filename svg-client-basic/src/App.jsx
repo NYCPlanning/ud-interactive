@@ -2,13 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import Triceratops from './components/Triceratops';
+import Previous from './components/Previous';
 import Next from './components/Next';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './App.css';
 
 function App(props) {
-  const { nextPos, saveAnimationTime, posNumber, animationStarted, animationTime } = props;
+  const {
+    previousPos,
+    nextPos,
+    saveAnimationTime,
+    posNumber,
+    animationStarted,
+    animationTime,
+    inReverse,
+  } = props;
   return (
     <div className="App">
       <Container>
@@ -19,7 +28,9 @@ function App(props) {
               animationStarted={animationStarted}
               animationTime={animationTime}
               saveAnimationTime={saveAnimationTime}
+              inReverse={inReverse}
             />
+            <Previous previousPos={previousPos} />
             <Next nextPos={nextPos} />
           </Col>
         </Row>
@@ -28,11 +39,13 @@ function App(props) {
   );
 }
 App.propTypes = {
+  previousPos: PropTypes.func.isRequired,
   nextPos: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
   animationStarted: PropTypes.bool.isRequired,
   animationTime: PropTypes.number,
   saveAnimationTime: PropTypes.func.isRequired,
+  inReverse: PropTypes.bool.isRequired,
 };
 App.defaultProps = {
   animationTime: 0,

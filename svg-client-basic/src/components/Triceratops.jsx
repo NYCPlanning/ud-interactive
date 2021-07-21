@@ -40,10 +40,29 @@ const camPositions = [
   { x: -300, y: 200, z: 200 },
 ];
 
+// const camPositions = [
+//   {
+//     x: 40,
+//     y: 0,
+//     z: -40,
+//   },
+//   {
+//     x: 60,
+//     y: 0,
+//     z: -20,
+//   },
+//   { x: 80, y: 10, z: -30 },
+//   {
+//     x: 100,
+//     y: -10,
+//     z: -40,
+//   },
+// ];
+
 const timePer = 2;
 
 function Dolly(props) {
-  const { posNumber, animationStarted, animationTime, saveAnimationTime } = props;
+  const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
 
   useFrame(({ clock, camera }) => {
     let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
@@ -52,28 +71,34 @@ function Dolly(props) {
       saveAnimationTime(clock.getElapsedTime());
       currentAnimProgress = 0;
     }
-    if (posNumber < camPositions.length - 1) {
+    let posNumberFixed = posNumber;
+
+    if ((!inReverse && posNumber > 0) || (inReverse && posNumber < camPositions.length - 1)) {
+      let oldPositions;
+      let newPositions;
       // console.log('animationTime! ' + animationTime);
+      if (!inReverse && posNumber > 0) {
+        //going forward
+        oldPositions = camPositions[posNumber - 1];
+        newPositions = camPositions[posNumber];
+      } else if (posNumber < camPositions.length - 1) {
+        oldPositions = camPositions[posNumber + 1];
+        newPositions = camPositions[posNumber];
+      } else {
+        oldPositions = { x: 0, y: 0, z: 0 };
+        newPositions = { x: 1, y: 1, z: 1 };
+      }
       if (currentAnimProgress > 1) {
         currentAnimProgress = 1;
       }
-      const x = THREE.MathUtils.lerp(
-        camPositions[posNumber].x,
-        camPositions[posNumber + 1].x,
-        currentAnimProgress
-      );
-      const y = THREE.MathUtils.lerp(
-        camPositions[posNumber].y,
-        camPositions[posNumber + 1].y,
-        currentAnimProgress
-      );
-      const z = THREE.MathUtils.lerp(
-        camPositions[posNumber].z,
-        camPositions[posNumber + 1].z,
-        currentAnimProgress
-      );
+      const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
+      const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
+      const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
       // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
       camera.position.set(x, y, z);
+    }
+    if (posNumber == 0) {
+      camera.position.set(camPositions[0].x, camPositions[0].y, camPositions[0].z);
     }
     camera.lookAt(50, 5, 0);
   });
@@ -81,7 +106,7 @@ function Dolly(props) {
 }
 
 export default function Triceratops(props) {
-  const { posNumber, animationStarted, animationTime, saveAnimationTime } = props;
+  const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -97,6 +122,7 @@ export default function Triceratops(props) {
             animationStarted={animationStarted}
             animationTime={animationTime}
             saveAnimationTime={saveAnimationTime}
+            inReverse={inReverse}
           />
         </Canvas>
       </div>
