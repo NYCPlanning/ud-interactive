@@ -5,6 +5,7 @@ import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
 import saveAnimationTime from './actions/saveAnimationTime';
 import posNumberReducer from './reducers/posNumberReducer';
@@ -15,11 +16,13 @@ const mapStateToProps = (state, ownProps) => {
     posNumber: state.posNumber,
     animationStarted: state.animationStarted,
     animationTime: state.animationTime,
+    inReverse: state.inReverse,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
     saveAnimationTime: (time) => dispatch(saveAnimationTime(time)),
   };
