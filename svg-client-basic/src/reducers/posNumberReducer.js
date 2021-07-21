@@ -16,7 +16,7 @@ const posNumberReducer = (state = defaultState, action) => {
       }
       return { ...state, posNumber: state.posNumber - 1 };
     case 'SAVEANIMATIONTIME':
-      console.log('animation time: ' + action.payload.time);
+      // console.log('animation time: ' + action.payload.time);
       return {
         ...state,
         animationStarted: false,
