@@ -6,18 +6,22 @@ import { connect, Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import nextPos from './actions/nextPos';
+import saveAnimationTime from './actions/saveAnimationTime';
 import posNumberReducer from './reducers/posNumberReducer';
 
 const store = createStore(posNumberReducer);
 const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
+    animationStarted: state.animationStarted,
+    animationStartTime: state.animationStarted,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     nextPos: () => dispatch(nextPos()),
+    saveAnimationTime: (time) => dispatch(saveAnimationTime(time)),
   };
 };
 
