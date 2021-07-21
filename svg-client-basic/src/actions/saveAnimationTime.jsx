@@ -1,8 +1,11 @@
+/* eslint-disable  */
+
 const saveAnimationTime = (time) => {
+  console.log('action called! ' + time);
   return {
-    type: 'SAVETIME',
+    type: 'SAVEANIMATIONTIME',
     payload: {
-      time,
+      time: time,
     },
   };
 };

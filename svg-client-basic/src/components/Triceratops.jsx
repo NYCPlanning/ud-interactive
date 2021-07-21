@@ -24,25 +24,6 @@ const FromJSON = () => {
   return <primitive object={scene} dispose={null} />;
 };
 
-// const camPositions = [
-//   {
-//     x: 40,
-//     y: 0,
-//     z: -40,
-//   },
-//   {
-//     x: 60,
-//     y: 0,
-//     z: -20,
-//   },
-//   { x: 80, y: 10, z: -30 },
-//   {
-//     x: 100,
-//     y: -10,
-//     z: -40,
-//   },
-// ];
-
 const camPositions = [
   {
     x: 100,
@@ -65,36 +46,6 @@ const camPositions = [
 
 const timePer = 2;
 
-function calcNew(oldDim, newDim, timePer, timeFromLast) {
-  const diff = newDim - oldDim;
-  const speed = diff / timePer;
-  const toTravel = speed * timeFromLast;
-  return oldDim + toTravel;
-}
-
-function givePosition(speed, elapsedTime) {
-  const timePer = (1 / speed) * 1000;
-  const currentPos = Math.floor(elapsedTime / timePer);
-  if (currentPos < camPositions.length - 1) {
-    let { x, y, z } = camPositions[currentPos];
-    const timeFromLast = elapsedTime - timePer * Math.floor(elapsedTime / timePer);
-    x = calcNew(x, camPositions[currentPos + 1].x, timePer, timeFromLast);
-    y = calcNew(y, camPositions[currentPos + 1].y, timePer, timeFromLast);
-    z = calcNew(z, camPositions[currentPos + 1].z, timePer, timeFromLast);
-    return { x, y, z };
-  }
-  return camPositions[camPositions.length - 1];
-}
-
-function snapPosition(posNumber) {
-  if (posNumber >= camPositions.length) {
-    const { x, y, z } = camPositions[camPositions.length - 1];
-    return { x, y, z };
-  }
-  const { x, y, z } = camPositions[posNumber];
-  return { x, y, z };
-}
-
 function Dolly(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime } = props;
   // This one makes the camera move in and out
@@ -102,13 +53,15 @@ function Dolly(props) {
   //   from: { x: 40, y: 0, z: -40 },
   //   to: { x: 60, y: 0, z: -20 },
   // });
+
   useFrame(({ clock, camera }) => {
     // console.log('animation started? ' + animationStarted);
     if (animationStarted) {
+      console.log('animation started in Dolly');
       saveAnimationTime(clock.getElapsedTime());
-      console.log(clock.getElapsedTime());
     }
     if (posNumber < camPositions.length - 1) {
+      console.log('animationTime! ' + animationTime);
       let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
       if (currentAnimProgress > 1) {
         currentAnimProgress = 0.999;
@@ -128,6 +81,7 @@ function Dolly(props) {
         camPositions[posNumber + 1].z,
         currentAnimProgress
       );
+      console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
       camera.position.set(x, y, z);
     }
     // const { x, y, z } = givePosition(180, clock.getElapsedTime());
@@ -136,46 +90,6 @@ function Dolly(props) {
     camera.lookAt(50, 5, 0);
   });
   return null;
-  // const [flip, set] = useState(false);
-  // const props = useSpring({
-  //   from: { x: 40, y: 0, z: -40 },
-  //   to: { x: 60, y: 0, z: -20 },
-  //   reset: true,
-  //   reverse: flip,
-  //   delay: 200,
-  //   config: config.molasses,
-  //   onRest: () => set(!flip),
-  // });
-  // return (
-  //   <animated.PerspectiveCamera
-  //     position={(props.x, props.y, props.z)}
-  //     near={0.1}
-  //     far={10000}
-  //     fov={70}
-  //     aspect={2}
-  //   />
-  // );
-  // const { x, y, z } = useSpring({
-  //   from: { x: 0, y: 0, z: 0 },
-  //   to: { x: 40, y: 0, z: -40 },
-  // });
-  // return (
-  //   <animated.PerspectiveCamera position={(x, y, z)} near={0.1} far={10000} fov={70} aspect={2} />
-  // );
-  // return (
-  //   // <PerspectiveCamera
-  //   //   position={(40, 0, -40)}
-  //   //   lookAt={(50, 5, 0)}
-  //   //   fov={35}
-  //   //   makeDefault
-  //   //   {...props}
-  //   // />
-  // );
-  // https://spectrum.chat/react-three-fiber/general/calling-usespring-set-in-useframe~c74107e3-9110-48d8-9ed2-27c6a58a26f1
-  // https://codesandbox.io/s/react-three-fiber-gestures-fig3s?from-embed
-  // const {size, viewport } = useThree();
-  // const aspect = size.width / viewport.width;
-  // const [spring, set] = useSpring(() => ({position: [0,0,0] lookAt: [50, 5, 0]})
 }
 
 export default function Triceratops(props) {
@@ -254,3 +168,93 @@ Triceratops.propTypes = {
 Triceratops.defaultProps = {
   animationTime: 0,
 };
+
+// const camPositions = [
+//   {
+//     x: 40,
+//     y: 0,
+//     z: -40,
+//   },
+//   {
+//     x: 60,
+//     y: 0,
+//     z: -20,
+//   },
+//   { x: 80, y: 10, z: -30 },
+//   {
+//     x: 100,
+//     y: -10,
+//     z: -40,
+//   },
+// ];
+
+// function calcNew(oldDim, newDim, timePer, timeFromLast) {
+//   const diff = newDim - oldDim;
+//   const speed = diff / timePer;
+//   const toTravel = speed * timeFromLast;
+//   return oldDim + toTravel;
+// }
+
+// function givePosition(speed, elapsedTime) {
+//   const timePer = (1 / speed) * 1000;
+//   const currentPos = Math.floor(elapsedTime / timePer);
+//   if (currentPos < camPositions.length - 1) {
+//     let { x, y, z } = camPositions[currentPos];
+//     const timeFromLast = elapsedTime - timePer * Math.floor(elapsedTime / timePer);
+//     x = calcNew(x, camPositions[currentPos + 1].x, timePer, timeFromLast);
+//     y = calcNew(y, camPositions[currentPos + 1].y, timePer, timeFromLast);
+//     z = calcNew(z, camPositions[currentPos + 1].z, timePer, timeFromLast);
+//     return { x, y, z };
+//   }
+//   return camPositions[camPositions.length - 1];
+// }
+
+// function snapPosition(posNumber) {
+//   if (posNumber >= camPositions.length) {
+//     const { x, y, z } = camPositions[camPositions.length - 1];
+//     return { x, y, z };
+//   }
+//   const { x, y, z } = camPositions[posNumber];
+//   return { x, y, z };
+// }
+
+// const [flip, set] = useState(false);
+// const props = useSpring({
+//   from: { x: 40, y: 0, z: -40 },
+//   to: { x: 60, y: 0, z: -20 },
+//   reset: true,
+//   reverse: flip,
+//   delay: 200,
+//   config: config.molasses,
+//   onRest: () => set(!flip),
+// });
+// return (
+//   <animated.PerspectiveCamera
+//     position={(props.x, props.y, props.z)}
+//     near={0.1}
+//     far={10000}
+//     fov={70}
+//     aspect={2}
+//   />
+// );
+// const { x, y, z } = useSpring({
+//   from: { x: 0, y: 0, z: 0 },
+//   to: { x: 40, y: 0, z: -40 },
+// });
+// return (
+//   <animated.PerspectiveCamera position={(x, y, z)} near={0.1} far={10000} fov={70} aspect={2} />
+// );
+// return (
+//   // <PerspectiveCamera
+//   //   position={(40, 0, -40)}
+//   //   lookAt={(50, 5, 0)}
+//   //   fov={35}
+//   //   makeDefault
+//   //   {...props}
+//   // />
+// );
+// https://spectrum.chat/react-three-fiber/general/calling-usespring-set-in-useframe~c74107e3-9110-48d8-9ed2-27c6a58a26f1
+// https://codesandbox.io/s/react-three-fiber-gestures-fig3s?from-embed
+// const {size, viewport } = useThree();
+// const aspect = size.width / viewport.width;
+// const [spring, set] = useSpring(() => ({position: [0,0,0] lookAt: [50, 5, 0]})

@@ -3,11 +3,10 @@
 const defaultState = {
   posNumber: 0,
   animationStarted: false,
-  animationStartTime: null,
+  animationTime: null,
 };
 
 const posNumberReducer = (state = defaultState, action) => {
-  console.log(state.posNumber);
   switch (action.type) {
     case 'NEXT':
       return { ...state, posNumber: state.posNumber + 1, animationStarted: true };
@@ -21,7 +20,7 @@ const posNumberReducer = (state = defaultState, action) => {
       return {
         ...state,
         animationStarted: false,
-        animationStartedTime: action.payload.time,
+        animationTime: action.payload.time,
       };
     default:
       return state;
