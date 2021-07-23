@@ -8,9 +8,9 @@ import reportWebVitals from './reportWebVitals';
 import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
 import saveAnimationTime from './actions/saveAnimationTime';
-import posNumberReducer from './reducers/posNumberReducer';
+import mainReducer from './reducers/mainReducer';
 
-const store = createStore(posNumberReducer);
+const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
