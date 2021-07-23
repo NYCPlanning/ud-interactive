@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import sample from '../assets/sample.json';
 import lightingtest from '../assets/lightingtest.json';
 
-const showSample = false;
+const showSample = true;
 
 // not able to get showSample functionality up and working yet
 function getCamPositions() {
