@@ -12,6 +12,19 @@
 
 ---
 
+## Displaying 3D Models
+
+We are trying to import a JSON output from Rhino into a react-three-fiber scene. Three.js has [ObjectLoader](https://threejs.org/docs/#api/en/loaders/ObjectLoader), which allows for this. Of note here is that this is distinct from [OBJLoader](https://threejs.org/docs/#examples/en/loaders/OBJLoader) which is for .obj files. 
+
+A few ideas I saw:
+- [This](https://stackoverflow.com/questions/56568535/objloader-with-react-three-parcel-and-react-three-fiber) StackOverflow post using OBJLoader, which I tried to tweak to use ObjectLoader but didn't work. [Here](https://stackoverflow.com/questions/56568535/objloader-with-react-three-parcel-and-react-three-fiber)'s a near identical example that has a similar issue with finding the model's path. A commenter notes that they could not properly get the model imported; this was also my problem. Of note also is that react-three-fiber's [useRender has been deprecated in favor of the useFrame hook](https://stackoverflow.com/questions/62838327/react-three-fiber-userender-is-not-exported-from-react-three-fiber), which differs from how implementation is described here.
+- [This](https://www.ilyameerovich.com/simple-3d-text-meshes-in-three-js/) post which is more generally about 3D text meshes in Three.js w/ R3F, but which imports a font file via JSON; I didn't get much here. 
+- Many of the posts I saw use [glTF format](https://discoverthreejs.com/book/first-steps/load-models/) which appears more modern than JSON, using [GLTFLoader](https://threejs.org/docs/#examples/en/loaders/GLTFLoader) within R3F/Three.js instead. I tried playing with examples of this (it seems more supported/common) by downloading [sample models from glTF](https://github.com/KhronosGroup/glTF-Sample-Models) to test importing, but also couldn't figure out how to do this. It's pretty clear that the issue here is actually getting something imported. 
+- [This](https://codesandbox.io/s/xvvn4vxqnz?file=/src/index.js:0-997) example I copied almost verbatim to try to get GLTF to display but had no luck. I think this may be worth trying again because I didn't actually use the exact file structure/exact environment that is described; this I will try in the morning. [Here's](https://codesandbox.io/s/react-three-fiber-gltf-loader-animations-vh976?file=/src/Scene.js) another although I think I want one that has controls already implemented. 
+- It seems that one of the issues that comes up is fetching the model and whether to wait for it; [here](https://github.com/pmndrs/react-three-fiber/issues/73)'s someone struggling with this on GitHub with GLTFLoader (using the .load function), I also often saw use of React's [<Suspense />](https://reactjs.org/docs/concurrent-mode-suspense.html) component, although it seems this is not well-supported. 
+
+---
+
 ### 3D
 
 We're using react-three-fiber, a React addon that uses Threejs, another 3D library.
