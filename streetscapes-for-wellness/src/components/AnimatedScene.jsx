@@ -7,9 +7,63 @@ import * as THREE from 'three';
 import sample from '../assets/sample.json';
 import lightingtest from '../assets/lightingtest.json';
 
+const showSample = true;
+
+// not able to get showSample functionality up and working yet
+function getCamPositions() {
+  if (showSample) {
+    return [
+      {
+        x: 100,
+        y: 50,
+        z: 0,
+      },
+      {
+        x: 400,
+        y: 200,
+        z: 100,
+      },
+      {
+        x: 200,
+        y: 0,
+        z: 50,
+      },
+      { x: -200, y: -100, z: 50 },
+      { x: -300, y: 200, z: 200 },
+    ];
+  }
+  return [
+    {
+      x: 40,
+      y: 0,
+      z: -40,
+    },
+    {
+      x: 600,
+      y: 0,
+      z: -200,
+    },
+    { x: 800, y: 100, z: -300 },
+    {
+      x: 100,
+      y: -100,
+      z: -400,
+    },
+  ];
+}
+
+function getModelToUse() {
+  if (showSample) {
+    return sample;
+  }
+  return lightingtest;
+}
+
+const camPositions = getCamPositions();
+
 const FromJSON = () => {
   const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(lightingtest);
+  const scene = loader.parse(getModelToUse());
 
   // make materials double-sided
   scene.traverse((o) => {
@@ -18,45 +72,6 @@ const FromJSON = () => {
   });
   return <primitive object={scene} dispose={null} />;
 };
-
-// const camPositions = [
-//   {
-//     x: 100,
-//     y: 50,
-//     z: 0,
-//   },
-//   {
-//     x: 400,
-//     y: 200,
-//     z: 100,
-//   },
-//   {
-//     x: 200,
-//     y: 0,
-//     z: 50,
-//   },
-//   { x: -200, y: -100, z: 50 },
-//   { x: -300, y: 200, z: 200 },
-// ];
-
-const camPositions = [
-  {
-    x: 40,
-    y: 0,
-    z: -40,
-  },
-  {
-    x: 600,
-    y: 0,
-    z: -200,
-  },
-  { x: 800, y: 100, z: -300 },
-  {
-    x: 100,
-    y: -100,
-    z: -400,
-  },
-];
 
 const timePer = 2;
 
@@ -103,7 +118,7 @@ function Dolly(props) {
   return null;
 }
 
-export default function Triceratops(props) {
+export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
@@ -127,7 +142,7 @@ export default function Triceratops(props) {
     </div>
   );
 }
-Triceratops.propTypes = {
+AnimatedScene.propTypes = {
   posNumber: PropTypes.number.isRequired,
   saveAnimationTime: PropTypes.func.isRequired,
   animationStarted: PropTypes.bool.isRequired,
@@ -135,6 +150,6 @@ Triceratops.propTypes = {
   inReverse: PropTypes.bool.isRequired,
 };
 
-Triceratops.defaultProps = {
+AnimatedScene.defaultProps = {
   animationTime: 0,
 };
