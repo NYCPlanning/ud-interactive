@@ -1,5 +1,3 @@
-/* eslint-disable  */
-
 const defaultState = {
   posNumber: 0,
   animationStarted: false,
@@ -7,7 +5,7 @@ const defaultState = {
   inReverse: false,
 };
 
-const posNumberReducer = (state = defaultState, action) => {
+const mainReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'NEXT':
       return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
@@ -28,4 +26,4 @@ const posNumberReducer = (state = defaultState, action) => {
   }
 };
 
-export default posNumberReducer;
+export default mainReducer;
