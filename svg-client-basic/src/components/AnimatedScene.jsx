@@ -89,14 +89,55 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
 }
 
 function getTimePer(inReverse, posNumber) {
-  if (!inReverse && posNumber < camPositions.length) {
-    return camPositions[posNumber].timePer;
-  }
-  if (inReverse && posNumber > 0) {
-    return camPositions[posNumber - 1].timePer;
+  if (posNumber < camPositions.length && posNumber >= 0) {
+    if (!inReverse) {
+      return camPositions[posNumber].timePer;
+    }
+    if (posNumber > 0) {
+      return camPositions[posNumber - 1].timePer;
+    }
   }
   console.log('uh oh, timePer not working');
   return timePer;
+}
+
+// if ((!inReverse && posNumber > 0) || (inReverse && posNumber < camPositions.length - 1)) {
+//   // console.log('animationTime! ' + animationTime);
+//   if (!inReverse && posNumber > 0) {
+//     // going forward and not on 0th step
+//     oldPositions = camPositions[posNumber - 1];
+//     newPositions = camPositions[posNumber];
+//   } else if(!inReverse && posNumber == 0) { //going forward and on 0th step
+//     oldPositions = camPositions[posNumber];
+//     newPositions = camPositions[posNumber];
+//   }
+//   } else if (inReverse && posNumber < camPositions.length - 1) { //in reverse
+//     oldPositions = camPositions[posNumber + 1];
+//     newPositions = camPositions[posNumber];
+//   } else {
+//     oldPositions = { x: 0, y: 0, z: 0 };
+//     newPositions = { x: 1, y: 1, z: 1 };
+//   }
+function getPositions(inReverse, posNumber) {
+  let oldPos = 0;
+  let newPos = 0;
+  if ((inReverse && posNumber === camPositions.length - 1) || (!inReverse && posNumber === 0)) {
+    oldPos = posNumber;
+    newPos = posNumber;
+  } else if (posNumber < 0) {
+    oldPos = 0;
+    newPos = 0;
+  } else if (posNumber >= camPositions.length) {
+    oldPos = camPositions.length - 1;
+    newPos = camPositions.length - 1;
+  } else if (inReverse) {
+    oldPos = posNumber + 1;
+    newPos = posNumber;
+  } else {
+    oldPos = posNumber - 1;
+    newPos = posNumber;
+  }
+  return { oldPos, newPos };
 }
 
 function Dolly(props) {
@@ -110,30 +151,19 @@ function Dolly(props) {
       saveAnimationTime(clock.getElapsedTime());
       currentAnimProgress = 0;
     }
-    let oldPositions;
-    let newPositions;
 
-    if ((!inReverse && posNumber > 0) || (inReverse && posNumber < camPositions.length - 1)) {
-      // console.log('animationTime! ' + animationTime);
-      if (!inReverse && posNumber > 0) {
-        // going forward
-        oldPositions = camPositions[posNumber - 1];
-        newPositions = camPositions[posNumber];
-      } else if (posNumber < camPositions.length - 1) {
-        oldPositions = camPositions[posNumber + 1];
-        newPositions = camPositions[posNumber];
-      } else {
-        oldPositions = { x: 0, y: 0, z: 0 };
-        newPositions = { x: 1, y: 1, z: 1 };
-      }
-      if (currentAnimProgress > 1) {
-        currentAnimProgress = 1;
-      }
-      const currentPositions = positionCalc(oldPositions, newPositions, currentAnimProgress);
+    const { oldPos, newPos } = getPositions(inReverse, posNumber);
+    const oldPositions = camPositions[oldPos];
+    const newPositions = camPositions[newPos];
 
-      // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
-      camera.position.set(currentPositions[0], currentPositions[1], currentPositions[2]);
+    if (currentAnimProgress > 1) {
+      currentAnimProgress = 1;
     }
+    const currentPositions = positionCalc(oldPositions, newPositions, currentAnimProgress);
+
+    // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
+    camera.position.set(currentPositions[0], currentPositions[1], currentPositions[2]);
+
     if (posNumber === 0) {
       camera.position.set(camPositions[0].x, camPositions[0].y, camPositions[0].z);
     }
