@@ -18,21 +18,56 @@ function getCamPositions() {
         y: 50,
         z: 0,
         timePer: 2,
+        lookAt: {
+          x: 50,
+          y: 5,
+          z: 0,
+        },
       },
       {
         x: 400,
         y: 200,
         z: 100,
         timePer: 0.5,
+        lookAt: {
+          x: 50,
+          y: 5,
+          z: 0,
+        },
       },
       {
         x: 200,
         y: 0,
         z: 50,
         timePer: 4,
+        lookAt: {
+          x: 50,
+          y: 5,
+          z: 0,
+        },
       },
-      { x: -200, y: -100, z: 50, timePer: 1 },
-      { x: -300, y: 200, z: 200, timePer: 10 },
+      {
+        x: -200,
+        y: -100,
+        z: 50,
+        timePer: 1,
+        lookAt: {
+          x: 50,
+          y: 5,
+          z: 0,
+        },
+      },
+      {
+        x: -300,
+        y: 200,
+        z: 200,
+        timePer: 10,
+        lookAt: {
+          x: 50,
+          y: 5,
+          z: 0,
+        },
+      },
     ];
   }
   return [
@@ -41,19 +76,44 @@ function getCamPositions() {
       y: 0,
       z: -40,
       timePer: 10,
+      lookAt: {
+        x: 50,
+        y: 5,
+        z: 0,
+      },
     },
     {
       x: 600,
       y: 0,
       z: -200,
       timePer: 0.5,
+      lookAt: {
+        x: 50,
+        y: 5,
+        z: 0,
+      },
     },
-    { x: 800, y: 100, z: -300, timePer: 2 },
+    {
+      x: 800,
+      y: 100,
+      z: -300,
+      timePer: 2,
+      lookAt: {
+        x: 50,
+        y: 5,
+        z: 0,
+      },
+    },
     {
       x: 100,
       y: -100,
       z: -400,
       timePer: 4,
+      lookAt: {
+        x: 50,
+        y: 5,
+        z: 0,
+      },
     },
   ];
 }
@@ -85,7 +145,8 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
   const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
-  return [x, y, z];
+  return new THREE.Vector3(x, y, z);
+  // return { x, y, z };
 }
 
 function getTimePer(inReverse, posNumber) {
@@ -101,33 +162,16 @@ function getTimePer(inReverse, posNumber) {
   return timePer;
 }
 
-// if ((!inReverse && posNumber > 0) || (inReverse && posNumber < camPositions.length - 1)) {
-//   // console.log('animationTime! ' + animationTime);
-//   if (!inReverse && posNumber > 0) {
-//     // going forward and not on 0th step
-//     oldPositions = camPositions[posNumber - 1];
-//     newPositions = camPositions[posNumber];
-//   } else if(!inReverse && posNumber == 0) { //going forward and on 0th step
-//     oldPositions = camPositions[posNumber];
-//     newPositions = camPositions[posNumber];
-//   }
-//   } else if (inReverse && posNumber < camPositions.length - 1) { //in reverse
-//     oldPositions = camPositions[posNumber + 1];
-//     newPositions = camPositions[posNumber];
-//   } else {
-//     oldPositions = { x: 0, y: 0, z: 0 };
-//     newPositions = { x: 1, y: 1, z: 1 };
-//   }
-function getPositions(inReverse, posNumber) {
+function getPositions(inReverse, posNumber, length) {
   let oldPos = 0;
   let newPos = 0;
-  if ((inReverse && posNumber === camPositions.length - 1) || (!inReverse && posNumber === 0)) {
+  if ((inReverse && posNumber === length - 1) || (!inReverse && posNumber === 0)) {
     oldPos = posNumber;
     newPos = posNumber;
   } else if (posNumber < 0) {
     oldPos = 0;
     newPos = 0;
-  } else if (posNumber >= camPositions.length) {
+  } else if (posNumber >= length) {
     oldPos = camPositions.length - 1;
     newPos = camPositions.length - 1;
   } else if (inReverse) {
@@ -151,23 +195,22 @@ function Dolly(props) {
       saveAnimationTime(clock.getElapsedTime());
       currentAnimProgress = 0;
     }
-
-    const { oldPos, newPos } = getPositions(inReverse, posNumber);
-    const oldPositions = camPositions[oldPos];
-    const newPositions = camPositions[newPos];
-
     if (currentAnimProgress > 1) {
       currentAnimProgress = 1;
     }
-    const currentPositions = positionCalc(oldPositions, newPositions, currentAnimProgress);
 
-    // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
-    camera.position.set(currentPositions[0], currentPositions[1], currentPositions[2]);
+    const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
+    const oldPositions = camPositions[oldPos];
+    const newPositions = camPositions[newPos];
 
-    if (posNumber === 0) {
-      camera.position.set(camPositions[0].x, camPositions[0].y, camPositions[0].z);
-    }
-    camera.lookAt(50, 5, 0);
+    const oldLookAt = camPositions[oldPos].lookAt;
+    const newLookAt = camPositions[newPos].lookAt;
+
+    const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
+    const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
+
+    camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    camera.lookAt(currentLookAt);
   });
   return null;
 }
