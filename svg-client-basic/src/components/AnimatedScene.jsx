@@ -75,6 +75,13 @@ const FromJSON = () => {
 
 const timePer = 2;
 
+function positionCalc(oldPositions, newPositions, currentAnimProgress) {
+  const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
+  const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
+  const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
+  return [x, y, z];
+}
+
 function Dolly(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
 
@@ -104,11 +111,10 @@ function Dolly(props) {
       if (currentAnimProgress > 1) {
         currentAnimProgress = 1;
       }
-      const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
-      const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
-      const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
+      const currentPositions = positionCalc(oldPositions, newPositions, currentAnimProgress);
+
       // console.log('x: ' + x + ', y: ' + y + ', z: ' + z);
-      camera.position.set(x, y, z);
+      camera.position.set(currentPositions[0], currentPositions[1], currentPositions[2]);
     }
     if (posNumber === 0) {
       camera.position.set(camPositions[0].x, camPositions[0].y, camPositions[0].z);
