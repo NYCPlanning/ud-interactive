@@ -79,7 +79,7 @@ const FromJSON = () => {
   return <primitive object={scene} dispose={null} />;
 };
 
-let timePer = 2;
+const timePer = 2;
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
@@ -88,14 +88,23 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   return [x, y, z];
 }
 
+function getTimePer(inReverse, posNumber) {
+  if (!inReverse && posNumber < camPositions.length) {
+    return camPositions[posNumber].timePer;
+  }
+  if (inReverse && posNumber > 0) {
+    return camPositions[posNumber - 1].timePer;
+  }
+  console.log('uh oh, timePer not working');
+  return timePer;
+}
+
 function Dolly(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
 
   useFrame(({ clock, camera }) => {
-    if (posNumber < camPositions.length) {
-      timePer = camPositions[posNumber].timePer;
-    }
-    let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
+    let currentAnimProgress =
+      (clock.getElapsedTime() - animationTime) / getTimePer(inReverse, posNumber);
     if (animationStarted) {
       // console.log('animation started in Dolly');
       saveAnimationTime(clock.getElapsedTime());
