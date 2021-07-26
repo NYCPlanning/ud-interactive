@@ -17,19 +17,22 @@ function getCamPositions() {
         x: 100,
         y: 50,
         z: 0,
+        timePer: 2,
       },
       {
         x: 400,
         y: 200,
         z: 100,
+        timePer: 0.5,
       },
       {
         x: 200,
         y: 0,
         z: 50,
+        timePer: 4,
       },
-      { x: -200, y: -100, z: 50 },
-      { x: -300, y: 200, z: 200 },
+      { x: -200, y: -100, z: 50, timePer: 1 },
+      { x: -300, y: 200, z: 200, timePer: 10 },
     ];
   }
   return [
@@ -37,17 +40,20 @@ function getCamPositions() {
       x: 40,
       y: 0,
       z: -40,
+      timePer: 10,
     },
     {
       x: 600,
       y: 0,
       z: -200,
+      timePer: 0.5,
     },
-    { x: 800, y: 100, z: -300 },
+    { x: 800, y: 100, z: -300, timePer: 2 },
     {
       x: 100,
       y: -100,
       z: -400,
+      timePer: 4,
     },
   ];
 }
@@ -73,7 +79,7 @@ const FromJSON = () => {
   return <primitive object={scene} dispose={null} />;
 };
 
-const timePer = 2;
+let timePer = 2;
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
@@ -86,6 +92,9 @@ function Dolly(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
 
   useFrame(({ clock, camera }) => {
+    if (posNumber < camPositions.length) {
+      timePer = camPositions[posNumber].timePer;
+    }
     let currentAnimProgress = (clock.getElapsedTime() - animationTime) / timePer;
     if (animationStarted) {
       // console.log('animation started in Dolly');
