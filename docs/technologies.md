@@ -52,7 +52,10 @@ Am trying to familiarize myself with hooks because react-three-fiber heavily use
 - [React Hooks useEffect Tutorial](https://www.youtube.com/watch?v=j1ZRyw7OtZs&list=PLN3n1USn4xlmyw3ebYuZmGp60mcENitdM&index=2)
 - [10 React Hooks Explained // Plus Build your own from Scratch](https://www.youtube.com/watch?v=TNhaISOUy6Q)
 
-JavaScript Promises: TBD
+Also trying to learn about JavaScript promises for API calls. The Three.js fundamentals tutorial linked some stuff about about Promises and async/await from the Mozilla Developer Network that I read:
+
+- [Making asynchronous programming easier with async and await](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
+- [Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 
 ### API Calls
 
@@ -109,11 +112,10 @@ As such, I moved on from this approach, looking at figuring out absolute positio
 
 After some brief research, the most stylistically and feature-rich example looked like Tippy.js (based on Popper.js), which has been implemented in React as [react-tippy](https://tvkhoa.github.io/testlib/). This has more functionality than react-svg-tooltip (mostly styling) and while large popout tooltips are not already supported, one can add custom HTML to any tooltip, including features to make it interactive; the site provides documentation for adding a form element to a tooltip, for example.
 
-The issue here is positioning, which is not easily solvable; it is very difficult to set left and top properties within styling programmatically (played around with this for awhile without success) and, more than this, to get this to scale proportionally with an SVG and to be responsive to different viewport sizes. 
+The issue here is positioning, which is not easily solvable; it is very difficult to set left and top properties within styling programmatically (played around with this for awhile without success) and, more than this, to get this to scale proportionally with an SVG and to be responsive to different viewport sizes.
 
 Regardless of how we annotate, animating and scaling an SVG with React is difficult; the [best solution I found](https://codepen.io/sdras/pen/VjvGJM) that scales/moves around/tours an SVG uses plain HTML/CSS/JavaScript; their [demo](https://codepen.io/sdras/pen/VjvGJM) is almost exactly what we want, but my sense is that this would be complicated by React's manipulation of the DOM. This said, React serves an important purpose, if we are going to manipulate state in the future.
 
-Amidst all of this confusion, I messaged the developers at [CHIPS](https://chips.nyc/), the design and development studio responsible for the [MET Kids installation](https://www.metmuseum.org/art/online-features/metkids/explore) we used as reference. To paraphrase from their email: they apparently used a piece of software called [MapTiler Desktop](https://www.maptiler.com/) that converted the JPG into a many-layered set of files that they integrated into mapping software; they used coordinates, tooltips, and info windows; none of this changed with zooming and was all responsive! MapTiler apparently can generate HTML in a few formats (Leaflet, OpenLayers, and Mapbox). 
-
+Amidst all of this confusion, I messaged the developers at [CHIPS](https://chips.nyc/), the design and development studio responsible for the [MET Kids installation](https://www.metmuseum.org/art/online-features/metkids/explore) we used as reference. To paraphrase from their email: they apparently used a piece of software called [MapTiler Desktop](https://www.maptiler.com/) that converted the JPG into a many-layered set of files that they integrated into mapping software; they used coordinates, tooltips, and info windows; none of this changed with zooming and was all responsive! MapTiler apparently can generate HTML in a few formats (Leaflet, OpenLayers, and Mapbox).
 
 ---
