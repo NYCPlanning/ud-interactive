@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
 import AnimatedScene from './components/AnimatedScene';
@@ -6,6 +6,11 @@ import Previous from './components/Previous';
 import Next from './components/Next';
 import Caption from './components/Caption';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import TestView from './components/TestView';
+
+import Streetscapes from './components/StreetscapesCompressed';
+import Background from './components/Background';
 
 function App(props) {
   const {
