@@ -49,54 +49,7 @@ function getViewSRC(posNumber) {
   return rhinoViews[posNumber];
 }
 
-const modelMode = 4;
-
-//   // {
-//   //   x: 666.25,
-//   //   y: 2370.21,
-//   //   z: 3443,
-//   //   timePer: 4,
-//   //   lookAt: {
-//   //     x: 361.38,
-//   //     y: 5964.4,
-//   //     z: 3000,
-//   //   },
-//   // },
-//   {
-//     x: 1240,
-//     y: 3300,
-//     z: 70,
-//     timePer: 4,
-//     lookAt: {
-//       x: -1089,
-//       y: -4250,
-//       z: -1000,
-//     },
-//   },
-//   {
-//     x: 660,
-//     y: 2370,
-//     z: 4105,
-//     timePer: 4,
-//     lookAt: {
-//       x: -440,
-//       y: -5970,
-//       z: -4105,
-//     },
-//   },
-//   {
-//     x: 875.7,
-//     y: 3311.94,
-//     z: 41.97,
-//     timePer: 4,
-//     lookAt: {
-//       x: 1001.28,
-//       y: 2814.86,
-//       z: 104.8,
-//     },
-//   },
-// ];
-
+const modelMode = 2;
 const rhinoStuff = [
   {
     viewName: 'commercial elevated',
@@ -147,49 +100,6 @@ const rhinoStuff = [
     },
   },
 ];
-
-function flipPosLookAt(position) {
-  return {
-    x: position.lookAt.x,
-    y: position.lookAt.y,
-    z: position.lookAt.z,
-    lookAt: {
-      x: position.x,
-      y: position.y,
-      z: position.z,
-    },
-  };
-}
-
-function flipAll(positions) {
-  const array = [];
-  for (let i = 0; i < positions.length; i += 1) {
-    array.push(flipPosLookAt(positions[i]));
-  }
-  return array;
-}
-
-function makeLookAtNegative(position) {
-  return {
-    x: position.x,
-    y: position.y,
-    z: position.z,
-    lookAt: {
-      x: -position.lookAt.x,
-      y: -position.lookAt.y,
-      z: -position.lookAt.z,
-    },
-  };
-}
-
-function makeAllNegative(positions) {
-  const array = [];
-  for (let i = 0; i < positions.length; i += 1) {
-    array.push(makeLookAtNegative(positions[i]));
-  }
-  return array;
-}
-
 function getFOV(lensLength) {
   return THREE.MathUtils.lerp(73.7, 39.6, (lensLength - 23) / (50 - 23));
 }
@@ -221,122 +131,10 @@ function getCamPositions() {
     case 1:
       return rhinoStuff;
     case 2:
-      return flipAll(rhinoStuff);
-    case 3:
-      return makeAllNegative(flipAll(rhinoStuff));
-    case 4:
       return makeAllThree(rhinoStuff);
     default:
       return rhinoStuff;
   }
-  // if (modelMode === 1) {
-  //   return [
-  //     {
-  //       x: 100,
-  //       y: 50,
-  //       z: 0,
-  //       timePer: 2,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: 400,
-  //       y: 200,
-  //       z: 100,
-  //       timePer: 0.5,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: 200,
-  //       y: 0,
-  //       z: 50,
-  //       timePer: 4,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: -200,
-  //       y: -100,
-  //       z: 50,
-  //       timePer: 1,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: -300,
-  //       y: 200,
-  //       z: 200,
-  //       timePer: 10,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //   ];
-  // }
-  // if (modelMode === 2) {
-  //   return [
-  //     {
-  //       x: 40,
-  //       y: 0,
-  //       z: -40,
-  //       timePer: 10,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: 600,
-  //       y: 0,
-  //       z: -200,
-  //       timePer: 0.5,
-  //       lookAt: {
-  //         x: 50,
-  //         y: 5,
-  //         z: 0,
-  //       },
-  //     },
-  //     {
-  //       x: 2892.82,
-  //       y: 691.15,
-  //       z: 5.89,
-  //       timePer: 2,
-  //       lookAt: {
-  //         x: 2893.02,
-  //         y: 631.28,
-  //         z: 7.58,
-  //       },
-  //     },
-  //     {
-  //       x: 875.7,
-  //       y: 3311.94,
-  //       z: 41.97,
-  //       timePer: 4,
-  //       lookAt: {
-  //         x: 1001.28,
-  //         y: 2814.86,
-  //         z: 104.8,
-  //       },
-  //     },
-  //   ];
-  // }
-  // return rhinoStuff;
 }
 
 function positionText(posNumber) {
