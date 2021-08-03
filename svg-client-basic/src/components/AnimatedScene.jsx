@@ -4,6 +4,8 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
 import { AxesHelper } from 'three';
 import * as THREE from 'three';
+import { OrbitControls } from '@react-three/drei';
+import Background from './Background';
 
 // exported scene from rhino/triceratops
 import sample from '../assets/sample.json';
@@ -13,18 +15,41 @@ import buildings from '../assets/buildings_ground_graylight.json';
 // import furnishings1 from '../assets/viewfurnishings.json';
 // import furnishing2 from '../assets/furnishings.json';
 
+// import threedfurnishings from '../assets/furnishings/furnishings_3dfurnishings.json';
+import facadedetails from '../assets/furnishings/furnishings_facadedetail.json';
+import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
+import greenery from '../assets/furnishings/furnishings_greenery.json';
+import highlights from '../assets/furnishings/furnishings_highlights.json';
+import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
+
 import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
 
+/*
+ * make sure field of view setting is working
+ * double check weird problematic value from rhino
+ * look into switching models in loader
+ * ask for most recent rhino draft + export to OBJ or Collada --> import in Blender --> export to GLTF --> import into animatedscene
+ */
+
 const rhinoViews = [commercialView, industrialView, parkView, residentialView];
+
+const furnishings = [
+  // threedfurnishings,
+  // facadedetails,
+  glassfacade,
+  greenery,
+  highlights,
+  vehicleglass,
+];
 
 function getViewSRC(posNumber) {
   return rhinoViews[posNumber];
 }
 
-const modelMode = 3;
+const modelMode = 4;
 
 //   // {
 //   //   x: 666.25,
@@ -165,6 +190,31 @@ function makeAllNegative(positions) {
   return array;
 }
 
+function getFOV(lensLength) {
+  return THREE.MathUtils.lerp(73.7, 39.6, (lensLength - 23) / (50 - 23));
+}
+function convertToThree(position) {
+  return {
+    x: -position.x,
+    y: position.z,
+    z: position.y,
+    fov: getFOV(position.lensLength),
+    lookAt: {
+      x: -position.lookAt.x,
+      y: position.lookAt.z,
+      z: position.lookAt.y,
+    },
+  };
+}
+
+function makeAllThree(positions) {
+  const array = [];
+  for (let i = 0; i < positions.length; i += 1) {
+    array.push(convertToThree(positions[i]));
+  }
+  return array;
+}
+
 // not able to get showSample functionality up and working yet
 function getCamPositions() {
   switch (modelMode) {
@@ -174,9 +224,119 @@ function getCamPositions() {
       return flipAll(rhinoStuff);
     case 3:
       return makeAllNegative(flipAll(rhinoStuff));
+    case 4:
+      return makeAllThree(rhinoStuff);
     default:
       return rhinoStuff;
   }
+  // if (modelMode === 1) {
+  //   return [
+  //     {
+  //       x: 100,
+  //       y: 50,
+  //       z: 0,
+  //       timePer: 2,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: 400,
+  //       y: 200,
+  //       z: 100,
+  //       timePer: 0.5,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: 200,
+  //       y: 0,
+  //       z: 50,
+  //       timePer: 4,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: -200,
+  //       y: -100,
+  //       z: 50,
+  //       timePer: 1,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: -300,
+  //       y: 200,
+  //       z: 200,
+  //       timePer: 10,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //   ];
+  // }
+  // if (modelMode === 2) {
+  //   return [
+  //     {
+  //       x: 40,
+  //       y: 0,
+  //       z: -40,
+  //       timePer: 10,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: 600,
+  //       y: 0,
+  //       z: -200,
+  //       timePer: 0.5,
+  //       lookAt: {
+  //         x: 50,
+  //         y: 5,
+  //         z: 0,
+  //       },
+  //     },
+  //     {
+  //       x: 2892.82,
+  //       y: 691.15,
+  //       z: 5.89,
+  //       timePer: 2,
+  //       lookAt: {
+  //         x: 2893.02,
+  //         y: 631.28,
+  //         z: 7.58,
+  //       },
+  //     },
+  //     {
+  //       x: 875.7,
+  //       y: 3311.94,
+  //       z: 41.97,
+  //       timePer: 4,
+  //       lookAt: {
+  //         x: 1001.28,
+  //         y: 2814.86,
+  //         z: 104.8,
+  //       },
+  //     },
+  //   ];
+  // }
+  // return rhinoStuff;
 }
 
 function positionText(posNumber) {
@@ -188,18 +348,6 @@ function originalPositionText(posNumber) {
 }
 
 const camPositions = getCamPositions();
-
-const FromJSON = () => {
-  const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(buildings);
-
-  // make materials double-sided
-  scene.traverse((o) => {
-    // eslint-disable-next-line no-param-reassign
-    if (o.material) o.material.side = THREE.DoubleSide;
-  });
-  return <primitive object={scene} dispose={null} />;
-};
 
 const timePer = 2;
 
@@ -273,7 +421,10 @@ function Dolly(props) {
     const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    // eslint-disable-next-line no-param-reassign
+    // camera.fov = currentPosition.fov;
     camera.lookAt(currentLookAt);
+    // camera.updateProjectionMatrix();
   });
   return null;
 }
@@ -287,11 +438,9 @@ export default function AnimatedScene(props) {
         <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 5000 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
-          <Suspense fallback={null}>
-            <FromJSON />
-          </Suspense>
+          <Background />
           {/* <axesHelper args={[1000]} /> */}
-
+          {/* <OrbitControls /> */}
           <Dolly
             posNumber={posNumber}
             animationStarted={animationStarted}
@@ -335,111 +484,3 @@ AnimatedScene.propTypes = {
 AnimatedScene.defaultProps = {
   animationTime: 0,
 };
-// if (modelMode === 1) {
-//   return [
-//     {
-//       x: 100,
-//       y: 50,
-//       z: 0,
-//       timePer: 2,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: 400,
-//       y: 200,
-//       z: 100,
-//       timePer: 0.5,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: 200,
-//       y: 0,
-//       z: 50,
-//       timePer: 4,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: -200,
-//       y: -100,
-//       z: 50,
-//       timePer: 1,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: -300,
-//       y: 200,
-//       z: 200,
-//       timePer: 10,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//   ];
-// }
-// if (modelMode === 2) {
-//   return [
-//     {
-//       x: 40,
-//       y: 0,
-//       z: -40,
-//       timePer: 10,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: 600,
-//       y: 0,
-//       z: -200,
-//       timePer: 0.5,
-//       lookAt: {
-//         x: 50,
-//         y: 5,
-//         z: 0,
-//       },
-//     },
-//     {
-//       x: 2892.82,
-//       y: 691.15,
-//       z: 5.89,
-//       timePer: 2,
-//       lookAt: {
-//         x: 2893.02,
-//         y: 631.28,
-//         z: 7.58,
-//       },
-//     },
-//     {
-//       x: 875.7,
-//       y: 3311.94,
-//       z: 41.97,
-//       timePer: 4,
-//       lookAt: {
-//         x: 1001.28,
-//         y: 2814.86,
-//         z: 104.8,
-//       },
-//     },
-//   ];
-// }
-// return rhinoStuff;
