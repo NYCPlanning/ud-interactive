@@ -4,8 +4,14 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
 import { AxesHelper } from 'three';
 import * as THREE from 'three';
-import { OrbitControls } from '@react-three/drei';
+import { useGLTF, OrbitControls } from '@react-three/drei';
+
+// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line import/extensions
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import Background from './Background';
+
+// import Streetscapes from './Streetscapes';
 
 // exported scene from rhino/triceratops
 import sample from '../assets/sample.json';
@@ -26,12 +32,10 @@ import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
-
+import streetscapes from '../assets/background/StreetscapesCompressed.glb';
 /*
- * make sure field of view setting is working
  * double check weird problematic value from rhino
  * look into switching models in loader
- * ask for most recent rhino draft + export to OBJ or Collada --> import in Blender --> export to GLTF --> import into animatedscene
  */
 
 const rhinoViews = [commercialView, industrialView, parkView, residentialView];
@@ -226,6 +230,18 @@ function Dolly(props) {
   });
   return null;
 }
+
+const FromJSON = () => {
+  const { scene } = useGLTF(streetscapes);
+
+  // make materials double-sided
+  scene.traverse((o) => {
+    // eslint-disable-next-line no-param-reassign
+    if (o.material) o.material.side = THREE.DoubleSide;
+  });
+  return <primitive object={scene} dispose={null} />;
+};
+
 export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
   positionText(posNumber);
@@ -236,9 +252,12 @@ export default function AnimatedScene(props) {
         <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 5000 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
-          <Background />
           {/* <axesHelper args={[1000]} /> */}
           {/* <OrbitControls /> */}
+          {/* <Streetscapes /> */}
+          <Suspense fallback={null}>
+            <FromJSON />
+          </Suspense>
           <Dolly
             posNumber={posNumber}
             animationStarted={animationStarted}
