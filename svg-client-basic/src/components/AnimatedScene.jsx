@@ -1,9 +1,10 @@
 /* eslint-disable no-nested-ternary */
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
 import { AxesHelper, SrcColorFactor } from 'three';
 import * as THREE from 'three';
+import { useLoader } from 'react-three-fiber';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
 // eslint-disable-next-line no-unused-vars
@@ -34,7 +35,12 @@ import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
 
 import streetscapeGltf from '../assets/background/rescaled-edges.glb';
+import avocado from '../assets/testglb/Avocado.glb';
+import buggy from '../assets/testglb/Buggy.glb';
+import cesiumman from '../assets/testglb/CesiumMan.glb';
 import streetscapeJson from '../assets/buildingsgroundupdate.json';
+
+const imports = [streetscapeGltf, avocado, buggy, cesiumman];
 
 /*
  * double check weird problematic value from rhino
@@ -255,12 +261,35 @@ const FromGLTF = ({ src }) => {
 FromGLTF.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   src: PropTypes.object.isRequired,
+  // posNumber: PropTypes.number.isRequired,
 };
 
+function Box({ url }) {
+  const { scene } = useLoader(GLTFLoader, url);
+  const copiedScene = useMemo(() => scene.clone(), [scene]);
+  const prim = useRef();
+  const [hover, setHover] = useState(false);
+
+  return <primitive ref={prim} object={copiedScene} />;
+}
+
+Box.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  url: PropTypes.object.isRequired,
+  // posNumber: PropTypes.number.isRequired,
+};
 export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
   positionText(posNumber);
   originalPositionText(posNumber);
+  const src = imports[posNumber];
+  const [modelNum, setModelNum] = useState(0);
+  const [model, setModel] = useState(imports[0]);
+  const onClick = () => {
+    setModel(imports[modelNum + 1]);
+    setModelNum(modelNum + 1);
+    // setModel(imports[1]);
+  };
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -271,18 +300,21 @@ export default function AnimatedScene(props) {
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromGLTF src={streetscapeGltf} />
+            <FromGLTF src={model} />
             {/* <FromJSON src={streetscapeJson} /> */}
           </Suspense>
-          <Dolly
+          {/* <Dolly
             posNumber={posNumber}
             animationStarted={animationStarted}
             animationTime={animationTime}
             saveAnimationTime={saveAnimationTime}
             inReverse={inReverse}
-          />
+          /> */}
         </Canvas>
-        <img
+        <button type="button" onClick={onClick}>
+          Next
+        </button>
+        {/* <img
           style={{ height: 200, width: 'auto' }}
           src={getViewSRC(posNumber)}
           alt="see from rhino"
@@ -300,7 +332,12 @@ export default function AnimatedScene(props) {
         <p style={{ fontWeight: 800 }}>CURRENTLY DISPLAYED:</p>
         <p style={{ display: 'inline-block' }}>{positionText(posNumber)}</p>
         <p style={{ fontWeight: 800 }}>FROM RHINO:</p>
-        <p>{originalPositionText(posNumber)}</p>
+        <p>{originalPositionText(posNumber)}</p> */}
+        {/* <p>{posNumber}</p>
+        <p>{imports[posNumber]}</p>
+        <p>{src}</p> */}
+        <p>{modelNum}</p>
+        <p>{model}</p>
       </div>
     </div>
   );
