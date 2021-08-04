@@ -33,7 +33,7 @@ import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
 
-import streetscapeGltf from '../assets/background/StreetscapesCompressed.glb';
+import streetscapeGltf from '../assets/background/rescaled.glb';
 import streetscapeJson from '../assets/buildingsgroundupdate.json';
 
 /*
@@ -242,7 +242,9 @@ const FromJSON = () => {
 
 const FromGLTF = () => {
   const { scene } = useGLTF(streetscapeGltf);
-  return <primitive object={scene} dispose={null} />;
+  return (
+    <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
+  );
 };
 
 export default function AnimatedScene(props) {
@@ -252,15 +254,15 @@ export default function AnimatedScene(props) {
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 5000 }}>
+        <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 7500 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
-          {/* <axesHelper args={[1000]} /> */}
+          <axesHelper args={[1000]} />
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            {/* <FromGLTF /> */}
-            <FromJSON />
+            <FromGLTF />
+            {/* <FromJSON /> */}
           </Suspense>
           <Dolly
             posNumber={posNumber}
