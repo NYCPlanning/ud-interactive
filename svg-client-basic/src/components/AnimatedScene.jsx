@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
-import { AxesHelper } from 'three';
+import { AxesHelper, SrcColorFactor } from 'three';
 import * as THREE from 'three';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
@@ -32,7 +32,10 @@ import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
-import streetscapes from '../assets/background/StreetscapesCompressed.glb';
+
+import streetscapeGltf from '../assets/background/rescaled-edges.glb';
+import streetscapeJson from '../assets/buildingsgroundupdate.json';
+
 /*
  * double check weird problematic value from rhino
  * look into switching models in loader
@@ -231,15 +234,27 @@ function Dolly(props) {
   return null;
 }
 
-const FromJSON = () => {
-  const { scene } = useGLTF(streetscapes);
-
-  // make materials double-sided
-  scene.traverse((o) => {
-    // eslint-disable-next-line no-param-reassign
-    if (o.material) o.material.side = THREE.DoubleSide;
-  });
+const FromJSON = ({ src }) => {
+  const loader = new THREE.ObjectLoader();
+  const scene = loader.parse(src);
   return <primitive object={scene} dispose={null} />;
+};
+
+FromJSON.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  src: PropTypes.object.isRequired,
+};
+
+const FromGLTF = ({ src }) => {
+  const { scene } = useGLTF(src);
+  return (
+    <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
+  );
+};
+
+FromGLTF.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  src: PropTypes.object.isRequired,
 };
 
 export default function AnimatedScene(props) {
@@ -249,14 +264,15 @@ export default function AnimatedScene(props) {
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 5000 }}>
+        <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 7500 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
-          {/* <axesHelper args={[1000]} /> */}
+          <axesHelper args={[1000]} />
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromJSON />
+            <FromGLTF src={streetscapeGltf} />
+            {/* <FromJSON src={streetscapeJson} /> */}
           </Suspense>
           <Dolly
             posNumber={posNumber}
