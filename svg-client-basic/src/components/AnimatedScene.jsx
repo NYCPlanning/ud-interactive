@@ -33,7 +33,7 @@ import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
 
-import streetscapeGltf from '../assets/background/rescaled.glb';
+import streetscapeGltf from '../assets/background/rescaled-edges.glb';
 import streetscapeJson from '../assets/buildingsgroundupdate.json';
 
 /*
