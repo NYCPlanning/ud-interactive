@@ -234,16 +234,11 @@ function Dolly(props) {
   return null;
 }
 
-// const FromJSON = () => {
-//   const { scene } = useGLTF(streetscapes);
-
-//   // make materials double-sided
-//   scene.traverse((o) => {
-//     // eslint-disable-next-line no-param-reassign
-//     if (o.material) o.material.side = THREE.DoubleSide;
-//   });
-//   return <primitive object={scene} dispose={null} />;
-// };
+const FromJSON = () => {
+  const loader = new THREE.ObjectLoader();
+  const scene = loader.parse(streetscapeJson);
+  return <primitive object={scene} dispose={null} />;
+};
 
 const FromGLTF = () => {
   const { scene } = useGLTF(streetscapeGltf);
@@ -264,7 +259,8 @@ export default function AnimatedScene(props) {
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromGLTF />
+            {/* <FromGLTF /> */}
+            <FromJSON />
           </Suspense>
           <Dolly
             posNumber={posNumber}
