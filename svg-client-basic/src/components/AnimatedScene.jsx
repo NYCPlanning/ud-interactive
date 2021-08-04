@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
-import { AxesHelper } from 'three';
+import { AxesHelper, SrcColorFactor } from 'three';
 import * as THREE from 'three';
 import { useGLTF, OrbitControls } from '@react-three/drei';
 
@@ -234,17 +234,27 @@ function Dolly(props) {
   return null;
 }
 
-const FromJSON = () => {
+const FromJSON = ({ src }) => {
   const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(streetscapeJson);
+  const scene = loader.parse(src);
   return <primitive object={scene} dispose={null} />;
 };
 
-const FromGLTF = () => {
-  const { scene } = useGLTF(streetscapeGltf);
+FromJSON.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  src: PropTypes.object.isRequired,
+};
+
+const FromGLTF = ({ src }) => {
+  const { scene } = useGLTF(src);
   return (
     <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
   );
+};
+
+FromGLTF.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  src: PropTypes.object.isRequired,
 };
 
 export default function AnimatedScene(props) {
@@ -261,8 +271,8 @@ export default function AnimatedScene(props) {
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromGLTF />
-            {/* <FromJSON /> */}
+            <FromGLTF src={streetscapeGltf} />
+            {/* <FromJSON src={streetscapeJson} /> */}
           </Suspense>
           <Dolly
             posNumber={posNumber}
