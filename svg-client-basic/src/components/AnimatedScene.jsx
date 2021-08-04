@@ -32,7 +32,10 @@ import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
-import streetscapes from '../assets/background/StreetscapesCompressed.glb';
+
+import streetscapeGltf from '../assets/background/StreetscapesCompressed.glb';
+import streetscapeJson from '../assets/buildingsgroundupdate.json';
+
 /*
  * double check weird problematic value from rhino
  * look into switching models in loader
@@ -231,14 +234,19 @@ function Dolly(props) {
   return null;
 }
 
-const FromJSON = () => {
-  const { scene } = useGLTF(streetscapes);
+// const FromJSON = () => {
+//   const { scene } = useGLTF(streetscapes);
 
-  // make materials double-sided
-  scene.traverse((o) => {
-    // eslint-disable-next-line no-param-reassign
-    if (o.material) o.material.side = THREE.DoubleSide;
-  });
+//   // make materials double-sided
+//   scene.traverse((o) => {
+//     // eslint-disable-next-line no-param-reassign
+//     if (o.material) o.material.side = THREE.DoubleSide;
+//   });
+//   return <primitive object={scene} dispose={null} />;
+// };
+
+const FromGLTF = () => {
+  const { scene } = useGLTF(streetscapeGltf);
   return <primitive object={scene} dispose={null} />;
 };
 
@@ -256,7 +264,7 @@ export default function AnimatedScene(props) {
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromJSON />
+            <FromGLTF />
           </Suspense>
           <Dolly
             posNumber={posNumber}
