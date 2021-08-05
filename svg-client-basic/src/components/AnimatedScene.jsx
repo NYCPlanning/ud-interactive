@@ -27,8 +27,7 @@ import buggy from '../assets/testglb/Buggy.glb';
  * navigation! with buttons or something
  */
 
-// const imports = [streetscapeGltf, avocado, buggy, cesiumman];
-const imports = [streetscapeGltf, buggy, streetscapeGltf, buggy, streetscapeGltf, buggy];
+const imports = [streetscapeGltf];
 
 const furnishings = [
   // threedfurnishings,
@@ -181,12 +180,12 @@ export default function AnimatedScene(props) {
         {/* <button type="button" onClick={onClick}>
           Next
         </button> */}
-        <VisualDebugger
+        {/* <VisualDebugger
           posNumber={posNumber}
           modelMode={modelMode}
           camPositions={camPositions}
           rhinoStuff={rhinoStuff}
-        />
+        /> */}
       </div>
     </div>
   );
