@@ -177,3 +177,20 @@ What are you hoping people get of the drawings?
 How have past drawings been used for public engagement purposes?
 
 What would be most exciting to see?
+
+
+### Lucas Additional Precedents
+
+[Museum Guggenheim Bilbao, Bilbao, Spain — Google Arts & Culture](https://artsandculture.google.com/streetview/museum-guggenheim-bilbao/6gGSw-L3-Xukfg?sv_lng=-2.934576581688561&sv_lat=43.26868278007137&sv_h=268.1713716329163&sv_p=10.954786703250448&sv_pid=YxeAeodjEbnIMX9nzBlARQ&sv_z=1.212106801078394&sv_lid=17242884745795414371)
+
+[Virtual Tour of the Glasner Studio](https://tourmkr.com/F1d8jd7Iwl/12562351p&56.66h&72.11t)
+
+[Our Lady of Mercy School for Young Women Virtual Tour - Build Matterport Virtual Tour | 247virtualtours.com](https://247virtualtours.com/272-our-lady-of-mercy-school-for-young-women-virtual-tour-tour)
+
+[SUBLIME VUE MER EN HAUTEUR](https://envisite.net/vtour/en/fus8qc/frame)
+
+[Virtual tour "New Wing"](https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/braccio-nuovo/tour-virtuale.html)
+
+[The National Museum of Computing](https://mpembed.com/show/?details=1&ga=UA-32443811-1&hdir=2&m=pq6v8gMmxMw&mdir=3&minimap=2&minimaptags=0)
+
+[NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)

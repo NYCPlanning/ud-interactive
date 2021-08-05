@@ -11,6 +11,6 @@ export default function FromGLTF({ src }) {
 
 FromGLTF.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
-  src: PropTypes.object.isRequired,
+  src: PropTypes.string.isRequired,
   // posNumber: PropTypes.number.isRequired,
 };

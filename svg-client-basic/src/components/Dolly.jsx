@@ -26,26 +26,35 @@ function getPositions(camPositions, inReverse, posNumber, length) {
 }
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
+  //   console.log(
+  //     `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+  //       newPositions
+  //     )} \n currentAnimProgress: ${currentAnimProgress}`
+  //   );
+  // the issue is currentAnimProgress!!
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
   const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
-  //   return new THREE.Vector3(x, y, z);
+  return new THREE.Vector3(x, y, z);
   //   return new THREE.Vector3(newPositions.x, newPositions.y, newPositions.z);
-  return { x, y, z };
+  // return { x, y, z };
 }
 
 const timePer = 2;
 
 function getTimePer(camPositions, inReverse, posNumber) {
-  if (posNumber < camPositions.length && posNumber >= 0) {
-    if (!inReverse) {
-      return camPositions[posNumber].timePer;
-    }
-    if (posNumber > 0) {
-      return camPositions[posNumber - 1].timePer;
-    }
-  }
-  console.log('uh oh, timePer not working');
+  // console.log(JSON.stringify(camPositions));
+  // console.log(inReverse);
+  // console.log(posNumber);
+  // if (posNumber < camPositions.length && posNumber >= 0) {
+  //   if (!inReverse) {
+  //     return camPositions[posNumber].timePer;
+  //   }
+  //   if (posNumber > 0) {
+  //     return camPositions[posNumber - 1].timePer;
+  //   }
+  // }
+  // console.log('uh oh, timePer not working');
   return timePer;
 }
 
@@ -56,9 +65,9 @@ export default function Dolly(props) {
   useFrame(({ clock, camera }) => {
     let currentAnimProgress =
       (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
-    console.log(clock.getElapsedTime());
-    console.log(animationTime); // null
-    console.log(getTimePer(camPositions, inReverse, posNumber)); // null
+    // console.log(clock.getElapsedTime());
+    // console.log(animationTime); // null
+    // console.log(getTimePer(camPositions, inReverse, posNumber)); // null
     if (animationStarted) {
       // console.log('animation started in Dolly');
       saveAnimationTime(clock.getElapsedTime());
@@ -67,6 +76,7 @@ export default function Dolly(props) {
     if (currentAnimProgress > 1) {
       currentAnimProgress = 1;
     }
+    // console.log(currentAnimProgress);
 
     const { oldPos, newPos } = getPositions(
       camPositions,
@@ -92,15 +102,15 @@ export default function Dolly(props) {
     //     currentLookAt={currentLookAt}
     //   />
     // );
-    console.log(
-      `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
-        newPositions
-      )}\n current position: ${JSON.stringify(currentPosition)} \n old lookAt: ${JSON.stringify(
-        oldLookAt
-      )}\n new lookAt: ${JSON.stringify(newLookAt)}\n current lookAt: ${JSON.stringify(
-        currentLookAt
-      )} \n currentAnimProgress: ${currentAnimProgress}`
-    );
+    // console.log(
+    //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+    //     newPositions
+    //   )}\n current position: ${JSON.stringify(currentPosition)} \n old lookAt: ${JSON.stringify(
+    //     oldLookAt
+    //   )}\n new lookAt: ${JSON.stringify(newLookAt)}\n current lookAt: ${JSON.stringify(
+    //     currentLookAt
+    //   )} \n currentAnimProgress: ${currentAnimProgress}`
+    // );
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     // eslint-disable-next-line no-param-reassign
     // camera.fov = currentPosition.fov;
