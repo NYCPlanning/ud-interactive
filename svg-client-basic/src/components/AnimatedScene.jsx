@@ -42,7 +42,8 @@ import streetscapeJson from '../assets/buildingsgroundupdate.json';
 
 /*
  * use just single model for GLTF! get animations going!
- *
+ * navigation! with buttons or something
+ * refactor: VisualDebugger, FromJSON, FromGLTF, Dolly
  */
 
 // const imports = [streetscapeGltf, avocado, buggy, cesiumman];
