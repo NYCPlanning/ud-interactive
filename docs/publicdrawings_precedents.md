@@ -51,6 +51,12 @@ What characteristics do we want visible? From an urban design perspective, what 
 
 - [Bus Simulation](https://setosa.io/bus/)
 
+- [Marseille](https://marseille.laphase5.com/en) - 3d home page, 2d elements
+
+- [Microsoft Datacenter Tour](https://news.microsoft.com/stories/microsoft-datacenter-tour/)
+
+- [The Biggest Change Daylight Street](https://www.thebiggestchange.com/velux-road)
+
 2D / Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
@@ -130,6 +136,9 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 - **highlighting points of interest in the 3D space**
 	- [Tomas Bata University](https://jenamdvacet.cz/) 
 	- [Eurovision](https://www.eurovisionvillage.com/)
+	- [Marseille](https://marseille.laphase5.com/en)
+	- [Microsoft Datacenter Tour](https://news.microsoft.com/stories/microsoft-datacenter-tour/)
+	- [The Biggest Change Daylight Street](https://www.thebiggestchange.com/velux-road)
 
 - **video/text/audio annotation in 3D space**
 	- [HIGHRISE One Millionth Tower Documentary](http://highrise.nfb.ca/onemillionthtower/1mt_webgl.php)
