@@ -2,25 +2,18 @@
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
-import { AxesHelper, SrcColorFactor } from 'three';
 import * as THREE from 'three';
+import { AxesHelper, SrcColorFactor } from 'three';
 import { useLoader } from 'react-three-fiber';
-import { useGLTF, OrbitControls } from '@react-three/drei';
-
-// eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line import/extensions
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+import FromJSON from './FromJSON';
+import FromGLTF from './FromGLTF';
+
+// eslint-disable-next-line no-unused-vars
 import Background from './Background';
-
-// import Streetscapes from './Streetscapes';
-
-// exported scene from rhino/triceratops
-import sample from '../assets/sample.json';
-import lightingtest from '../assets/lightingtest.json';
-// import combinedscene from '../assets/combinedscene.json';
 import buildings from '../assets/buildings_ground_graylight.json';
-// import furnishings1 from '../assets/viewfurnishings.json';
-// import furnishing2 from '../assets/furnishings.json';
 
 // import threedfurnishings from '../assets/furnishings/furnishings_3dfurnishings.json';
 import facadedetails from '../assets/furnishings/furnishings_facadedetail.json';
@@ -35,10 +28,7 @@ import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
 
 import streetscapeGltf from '../assets/background/rescaled-edges.glb';
-import avocado from '../assets/testglb/Avocado.glb';
 import buggy from '../assets/testglb/Buggy.glb';
-import cesiumman from '../assets/testglb/CesiumMan.glb';
-import streetscapeJson from '../assets/buildingsgroundupdate.json';
 
 /*
  * use just single model for GLTF! get animations going!
@@ -241,30 +231,6 @@ function Dolly(props) {
   });
   return null;
 }
-
-const FromJSON = ({ src }) => {
-  const loader = new THREE.ObjectLoader();
-  const scene = loader.parse(src);
-  return <primitive object={scene} dispose={null} />;
-};
-
-FromJSON.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  src: PropTypes.object.isRequired,
-};
-
-const FromGLTF = ({ src }) => {
-  const { scene } = useGLTF(src);
-  return (
-    <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
-  );
-};
-
-FromGLTF.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  src: PropTypes.object.isRequired,
-  // posNumber: PropTypes.number.isRequired,
-};
 
 function Box({ url }) {
   const { scene } = useLoader(GLTFLoader, url);
