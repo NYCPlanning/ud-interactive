@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(App);
+// store.subscribe(() => console.log(JSON.stringify(store.getState())));
 
 function AppWrapper() {
   return (
