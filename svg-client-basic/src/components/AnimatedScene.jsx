@@ -11,12 +11,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import FromJSON from './FromJSON';
 import FromGLTF from './FromGLTF';
 import VisualDebugger from './VisualDebugger';
+import Dolly from './Dolly';
 
-// eslint-disable-next-line no-unused-vars
-import Background from './Background';
-import buildings from '../assets/buildings_ground_graylight.json';
-
-// import threedfurnishings from '../assets/furnishings/furnishings_3dfurnishings.json';
 import facadedetails from '../assets/furnishings/furnishings_facadedetail.json';
 import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
 import greenery from '../assets/furnishings/furnishings_greenery.json';
@@ -29,7 +25,6 @@ import buggy from '../assets/testglb/Buggy.glb';
 /*
  * use just single model for GLTF! get animations going!
  * navigation! with buttons or something
- * refactor: VisualDebugger, FromJSON, FromGLTF, Dolly
  */
 
 // const imports = [streetscapeGltf, avocado, buggy, cesiumman];
@@ -134,111 +129,31 @@ function getCamPositions() {
 
 const camPositions = getCamPositions();
 
-const timePer = 2;
+// function Box({ url }) {
+//   const { scene } = useLoader(GLTFLoader, url);
+//   const copiedScene = useMemo(() => scene.clone(), [scene]);
+//   const prim = useRef();
+//   const [hover, setHover] = useState(false);
 
-function positionCalc(oldPositions, newPositions, currentAnimProgress) {
-  // const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
-  // const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
-  // const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
-  // return new THREE.Vector3(x, y, z);
-  return new THREE.Vector3(newPositions.x, newPositions.y, newPositions.z);
-  // return { x, y, z };
-}
+//   return <primitive ref={prim} object={copiedScene} />;
+// }
 
-function getTimePer(inReverse, posNumber) {
-  if (posNumber < camPositions.length && posNumber >= 0) {
-    if (!inReverse) {
-      return camPositions[posNumber].timePer;
-    }
-    if (posNumber > 0) {
-      return camPositions[posNumber - 1].timePer;
-    }
-  }
-  console.log('uh oh, timePer not working');
-  return timePer;
-}
-
-function getPositions(inReverse, posNumber, length) {
-  let oldPos = 0;
-  let newPos = 0;
-  if ((inReverse && posNumber === length - 1) || (!inReverse && posNumber === 0)) {
-    oldPos = posNumber;
-    newPos = posNumber;
-  } else if (posNumber < 0) {
-    oldPos = 0;
-    newPos = 0;
-  } else if (posNumber >= length) {
-    oldPos = camPositions.length - 1;
-    newPos = camPositions.length - 1;
-  } else if (inReverse) {
-    oldPos = posNumber + 1;
-    newPos = posNumber;
-  } else {
-    oldPos = posNumber - 1;
-    newPos = posNumber;
-  }
-  return { oldPos, newPos };
-}
-
-function Dolly(props) {
-  const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
-
-  useFrame(({ clock, camera }) => {
-    let currentAnimProgress =
-      (clock.getElapsedTime() - animationTime) / getTimePer(inReverse, posNumber);
-    if (animationStarted) {
-      // console.log('animation started in Dolly');
-      saveAnimationTime(clock.getElapsedTime());
-      currentAnimProgress = 0;
-    }
-    if (currentAnimProgress > 1) {
-      currentAnimProgress = 1;
-    }
-
-    const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
-    const oldPositions = camPositions[oldPos];
-    const newPositions = camPositions[newPos];
-
-    const oldLookAt = camPositions[oldPos].lookAt;
-    const newLookAt = camPositions[newPos].lookAt;
-
-    const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
-    const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
-
-    camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
-    // eslint-disable-next-line no-param-reassign
-    // camera.fov = currentPosition.fov;
-    camera.lookAt(currentLookAt);
-    // camera.updateProjectionMatrix();
-  });
-  return null;
-}
-
-function Box({ url }) {
-  const { scene } = useLoader(GLTFLoader, url);
-  const copiedScene = useMemo(() => scene.clone(), [scene]);
-  const prim = useRef();
-  const [hover, setHover] = useState(false);
-
-  return <primitive ref={prim} object={copiedScene} />;
-}
-
-Box.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  url: PropTypes.object.isRequired,
-  // posNumber: PropTypes.number.isRequired,
-};
+// Box.propTypes = {
+//   // eslint-disable-next-line react/forbid-prop-types
+//   url: PropTypes.object.isRequired,
+//   // posNumber: PropTypes.number.isRequired,
+// };
 
 export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
-  const src = imports[posNumber];
-  const [modelNum, setModelNum] = useState(0);
-  const [model, setModel] = useState(imports[0]);
-  const onClick = () => {
-    setModel(imports[modelNum + 1]);
-    setModelNum(modelNum + 1);
-    // setModel(imports[1]);
-  };
+  const src = imports[0];
+  // const [modelNum, setModelNum] = useState(0);
+  // const [model, setModel] = useState(imports[0]);
+  // const onClick = () => {
+  //   setModel(imports[modelNum + 1]);
+  //   setModelNum(modelNum + 1);
+  //   // setModel(imports[1]);
+  // };
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -254,28 +169,24 @@ export default function AnimatedScene(props) {
             {/* <FromJSON src={streetscapeJson} /> */}
             {/* <Box src={model} /> */}
           </Suspense>
-          {/* <Dolly
+          <Dolly
+            camPositions={camPositions}
             posNumber={posNumber}
             animationStarted={animationStarted}
             animationTime={animationTime}
             saveAnimationTime={saveAnimationTime}
             inReverse={inReverse}
-          /> */}
+          />
         </Canvas>
-        <button type="button" onClick={onClick}>
+        {/* <button type="button" onClick={onClick}>
           Next
-        </button>
+        </button> */}
         <VisualDebugger
           posNumber={posNumber}
           modelMode={modelMode}
           camPositions={camPositions}
           rhinoStuff={rhinoStuff}
         />
-        {/* <p>{posNumber}</p>
-        <p>{imports[posNumber]}</p>
-        <p>{src}</p> */}
-        <p>{modelNum}</p>
-        <p>{model}</p>
       </div>
     </div>
   );
