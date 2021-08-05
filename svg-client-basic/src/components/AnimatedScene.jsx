@@ -10,6 +10,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 import FromJSON from './FromJSON';
 import FromGLTF from './FromGLTF';
+import VisualDebugger from './VisualDebugger';
 
 // eslint-disable-next-line no-unused-vars
 import Background from './Background';
@@ -21,11 +22,6 @@ import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
 import greenery from '../assets/furnishings/furnishings_greenery.json';
 import highlights from '../assets/furnishings/furnishings_highlights.json';
 import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
-
-import commercialView from '../assets/rhino-views/commercial-elevated.png';
-import industrialView from '../assets/rhino-views/industrial.png';
-import parkView from '../assets/rhino-views/park.png';
-import residentialView from '../assets/rhino-views/residential.png';
 
 import streetscapeGltf from '../assets/background/rescaled-edges.glb';
 import buggy from '../assets/testglb/Buggy.glb';
@@ -39,8 +35,6 @@ import buggy from '../assets/testglb/Buggy.glb';
 // const imports = [streetscapeGltf, avocado, buggy, cesiumman];
 const imports = [streetscapeGltf, buggy, streetscapeGltf, buggy, streetscapeGltf, buggy];
 
-const rhinoViews = [commercialView, industrialView, parkView, residentialView];
-
 const furnishings = [
   // threedfurnishings,
   // facadedetails,
@@ -49,10 +43,6 @@ const furnishings = [
   highlights,
   vehicleglass,
 ];
-
-function getViewSRC(posNumber) {
-  return rhinoViews[posNumber];
-}
 
 const modelMode = 2;
 const rhinoStuff = [
@@ -140,14 +130,6 @@ function getCamPositions() {
     default:
       return rhinoStuff;
   }
-}
-
-function positionText(posNumber) {
-  return JSON.stringify(getCamPositions()[posNumber]);
-}
-
-function originalPositionText(posNumber) {
-  return JSON.stringify(rhinoStuff[posNumber]);
 }
 
 const camPositions = getCamPositions();
@@ -246,10 +228,9 @@ Box.propTypes = {
   url: PropTypes.object.isRequired,
   // posNumber: PropTypes.number.isRequired,
 };
+
 export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
-  positionText(posNumber);
-  originalPositionText(posNumber);
   const src = imports[posNumber];
   const [modelNum, setModelNum] = useState(0);
   const [model, setModel] = useState(imports[0]);
@@ -284,25 +265,12 @@ export default function AnimatedScene(props) {
         <button type="button" onClick={onClick}>
           Next
         </button>
-        {/* <img
-          style={{ height: 200, width: 'auto' }}
-          src={getViewSRC(posNumber)}
-          alt="see from rhino"
+        <VisualDebugger
+          posNumber={posNumber}
+          modelMode={modelMode}
+          camPositions={camPositions}
+          rhinoStuff={rhinoStuff}
         />
-        <p style={{ fontWeight: 800 }}>MODE</p>
-        <p style={{ display: 'inline-block' }}>
-          {modelMode === 1
-            ? 'regular'
-            : modelMode === 2
-            ? 'flipped lookAt'
-            : modelMode === 3
-            ? 'flipped and negative LookAt'
-            : 'weird modelMode'}
-        </p>
-        <p style={{ fontWeight: 800 }}>CURRENTLY DISPLAYED:</p>
-        <p style={{ display: 'inline-block' }}>{positionText(posNumber)}</p>
-        <p style={{ fontWeight: 800 }}>FROM RHINO:</p>
-        <p>{originalPositionText(posNumber)}</p> */}
         {/* <p>{posNumber}</p>
         <p>{imports[posNumber]}</p>
         <p>{src}</p> */}
