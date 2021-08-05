@@ -1,5 +1,7 @@
+import React from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
+import DollyDebugger from './DollyDebugger';
 
 const timePer = 2;
 
@@ -25,7 +27,7 @@ function getPositions(camPositions, inReverse, posNumber, length) {
   return { oldPos, newPos };
 }
 
-function positionCalc(camPositions, oldPositions, newPositions, currentAnimProgress) {
+function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   // const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   // const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
   // const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
@@ -75,19 +77,25 @@ export default function Dolly(props) {
     const oldLookAt = camPositions[oldPos].lookAt;
     const newLookAt = camPositions[newPos].lookAt;
 
-    const currentPosition = positionCalc(
-      camPositions,
-      oldPositions,
-      newPositions,
-      currentAnimProgress
-    );
-    const currentLookAt = positionCalc(camPositions, oldLookAt, newLookAt, currentAnimProgress);
+    const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
+    const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
+    // const dollyDebugger = (
+    //   <DollyDebugger
+    //     oldPositions={oldPositions}
+    //     newPositions={newPositions}
+    //     oldLookAt={oldLookAt}
+    //     newLookAt={newLookAt}
+    //     currentPosition={currentPosition}
+    //     currentLookAt={currentLookAt}
+    //   />
+    // );
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     // eslint-disable-next-line no-param-reassign
     // camera.fov = currentPosition.fov;
     camera.lookAt(currentLookAt);
     // camera.updateProjectionMatrix();
+    // return dollyDebugger;
   });
   return null;
 }
