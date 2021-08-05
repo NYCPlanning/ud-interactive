@@ -40,12 +40,13 @@ import buggy from '../assets/testglb/Buggy.glb';
 import cesiumman from '../assets/testglb/CesiumMan.glb';
 import streetscapeJson from '../assets/buildingsgroundupdate.json';
 
-const imports = [streetscapeGltf, avocado, buggy, cesiumman];
-
 /*
- * double check weird problematic value from rhino
- * look into switching models in loader
+ * use just single model for GLTF! get animations going!
+ *
  */
+
+// const imports = [streetscapeGltf, avocado, buggy, cesiumman];
+const imports = [streetscapeGltf, buggy, streetscapeGltf, buggy, streetscapeGltf, buggy];
 
 const rhinoViews = [commercialView, industrialView, parkView, residentialView];
 
@@ -300,8 +301,10 @@ export default function AnimatedScene(props) {
           {/* <OrbitControls /> */}
           {/* <Streetscapes /> */}
           <Suspense fallback={null}>
-            <FromGLTF src={model} />
+            {/* <FromGLTF src={imports[0]} /> */}
+            <FromGLTF src={src} />
             {/* <FromJSON src={streetscapeJson} /> */}
+            {/* <Box src={model} /> */}
           </Suspense>
           {/* <Dolly
             posNumber={posNumber}

@@ -39,8 +39,8 @@ function App(props) {
         </Row>
         <Row>
           <Col sm={5} xs={5} md={5} lg={5}>
-            {/* <Previous previousPos={previousPos} />
-            <Next nextPos={nextPos} /> */}
+            <Previous previousPos={previousPos} />
+            <Next nextPos={nextPos} />
           </Col>
           <Col sm={5} xs={5} md={5} lg={5}>
             <Caption posNumber={posNumber} />
