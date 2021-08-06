@@ -25,17 +25,16 @@ function App(props) {
   } = props;
   return (
     <div className="App">
+      <AnimatedScene
+        posNumber={posNumber}
+        animationStarted={animationStarted}
+        animationTime={animationTime}
+        saveAnimationTime={saveAnimationTime}
+        inReverse={inReverse}
+      />
       <Container>
         <Row>
-          <Col sm={10} xs={10} md={10} lg={10}>
-            <AnimatedScene
-              posNumber={posNumber}
-              animationStarted={animationStarted}
-              animationTime={animationTime}
-              saveAnimationTime={saveAnimationTime}
-              inReverse={inReverse}
-            />
-          </Col>
+          <Col sm={10} xs={10} md={10} lg={10} />
         </Row>
         <Row>
           <Col sm={5} xs={5} md={5} lg={5}>

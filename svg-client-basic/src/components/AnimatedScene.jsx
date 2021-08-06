@@ -12,6 +12,7 @@ import FromJSON from './FromJSON';
 import FromGLTF from './FromGLTF';
 import VisualDebugger from './VisualDebugger';
 import Dolly from './Dolly';
+import useWindowDimensions from '../useWindowDimensions';
 
 import facadedetails from '../assets/furnishings/furnishings_facadedetail.json';
 import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
@@ -23,8 +24,9 @@ import streetscapeGltf from '../assets/background/rescaled-edges.glb';
 import buggy from '../assets/testglb/Buggy.glb';
 
 /*
- * use just single model for GLTF! get animations going!
- * navigation! with buttons or something
+ * responsiveness to window size changing
+ * regaining controls / free navigation
+ * put a cube into the scene / make it work with pointer - pointer-based interactivity
  */
 
 const imports = [streetscapeGltf];
@@ -146,6 +148,8 @@ const camPositions = getCamPositions();
 export default function AnimatedScene(props) {
   const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
   const src = imports[0];
+  const { height, width } = useWindowDimensions();
+
   // const [modelNum, setModelNum] = useState(0);
   // const [model, setModel] = useState(imports[0]);
   // const onClick = () => {
@@ -156,7 +160,7 @@ export default function AnimatedScene(props) {
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: 300, width: 800 }} camera={{ fov: 70, near: 10, far: 7500 }}>
+        <Canvas style={{ height, width }} camera={{ fov: 70, near: 10, far: 7500 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <axesHelper args={[1000]} />

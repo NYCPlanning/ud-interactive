@@ -40,7 +40,7 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   // return { x, y, z };
 }
 
-const timePer = 2;
+const timePer = 10;
 
 function getTimePer(camPositions, inReverse, posNumber) {
   // console.log(JSON.stringify(camPositions));
