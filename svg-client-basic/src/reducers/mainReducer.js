@@ -3,10 +3,14 @@ const defaultState = {
   animationStarted: false,
   animationTime: null,
   inReverse: false,
+  elapsedTime: 0,
 };
 
 const mainReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case 'LOG':
+      // for: animations in progress, iterate + deal with + calculate rates / positions
+      return { ...state, elapsedTime: action.payload.elapsedTime };
     case 'NEXT':
       return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':

@@ -22,6 +22,7 @@ function App(props) {
     animationStarted,
     animationTime,
     inReverse,
+    logTime,
   } = props;
   return (
     <div className="App">
@@ -31,6 +32,7 @@ function App(props) {
         animationTime={animationTime}
         saveAnimationTime={saveAnimationTime}
         inReverse={inReverse}
+        logTime={logTime}
       />
       <Container>
         <Row>
@@ -57,6 +59,7 @@ App.propTypes = {
   animationTime: PropTypes.number,
   saveAnimationTime: PropTypes.func.isRequired,
   inReverse: PropTypes.bool.isRequired,
+  logTime: PropTypes.func.isRequired,
 };
 App.defaultProps = {
   animationTime: 0,
