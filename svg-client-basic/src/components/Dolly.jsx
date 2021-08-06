@@ -2,8 +2,11 @@ import React from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import DollyDebugger from './DollyDebugger';
+import camPositionsCalc from '../functions/camPositionsCalc';
 
-function getPositions(camPositions, inReverse, posNumber, length) {
+const camPositions = camPositionsCalc();
+
+function getPositions(inReverse, posNumber, length) {
   let oldPos = 0;
   let newPos = 0;
   if ((inReverse && posNumber === length - 1) || (!inReverse && posNumber === 0)) {
@@ -42,7 +45,7 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
 
 const timePer = 10;
 
-function getTimePer(camPositions, inReverse, posNumber) {
+function getTimePer(inReverse, posNumber) {
   // console.log(JSON.stringify(camPositions));
   // console.log(inReverse);
   // console.log(posNumber);
@@ -59,15 +62,8 @@ function getTimePer(camPositions, inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const {
-    logTime,
-    posNumber,
-    animationStarted,
-    animationTime,
-    saveAnimationTime,
-    inReverse,
-    camPositions,
-  } = props;
+  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
+    props;
 
   useFrame(({ clock, camera }) => {
     let currentAnimProgress =
@@ -86,12 +82,7 @@ export default function Dolly(props) {
     }
     // console.log(currentAnimProgress);
 
-    const { oldPos, newPos } = getPositions(
-      camPositions,
-      inReverse,
-      posNumber,
-      camPositions.length
-    );
+    const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
     const oldPositions = camPositions[oldPos];
     const newPositions = camPositions[newPos];
 

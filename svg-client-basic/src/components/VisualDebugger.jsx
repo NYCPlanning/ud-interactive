@@ -5,6 +5,9 @@ import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
+import camPositionsCalc from '../functions/camPositionsCalc';
+
+const camPositions = camPositionsCalc();
 
 const rhinoViews = [commercialView, industrialView, parkView, residentialView];
 
@@ -12,7 +15,7 @@ function getViewSRC(posNumber) {
   return rhinoViews[posNumber];
 }
 
-function positionText(camPositions, posNumber) {
+function positionText(posNumber) {
   return JSON.stringify(camPositions[posNumber]);
 }
 
@@ -21,7 +24,7 @@ function originalPositionText(rhinoStuff, posNumber) {
 }
 
 export default function VisualDebugger(props) {
-  const { posNumber, modelMode, camPositions, rhinoStuff } = props;
+  const { posNumber, modelMode, rhinoStuff } = props;
   return (
     <div>
       <img
@@ -40,7 +43,7 @@ export default function VisualDebugger(props) {
           : 'weird modelMode'}
       </p>
       <p style={{ fontWeight: 800 }}>CURRENTLY DISPLAYED:</p>
-      <p style={{ display: 'inline-block' }}>{positionText(camPositions, posNumber)}</p>
+      <p style={{ display: 'inline-block' }}>{positionText(posNumber)}</p>
       <p style={{ fontWeight: 800 }}>FROM RHINO:</p>
       <p>{originalPositionText(rhinoStuff, posNumber)}</p>
     </div>
@@ -50,7 +53,5 @@ export default function VisualDebugger(props) {
 VisualDebugger.propTypes = {
   posNumber: PropTypes.number.isRequired,
   modelMode: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  camPositions: PropTypes.object.isRequired,
   rhinoStuff: PropTypes.number.isRequired,
 };
