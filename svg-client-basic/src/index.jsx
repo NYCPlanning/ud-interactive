@@ -9,6 +9,7 @@ import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
 import saveAnimationTime from './actions/saveAnimationTime';
 import mainReducer from './reducers/mainReducer';
+import logTime from './actions/logTime';
 
 const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
@@ -25,11 +26,12 @@ const mapDispatchToProps = (dispatch) => {
     previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
     saveAnimationTime: (time) => dispatch(saveAnimationTime(time)),
+    logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
   };
 };
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(App);
-// store.subscribe(() => console.log(JSON.stringify(store.getState())));
+store.subscribe(() => console.log(JSON.stringify(store.getState())));
 
 function AppWrapper() {
   return (

@@ -59,8 +59,15 @@ function getTimePer(camPositions, inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse, camPositions } =
-    props;
+  const {
+    logTime,
+    posNumber,
+    animationStarted,
+    animationTime,
+    saveAnimationTime,
+    inReverse,
+    camPositions,
+  } = props;
 
   useFrame(({ clock, camera }) => {
     let currentAnimProgress =
@@ -68,6 +75,7 @@ export default function Dolly(props) {
     // console.log(clock.getElapsedTime());
     // console.log(animationTime); // null
     // console.log(getTimePer(camPositions, inReverse, posNumber)); // null
+    logTime(clock.getElapsedTime());
     if (animationStarted) {
       // console.log('animation started in Dolly');
       saveAnimationTime(clock.getElapsedTime());

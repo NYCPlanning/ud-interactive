@@ -146,7 +146,8 @@ const camPositions = getCamPositions();
 // };
 
 export default function AnimatedScene(props) {
-  const { posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } = props;
+  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
+    props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
 
@@ -179,6 +180,7 @@ export default function AnimatedScene(props) {
             animationTime={animationTime}
             saveAnimationTime={saveAnimationTime}
             inReverse={inReverse}
+            logTime={logTime}
           />
         </Canvas>
         {/* <button type="button" onClick={onClick}>
@@ -201,6 +203,7 @@ AnimatedScene.propTypes = {
   animationStarted: PropTypes.bool.isRequired,
   animationTime: PropTypes.number,
   inReverse: PropTypes.bool.isRequired,
+  logTime: PropTypes.func.isRequired,
 };
 
 AnimatedScene.defaultProps = {
