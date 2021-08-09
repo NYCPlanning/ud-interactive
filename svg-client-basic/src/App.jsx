@@ -16,10 +16,6 @@ import Caption from './components/Caption';
 
 function App(props) {
   const {
-    currentAnimationStartTime,
-    currentAnimationEndTime,
-    currentAnimationStartPosition,
-    currentAnimationEndPosition,
     previousPos,
     nextPos,
     currentPosition,
@@ -29,34 +25,25 @@ function App(props) {
     animationTime,
     inReverse,
     logTime,
-    addAnim,
+    addAnimation,
     addMovement,
     newMovement,
     newMovementDur,
-    updateAnimations,
   } = props;
-  console.log(
-    `currentAnimationStartPosition: ${currentAnimationStartPosition} currentAnimationStartTime: ${currentAnimationStartTime} currentAnimationEndTime: ${currentAnimationEndTime} currentAnimationEndPosition ${currentAnimationEndPosition}`
-  );
   return (
     <div className="App">
       <AnimatedScene
-        addAnim={addAnim}
+        addAnimation={addAnimation}
         addMovement={addMovement}
         newMovement={newMovement}
         newMovementDur={newMovementDur}
         posNumber={posNumber}
         animationStarted={animationStarted}
-        updateAnimations={updateAnimations}
         animationTime={animationTime}
         saveAnimationTime={saveAnimationTime}
         inReverse={inReverse}
         logTime={logTime}
         currentPosition={currentPosition}
-        currentAnimationStartTime={currentAnimationStartTime}
-        currentAnimationStartPosition={currentAnimationStartPosition}
-        currentANimationEndTime={currentAnimationEndTime}
-        currentAnimationEndPosition={currentAnimationEndPosition}
       />
       <Container>
         <Row>
@@ -81,21 +68,11 @@ App.propTypes = {
   posNumber: PropTypes.number.isRequired,
   animationStarted: PropTypes.bool.isRequired,
   animationTime: PropTypes.number,
+  saveAnimationTime: PropTypes.func.isRequired,
+  inReverse: PropTypes.bool.isRequired,
   logTime: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-
-  addAnim: PropTypes.func.isRequired,
-  addMovement: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  newMovement: PropTypes.object.isRequired,
-  newMovementDur: PropTypes.number.isRequired,
-  currentAnimationStartTime: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  currentAnimationStartPosition: PropTypes.object.isRequired,
-  currentAnimationEndTime: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  currentAnimationEndPosition: PropTypes.object.isRequired,
-  updateAnimations: PropTypes.func.isRequired,
+  currentPosition: PropTypes.object.isRequired,
 };
 App.defaultProps = {
   animationTime: 0,
