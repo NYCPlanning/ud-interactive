@@ -10,6 +10,7 @@ import nextPos from './actions/nextPos';
 import mainReducer from './reducers/mainReducer';
 import logTime from './actions/logTime';
 import addMovement from './actions/addMovement';
+import addPosition from './actions/addPosition';
 import updateAnimations from './actions/updateAnimations';
 
 // addMovement: false,
@@ -31,6 +32,8 @@ const mapDispatchToProps = (dispatch) => {
     nextPos: () => dispatch(nextPos()),
     logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
     updateAnimations: (time) => dispatch(updateAnimations(time)),
+    addMovement: (movement, duration) => dispatch(addMovement(movement, duration)),
+    addPosition: (position, duration) => dispatch(addPosition(position, duration)),
   };
 };
 
