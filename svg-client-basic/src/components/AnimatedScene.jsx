@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -60,7 +59,7 @@ const furnishings = [
 export default function AnimatedScene(props) {
   const {
     animationStarted,
-    addAnimation,
+    addAnim,
     addMovement,
     newMovement,
     newMovementDur,
@@ -80,6 +79,9 @@ export default function AnimatedScene(props) {
   //   setModelNum(modelNum + 1);
   //   // setModel(imports[1]);
   // };
+  console.log(
+    `currentAnimationStartPosition: ${currentAnimationStartPosition} currentAnimationStartTime: ${currentAnimationStartTime} currentAnimationEndTime: ${currentAnimationEndTime} currentAnimationEndPosition ${currentAnimationEndPosition}`
+  );
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -96,7 +98,7 @@ export default function AnimatedScene(props) {
             {/* <Box src={model} /> */}
           </Suspense>
           <Dolly
-            addAnimation={addAnimation}
+            addAnim={addAnim}
             addMovement={addMovement}
             newMovement={newMovement}
             newMovementDur={newMovementDur}
@@ -122,14 +124,20 @@ export default function AnimatedScene(props) {
 }
 
 AnimatedScene.propTypes = {
-  posNumber: PropTypes.number.isRequired,
-  saveAnimationTime: PropTypes.func.isRequired,
-  animationStarted: PropTypes.bool.isRequired,
   animationTime: PropTypes.number,
-  inReverse: PropTypes.bool.isRequired,
-  logTime: PropTypes.func.isRequired,
+  addAnim: PropTypes.func.isRequired,
+  addMovement: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  currentPosition: PropTypes.object.isRequired,
+  newMovement: PropTypes.object.isRequired,
+  newMovementDur: PropTypes.number.isRequired,
+  currentAnimationStartTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currentAnimationStartPosition: PropTypes.object.isRequired,
+  currentAnimationEndTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currentAnimationEndPosition: PropTypes.object.isRequired,
+  animationStarted: PropTypes.bool.isRequired,
+  updateAnimations: PropTypes.bool.isRequired,
 };
 
 AnimatedScene.defaultProps = {

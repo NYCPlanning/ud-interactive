@@ -10,6 +10,8 @@ import nextPos from './actions/nextPos';
 import mainReducer from './reducers/mainReducer';
 import logTime from './actions/logTime';
 import updateAnimations from './actions/updateAnimations';
+import addAnimation from './actions/addAnimation';
+import addMovement from './actions/addMovement';
 
 const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
@@ -17,6 +19,7 @@ const mapStateToProps = (state, ownProps) => {
     posNumber: state.posNumber,
     currentPosition: state.currentPosition,
     animationStarted: state.animationStarted,
+    newMovementDur: state.newMovementDur,
     currentAnimationStartTime: state.currentAnimationStartTime,
     currentAnimationStartPosition: state.currentAnimationStartPosition,
     currentAnimationEndTime: state.currentAnimationEndTime,
@@ -30,6 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     nextPos: () => dispatch(nextPos()),
     logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
     updateAnimations: (time, position) => dispatch(updateAnimations(time, position)),
+    addAnim: (animation) => dispatch(addAnimation(animation)),
+    addMovement: (movement, dur) => dispatch(addMovement(movement, dur)),
   };
 };
 
