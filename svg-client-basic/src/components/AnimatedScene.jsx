@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-nested-ternary */
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -57,13 +59,16 @@ const furnishings = [
 
 export default function AnimatedScene(props) {
   const {
-    currentPosition,
-    logTime,
-    posNumber,
     animationStarted,
-    animationTime,
-    saveAnimationTime,
-    inReverse,
+    addAnimation,
+    addMovement,
+    newMovement,
+    newMovementDur,
+    currentAnimationStartTime,
+    currentAnimationStartPosition,
+    currentAnimationEndTime,
+    currentAnimationEndPosition,
+    updateAnimations,
   } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
@@ -91,13 +96,16 @@ export default function AnimatedScene(props) {
             {/* <Box src={model} /> */}
           </Suspense>
           <Dolly
-            currentPosition={currentPosition}
-            posNumber={posNumber}
+            addAnimation={addAnimation}
+            addMovement={addMovement}
+            newMovement={newMovement}
+            newMovementDur={newMovementDur}
             animationStarted={animationStarted}
-            animationTime={animationTime}
-            saveAnimationTime={saveAnimationTime}
-            inReverse={inReverse}
-            logTime={logTime}
+            currentAnimationStartTime={currentAnimationStartTime}
+            currentAnimationStartPosition={currentAnimationStartPosition}
+            currentAnimationEndTime={currentAnimationEndTime}
+            currentAnimationEndPosition={currentAnimationEndPosition}
+            updateAnimations={updateAnimations}
           />
         </Canvas>
         {/* <button type="button" onClick={onClick}>
