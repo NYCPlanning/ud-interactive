@@ -5,14 +5,14 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import DollyDebugger from './DollyDebugger';
 import camPositionsCalc from '../functions/camPositionsCalc';
+import Animation from '../classes/Animation';
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
-  //   console.log(
-  //     `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
-  //       newPositions
-  //     )} \n currentAnimProgress: ${currentAnimProgress}`
-  //   );
-  // the issue is currentAnimProgress!!
+  // console.log(
+  //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+  //     newPositions
+  //   )} \n currentAnimProgress: ${currentAnimProgress}`
+  // );
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
   const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
@@ -42,7 +42,7 @@ function getTimePer(inReverse, posNumber) {
 export default function Dolly(props) {
   const {
     animationStarted,
-    addAnimation,
+    addAnim,
     addMovement,
     newMovement,
     newMovementDur,
@@ -71,13 +71,17 @@ export default function Dolly(props) {
       },
     };
     if (addMovement) {
-      addAnimation(new Animation(elapsedTime, elapsedTime + newMovementDur, newMovement));
+      addAnim(new Animation(elapsedTime, elapsedTime + newMovementDur, newMovement));
     }
     if (animationStarted) {
       updateAnimations(elapsedTime, position);
     }
     const animProgress =
       (elapsedTime - currentAnimationStartTime) / (currentAnimationEndTime - elapsedTime);
+
+    console.log(
+      `currentAnimationStartPosition: ${currentAnimationStartPosition} currentAnimationStartTime: ${currentAnimationStartTime} currentAnimationEndTime: ${currentAnimationEndTime} currentAnimationEndPosition ${currentAnimationEndPosition}`
+    );
 
     const currentPosition = positionCalc(
       currentAnimationStartPosition,
