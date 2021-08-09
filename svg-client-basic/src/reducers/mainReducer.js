@@ -27,8 +27,6 @@ function positionsDiff(firstPos, secondPos) {
 
 const defaultState = {
   posNumber: 0,
-  animationStarted: false,
-  animationTime: null,
   inReverse: false,
   elapsedTime: 0,
   animationsInProgress: [],
