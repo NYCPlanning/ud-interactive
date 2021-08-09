@@ -24,46 +24,9 @@ export default class Animation {
     return { x, y, z, lookX, lookY, lookZ };
   }
 
-  getMovement() {
-    return this.movement;
-  }
-
-  addMovement(otherMovement, duration) {
-    const movementFraction = duration / this.getDuration();
-    const x = otherMovement.x + this.movement.x * movementFraction;
-    const y = otherMovement.y + this.movement.y * movementFraction;
-    const z = otherMovement.z + this.movement.z * movementFraction;
-    const lookX = otherMovement.lookAt.x + this.movement.lookAt.x * movementFraction;
-    const lookY = otherMovement.lookAt.y + this.movement.lookAt.y * movementFraction;
-    const lookZ = otherMovement.lookAt.z + this.movement.lookAt.z * movementFraction;
-    return {
-      x,
-      y,
-      z,
-      lookAt: {
-        x: lookX,
-        y: lookY,
-        z: lookZ,
-      },
-    };
-  }
-
   toJSON() {
     return `startTime: ${this.startTime}, endTime: ${this.endTime}, movement: ${JSON.stringify(
       this.movement
     )}`;
-  }
-
-  static calcMovement(positionA, positionB) {
-    return {
-      x: positionB.x - positionA.x,
-      y: positionB.y - positionB.y,
-      z: positionB.z - positionB.z,
-      lookAt: {
-        x: positionB.lookAt.x - positionA.lookAt.x,
-        y: positionB.lookAt.y - positionA.lookAt.y,
-        z: positionB.lookAt.z - positionB.lookAt.z,
-      },
-    };
   }
 }

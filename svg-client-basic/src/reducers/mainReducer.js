@@ -1,131 +1,118 @@
-/* eslint-disable no-case-declarations */
 import camPositionsCalc from '../functions/camPositionsCalc';
 import Animation from '../classes/Animation';
 
 const camPositions = camPositionsCalc();
 const timePerReducer = 2;
 
+function positionsDiff(firstPos, secondPos) {
+  const error = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+  if (
+    firstPos > camPositions.length ||
+    firstPos < 0 ||
+    secondPos > camPositions.length ||
+    secondPos < 0
+  ) {
+    return error;
+  }
+  const firstPosition = camPositions[firstPos];
+  const secondPosition = camPositions[secondPos];
+  const x = secondPosition.x - firstPosition.x;
+  const y = secondPosition.y - firstPosition.y;
+  const z = secondPosition.z - firstPosition.z;
+  const lookX = secondPosition.lookAt.x - firstPosition.lookAt.x;
+  const lookY = secondPosition.lookAt.y - firstPosition.lookAt.y;
+  const lookZ = secondPosition.lookAt.z - firstPosition.lookAt.z;
+  return { x, y, z, lookAt: { x: lookX, y: lookY, z: lookZ } };
+}
+
 const defaultState = {
   posNumber: 0,
   animationStarted: false,
-  addMovement: false,
-  newMovement: {},
-  newMovementDur: 0,
+  animationTime: null,
+  inReverse: false,
+  elapsedTime: 0,
   animationsInProgress: [],
-  sortedEndTimes: [],
-  currentAnimationStartTime: 0,
-  currentAnimationStartPosition: {},
-  currentAnimationEndTime: 0,
-  currentAnimationEndPosition: {},
+  currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
+  // lastPosition: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
+  currentPosition: camPositions[0],
+  // nextPosition: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
 };
 
 const mainReducer = (state = defaultState, action) => {
   const tempAnimationsInProgress = [...state.animationsInProgress];
-  const endTimesTemp = [...state.sortedEndTimes];
+  const currentRates = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+  const updatedCurrentPosition = { ...state.currentPosition };
+
+  let sinceLastFrame = 0;
   switch (action.type) {
-    case 'ADDMOVEMENT':
-      return {
-        ...state,
-        addMovement: true,
-        newMovement: action.payload.movement,
-        newMovementDur: action.payload.dur,
-      };
-    case 'NEXT':
-      return {
-        ...state,
-        addMovement: true,
-        newMovement: action.payload.movement,
-        newMovementDur: action.payload.dur,
-        stepNum: state.stepNum + 1,
-      };
-    case 'ADDANIM':
-      tempAnimationsInProgress.push(action.payload.animation);
-      endTimesTemp.push(action.payload.animation.getEnd());
-      endTimesTemp.sort();
-      return {
-        ...state,
-        animationStarted: true,
-        animationsInProgress: tempAnimationsInProgress,
-        sortedEndTimes: endTimesTemp,
-      };
-    case 'UPDATE_ANIMATIONS':
-      let newPosition = { ...state.currentAnimation };
+    case 'LOG':
+      // for: animations in progress, iterate + deal with + calculate rates / positions
       for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-        // clear out animations that are over
-        if (tempAnimationsInProgress[i].getEnd()) {
-          tempAnimationsInProgress.splice(i, 0);
+        const currentAnimation = tempAnimationsInProgress[i];
+        if (currentAnimation.getEnd() > state.elapsedTime) {
+          const { x, y, z, lookX, lookY, lookZ } = currentAnimation.getRates();
+          currentRates.x += x;
+          currentRates.y += y;
+          currentRates.z += z;
+          currentRates.lookAt.x += lookX;
+          currentRates.lookAt.y += lookY;
+          currentRates.lookAt.z += lookZ;
+        } else if (currentAnimation.getEnd() < state.elapsedTime) {
+          tempAnimationsInProgress.splice(i, 1);
           i -= 1;
         }
       }
-      const animDuration = state.sortedEndTimes[0] - action.payload.time;
-      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-        newPosition = tempAnimationsInProgress[i].addMovement(newPosition, animDuration);
-      }
-
-      const endTime = endTimesTemp.shift();
+      sinceLastFrame = action.payload.elapsedTime - state.elapsedTime;
+      updatedCurrentPosition.x = state.currentPosition.x + sinceLastFrame * currentRates.x;
+      updatedCurrentPosition.y = state.currentPosition.y + sinceLastFrame * currentRates.y;
+      updatedCurrentPosition.z = state.currentPosition.z + sinceLastFrame * currentRates.z;
+      updatedCurrentPosition.lookAt.x =
+        state.currentPosition.lookAt.x + sinceLastFrame * currentRates.lookAt.x;
+      updatedCurrentPosition.lookAt.y =
+        state.currentPosition.lookAt.y + sinceLastFrame * currentRates.lookAt.y;
+      updatedCurrentPosition.lookAt.z =
+        state.currentPosition.lookAt.z + sinceLastFrame * currentRates.lookAt.z;
 
       return {
         ...state,
+        currentPosition: updatedCurrentPosition,
+        elapsedTime: action.payload.elapsedTime,
         animationsInProgress: tempAnimationsInProgress,
-        currentAnimationStartTime: action.payload.time,
-        currentAnimationStartPosition: action.paylod.position,
-        currentAnimationEndTime: endTime,
-        currentAnimationEndPosition: newPosition,
-        endTimes: endTimesTemp,
-        animationStarted: false,
+        currentRates,
       };
-
-    // case 'NEXT':
-    //   tempAnimationsInProgress.push(
-    //     new Animation(
-    //       state.elapsedTime,
-    //       state.elapsedTime + timePerReducer,
-    //       positionsDiff(state.posNumber, state.posNumber + 1)
-    //     )
-    //   );
-    //   return {
-    //     ...state,
-    //     posNumber: state.posNumber + 1,
-    //     animationsInProgress: tempAnimationsInProgress,
-    //   };
-    // // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
-    // case 'PREVIOUS':
-    //   tempAnimationsInProgress.push(
-    //     new Animation(
-    //       state.elapsedTime,
-    //       state.elapsedTime + timePerReducer,
-    //       positionsDiff(state.posNumber, state.posNumber - 1)
-    //     )
-    //   );
-    // return {
-    //   ...state,
-    //   posNumber: state.posNumber - 1,
-    //   animationsInProgress: tempAnimationsInProgress,
-    // };
+    case 'ADDANIM':
+      tempAnimationsInProgress.push(action.payload.animation);
+      return { ...state, animationsInProgress: tempAnimationsInProgress };
+    case 'NEXT':
+      tempAnimationsInProgress.push(
+        new Animation(
+          state.elapsedTime,
+          state.elapsedTime + timePerReducer,
+          positionsDiff(state.posNumber, state.posNumber + 1)
+        )
+      );
+      return {
+        ...state,
+        posNumber: state.posNumber + 1,
+        animationsInProgress: tempAnimationsInProgress,
+      };
+    // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
+    case 'PREVIOUS':
+      tempAnimationsInProgress.push(
+        new Animation(
+          state.elapsedTime,
+          state.elapsedTime + timePerReducer,
+          positionsDiff(state.posNumber, state.posNumber - 1)
+        )
+      );
+      return {
+        ...state,
+        posNumber: state.posNumber - 1,
+        animationsInProgress: tempAnimationsInProgress,
+      };
     default:
       return state;
   }
 };
 
 export default mainReducer;
-
-// function positionsDiff(firstPos, secondPos) {
-//   const error = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
-//   if (
-//     firstPos > camPositions.length ||
-//     firstPos < 0 ||
-//     secondPos > camPositions.length ||
-//     secondPos < 0
-//   ) {
-//     return error;
-//   }
-//   const firstPosition = camPositions[firstPos];
-//   const secondPosition = camPositions[secondPos];
-//   const x = secondPosition.x - firstPosition.x;
-//   const y = secondPosition.y - firstPosition.y;
-//   const z = secondPosition.z - firstPosition.z;
-//   const lookX = secondPosition.lookAt.x - firstPosition.lookAt.x;
-//   const lookY = secondPosition.lookAt.y - firstPosition.lookAt.y;
-//   const lookZ = secondPosition.lookAt.z - firstPosition.lookAt.z;
-//   return { x, y, z, lookAt: { x: lookX, y: lookY, z: lookZ } };
-// }
