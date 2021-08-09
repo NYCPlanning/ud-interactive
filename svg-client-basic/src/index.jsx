@@ -9,12 +9,18 @@ import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
 import mainReducer from './reducers/mainReducer';
 import logTime from './actions/logTime';
+import addMovement from './actions/addMovement';
+
+// addMovement: false,
+// movementPosition: null,
+// movementDur: null,
 
 const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
     currentPosition: state.currentPosition,
+    movementBeingAdded: state.movementBeingAdded,
   };
 };
 
@@ -27,7 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(App);
-store.subscribe(() => console.log(JSON.stringify(store.getState())));
+// store.subscribe(() => console.log(JSON.stringify(store.getState())));
 
 function AppWrapper() {
   return (

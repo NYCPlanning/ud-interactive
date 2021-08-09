@@ -8,7 +8,7 @@ const defaultState = {
   posNumber: 0,
   elapsedTime: 0,
   animationsInProgress: [],
-  addMovement: false,
+  movementBeingAdded: false,
   movementPosition: null,
   movementDur: null,
   currAnimStartTime: 0,
@@ -64,7 +64,7 @@ const mainReducer = (state = defaultState, action) => {
     case 'ADDMOVEMENT':
       return {
         ...state,
-        addMovement: true,
+        movementBeingAdded: true,
         movementPosition: action.payload.movement,
         movementDur: action.payload.time,
       };
