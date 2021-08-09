@@ -67,14 +67,6 @@ export default function AnimatedScene(props) {
   } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
-
-  // const [modelNum, setModelNum] = useState(0);
-  // const [model, setModel] = useState(imports[0]);
-  // const onClick = () => {
-  //   setModel(imports[modelNum + 1]);
-  //   setModelNum(modelNum + 1);
-  //   // setModel(imports[1]);
-  // };
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -82,32 +74,12 @@ export default function AnimatedScene(props) {
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <axesHelper args={[1000]} />
-          {/* <OrbitControls /> */}
-          {/* <Streetscapes /> */}
+
           <Suspense fallback={null}>
-            {/* <FromGLTF src={imports[0]} /> */}
             <FromGLTF src={src} />
-            {/* <FromJSON src={streetscapeJson} /> */}
-            {/* <Box src={model} /> */}
           </Suspense>
-          <Dolly
-            currentPosition={currentPosition}
-            posNumber={posNumber}
-            animationStarted={animationStarted}
-            animationTime={animationTime}
-            saveAnimationTime={saveAnimationTime}
-            inReverse={inReverse}
-            logTime={logTime}
-          />
+          <Dolly currentPosition={currentPosition} logTime={logTime} />
         </Canvas>
-        {/* <button type="button" onClick={onClick}>
-          Next
-        </button> */}
-        {/* <VisualDebugger
-          posNumber={posNumber}
-          modelMode={modelMode}
-          rhinoStuff={rhinoStuff}
-        /> */}
       </div>
     </div>
   );
