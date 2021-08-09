@@ -1,8 +1,17 @@
 export default class Animation {
-  constructor(startTime, endTime, movement) {
+  constructor(startTime, endTime, positionA, positionB) {
     this.startTime = startTime;
     this.endTime = endTime;
-    this.movement = movement;
+    this.movement = {
+      x: positionB.x - positionA.x,
+      y: positionB.y - positionA.y,
+      z: positionB.z - positionA.z,
+      lookAt: {
+        x: positionB.lookAt.x - positionA.lookAt.x,
+        y: positionB.lookAt.y - positionA.lookAt.y,
+        z: positionB.lookAt.z - positionA.lookAt.z,
+      },
+    };
   }
 
   getDuration() {
@@ -22,6 +31,26 @@ export default class Animation {
     const lookY = this.movement.lookAt.y / duration;
     const lookZ = this.movement.lookAt.z / duration;
     return { x, y, z, lookX, lookY, lookZ };
+  }
+
+  addMovement(otherMovement, duration) {
+    const movementFraction = duration / this.getDuration();
+    const x = otherMovement.x + this.movement.x * movementFraction;
+    const y = otherMovement.y + this.movement.y * movementFraction;
+    const z = otherMovement.z + this.movement.z * movementFraction;
+    const lookX = otherMovement.lookAt.x + this.movement.lookAt.x * movementFraction;
+    const lookY = otherMovement.lookAt.y + this.movement.lookAt.y * movementFraction;
+    const lookZ = otherMovement.lookAt.z + this.movement.lookAt.z * movementFraction;
+    return {
+      x,
+      y,
+      z,
+      lookAt: {
+        x: lookX,
+        y: lookY,
+        z: lookZ,
+      },
+    };
   }
 
   toJSON() {
