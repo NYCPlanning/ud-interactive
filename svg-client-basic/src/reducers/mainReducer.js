@@ -33,11 +33,17 @@ const defaultState = {
   elapsedTime: 0,
   animationsInProgress: [],
   currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
+  // lastPosition: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
+  currentPosition: camPositions[0],
+  // nextPosition: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
 };
 
 const mainReducer = (state = defaultState, action) => {
   const tempAnimationsInProgress = [...state.animationsInProgress];
-  const { currentRates } = defaultState;
+  const currentRates = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+  const updatedCurrentPosition = { ...state.currentPosition };
+
+  let sinceLastFrame = 0;
   switch (action.type) {
     case 'LOG':
       // for: animations in progress, iterate + deal with + calculate rates / positions
@@ -52,12 +58,25 @@ const mainReducer = (state = defaultState, action) => {
           currentRates.lookAt.y += lookY;
           currentRates.lookAt.z += lookZ;
         } else if (currentAnimation.getEnd() < state.elapsedTime) {
-          tempAnimationsInProgress.remove(i);
+          tempAnimationsInProgress.splice(i, 1);
           i -= 1;
         }
       }
+      sinceLastFrame = action.payload.elapsedTime - state.elapsedTime;
+      updatedCurrentPosition.x = state.currentPosition.x + sinceLastFrame * currentRates.x;
+      updatedCurrentPosition.y = state.currentPosition.y + sinceLastFrame * currentRates.y;
+      updatedCurrentPosition.z = state.currentPosition.z + sinceLastFrame * currentRates.z;
+      updatedCurrentPosition.lookAt.x =
+        state.currentPosition.lookAt.x + sinceLastFrame * currentRates.lookAt.x;
+      updatedCurrentPosition.lookAt.y =
+        state.currentPosition.lookAt.y + sinceLastFrame * currentRates.lookAt.y;
+      updatedCurrentPosition.lookAt.z =
+        state.currentPosition.lookAt.z + sinceLastFrame * currentRates.lookAt.z;
+
       return {
         ...state,
+        currentPosition: updatedCurrentPosition,
+        elapsedTime: action.payload.elapsedTime,
         animationsInProgress: tempAnimationsInProgress,
         currentRates,
       };
@@ -79,16 +98,17 @@ const mainReducer = (state = defaultState, action) => {
       };
     // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
-      if (state.posNumber === 0) {
-        return state;
-      }
-      return { ...state, posNumber: state.posNumber - 1, animationStarted: true, inReverse: true };
-    case 'SAVEANIMATIONTIME':
-      // console.log('animation time: ' + action.payload.time);
+      tempAnimationsInProgress.push(
+        new Animation(
+          state.elapsedTime,
+          state.elapsedTime + timePerReducer,
+          positionsDiff(state.posNumber, state.posNumber - 1)
+        )
+      );
       return {
         ...state,
-        animationStarted: false,
-        animationTime: action.payload.time,
+        posNumber: state.posNumber - 1,
+        animationsInProgress: tempAnimationsInProgress,
       };
     default:
       return state;

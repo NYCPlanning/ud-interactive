@@ -23,4 +23,10 @@ export default class Animation {
     const lookZ = this.movement.lookAt.z / duration;
     return { x, y, z, lookX, lookY, lookZ };
   }
+
+  toJSON() {
+    return `startTime: ${this.startTime}, endTime: ${this.endTime}, movement: ${JSON.stringify(
+      this.movement
+    )}`;
+  }
 }

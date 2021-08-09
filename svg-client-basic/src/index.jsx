@@ -7,7 +7,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
-import saveAnimationTime from './actions/saveAnimationTime';
 import mainReducer from './reducers/mainReducer';
 import logTime from './actions/logTime';
 
@@ -15,9 +14,7 @@ const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
-    animationStarted: state.animationStarted,
-    animationTime: state.animationTime,
-    inReverse: state.inReverse,
+    currentPosition: state.currentPosition,
   };
 };
 
@@ -25,7 +22,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
-    saveAnimationTime: (time) => dispatch(saveAnimationTime(time)),
     logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
   };
 };

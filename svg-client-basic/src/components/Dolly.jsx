@@ -1,4 +1,6 @@
 import React from 'react';
+import { Vector3 } from 'three';
+
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import DollyDebugger from './DollyDebugger';
@@ -62,35 +64,44 @@ function getTimePer(inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
-    props;
+  const {
+    currentPosition,
+    logTime,
+    posNumber,
+    animationStarted,
+    animationTime,
+    saveAnimationTime,
+    inReverse,
+  } = props;
 
   useFrame(({ clock, camera }) => {
-    let currentAnimProgress =
-      (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
+    // let currentAnimProgress =
+    //   (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
     // console.log(clock.getElapsedTime());
     // console.log(animationTime); // null
     // console.log(getTimePer(camPositions, inReverse, posNumber)); // null
     logTime(clock.getElapsedTime());
-    if (animationStarted) {
-      // console.log('animation started in Dolly');
-      saveAnimationTime(clock.getElapsedTime());
-      currentAnimProgress = 0;
-    }
-    if (currentAnimProgress > 1) {
-      currentAnimProgress = 1;
-    }
-    // console.log(currentAnimProgress);
 
-    const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
-    const oldPositions = camPositions[oldPos];
-    const newPositions = camPositions[newPos];
+    // if (animationStarted) {
+    //   // console.log('animation started in Dolly');
+    //   saveAnimationTime(clock.getElapsedTime());
+    //   currentAnimProgress = 0;
+    // }
+    // if (currentAnimProgress > 1) {
+    //   currentAnimProgress = 1;
+    // }
+    // // console.log(currentAnimProgress);
 
-    const oldLookAt = camPositions[oldPos].lookAt;
-    const newLookAt = camPositions[newPos].lookAt;
+    // const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
+    // const oldPositions = camPositions[oldPos];
+    // const newPositions = camPositions[newPos];
 
-    const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
-    const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
+    // const oldLookAt = camPositions[oldPos].lookAt;
+    // const newLookAt = camPositions[newPos].lookAt;
+
+    // const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
+    // const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
+
     // const dollyDebugger = (
     //   <DollyDebugger
     //     oldPositions={oldPositions}
@@ -110,10 +121,15 @@ export default function Dolly(props) {
     //     currentLookAt
     //   )} \n currentAnimProgress: ${currentAnimProgress}`
     // );
+    // camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    camera.lookAt(
+      new Vector3(currentPosition.lookAt.x, currentPosition.lookAt.y, currentPosition.lookAt.z)
+    );
+
     // eslint-disable-next-line no-param-reassign
     // camera.fov = currentPosition.fov;
-    camera.lookAt(currentLookAt);
+    // camera.lookAt(currentLookAt);
     // camera.updateProjectionMatrix();
     // return dollyDebugger;
   });
