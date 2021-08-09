@@ -56,7 +56,7 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
-  const { currentPosition, logTime } = props;
+  const { currentPosition, logTime, movementBeingAdded } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
   return (
@@ -70,7 +70,11 @@ export default function AnimatedScene(props) {
           <Suspense fallback={null}>
             <FromGLTF src={src} />
           </Suspense>
-          <Dolly currentPosition={currentPosition} logTime={logTime} />
+          <Dolly
+            currentPosition={currentPosition}
+            logTime={logTime}
+            movementBeingAdded={movementBeingAdded}
+          />
         </Canvas>
       </div>
     </div>
@@ -79,6 +83,7 @@ export default function AnimatedScene(props) {
 
 AnimatedScene.propTypes = {
   logTime: PropTypes.func.isRequired,
+  movementBeingAdded: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
 };

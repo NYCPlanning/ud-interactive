@@ -64,11 +64,14 @@ function getTimePer(inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const { currentPosition, logTime } = props;
+  const { movementBeingAdded, currentPosition, logTime } = props;
 
   useFrame(({ clock, camera }) => {
     // let currentAnimProgress =
     //   (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
+    if (movementBeingAdded) {
+      console.log('adding movement');
+    }
     logTime(clock.getElapsedTime());
 
     // const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);

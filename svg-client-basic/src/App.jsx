@@ -13,11 +13,20 @@ import Caption from './components/Caption';
 // import StreetscapesCompressed from './components/StreetscapesCompressed';
 // import Background from './components/Background';
 
+// addMovement: false,
+// movementPosition: null,
+// movementDur: null,
+
 function App(props) {
-  const { previousPos, nextPos, currentPosition, posNumber, logTime } = props;
+  const { previousPos, nextPos, currentPosition, posNumber, logTime, movementBeingAdded } = props;
   return (
     <div className="App">
-      <AnimatedScene posNumber={posNumber} logTime={logTime} currentPosition={currentPosition} />
+      <AnimatedScene
+        movementBeingAdded={movementBeingAdded}
+        posNumber={posNumber}
+        logTime={logTime}
+        currentPosition={currentPosition}
+      />
       <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10} />
@@ -40,6 +49,7 @@ App.propTypes = {
   nextPos: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
   logTime: PropTypes.func.isRequired,
+  movementBeingAdded: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
 };
