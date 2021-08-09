@@ -4,13 +4,37 @@ const defaultState = {
   animationTime: null,
   inReverse: false,
   elapsedTime: 0,
+  animationsInProgress: [],
+  currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
 };
 
 const mainReducer = (state = defaultState, action) => {
+  const tempAnimationsInProgress = [...state.animationsInProgress];
+  const { currentRates } = defaultState;
+
   switch (action.type) {
     case 'LOG':
       // for: animations in progress, iterate + deal with + calculate rates / positions
-      return { ...state, elapsedTime: action.payload.elapsedTime };
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        const currentAnimation = tempAnimationsInProgress[i];
+        if (currentAnimation.getEnd() > state.elapsedTime) {
+          const { x, y, z, lookX, lookY, lookZ } = currentAnimation.getRates();
+          currentRates.x += x;
+          currentRates.y += y;
+          currentRates.z += z;
+          currentRates.lookAt.x += lookX;
+          currentRates.lookAt.y += lookY;
+          currentRates.lookAt.z += lookZ;
+        } else if (currentAnimation.getEnd() < state.elapsedTime) {
+          tempAnimationsInProgress.remove(i);
+          i -= 1;
+        }
+      }
+      return {
+        ...state,
+        animationsInProgress: tempAnimationsInProgress,
+        currentRates,
+      };
     case 'NEXT':
       return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
