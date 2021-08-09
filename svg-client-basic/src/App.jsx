@@ -17,6 +17,7 @@ function App(props) {
   const {
     previousPos,
     nextPos,
+    currentPosition,
     saveAnimationTime,
     posNumber,
     animationStarted,
@@ -33,6 +34,7 @@ function App(props) {
         saveAnimationTime={saveAnimationTime}
         inReverse={inReverse}
         logTime={logTime}
+        currentPosition={currentPosition}
       />
       <Container>
         <Row>
@@ -60,6 +62,8 @@ App.propTypes = {
   saveAnimationTime: PropTypes.func.isRequired,
   inReverse: PropTypes.bool.isRequired,
   logTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currentPosition: PropTypes.object.isRequired,
 };
 App.defaultProps = {
   animationTime: 0,

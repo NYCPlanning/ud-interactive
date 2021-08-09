@@ -56,8 +56,15 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
-  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
-    props;
+  const {
+    currentPosition,
+    logTime,
+    posNumber,
+    animationStarted,
+    animationTime,
+    saveAnimationTime,
+    inReverse,
+  } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
 
@@ -84,6 +91,7 @@ export default function AnimatedScene(props) {
             {/* <Box src={model} /> */}
           </Suspense>
           <Dolly
+            currentPosition={currentPosition}
             posNumber={posNumber}
             animationStarted={animationStarted}
             animationTime={animationTime}
@@ -112,6 +120,8 @@ AnimatedScene.propTypes = {
   animationTime: PropTypes.number,
   inReverse: PropTypes.bool.isRequired,
   logTime: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currentPosition: PropTypes.object.isRequired,
 };
 
 AnimatedScene.defaultProps = {
