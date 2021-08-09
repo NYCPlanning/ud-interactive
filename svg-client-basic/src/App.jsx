@@ -7,6 +7,7 @@ import AnimatedScene from './components/AnimatedScene';
 import Previous from './components/Previous';
 import Next from './components/Next';
 import Caption from './components/Caption';
+import camPositionsCalc from './functions/camPositionsCalc';
 
 // import TestView from './components/TestView';
 // import Streetscapes from './components/Streetscapes';
@@ -17,16 +18,20 @@ import Caption from './components/Caption';
 // movementPosition: null,
 // movementDur: null,
 
+const camPositions = camPositionsCalc();
+
 function App(props) {
   const {
     updateAnimations,
-    previousPos,
-    nextPos,
-    currentPosition,
-    posNumber,
-    logTime,
     movementBeingAdded,
+    posNumber,
+    addPosition,
+    // gonna get rid of stuff below eventually
+    previousPos,
+    currentPosition,
+    logTime,
   } = props;
+  const nextPosition = camPositions[posNumber + 1];
   return (
     <div className="App">
       <AnimatedScene
@@ -43,7 +48,7 @@ function App(props) {
         <Row>
           <Col sm={5} xs={5} md={5} lg={5}>
             <Previous previousPos={previousPos} />
-            <Next nextPos={nextPos} />
+            <Next nextPos={nextPosition} addPosition={addPosition} />
           </Col>
           <Col sm={5} xs={5} md={5} lg={5}>
             <Caption posNumber={posNumber} />
@@ -54,12 +59,13 @@ function App(props) {
   );
 }
 App.propTypes = {
-  previousPos: PropTypes.func.isRequired,
-  nextPos: PropTypes.func.isRequired,
-  posNumber: PropTypes.number.isRequired,
-  logTime: PropTypes.func.isRequired,
   updateAnimations: PropTypes.func.isRequired,
   movementBeingAdded: PropTypes.bool.isRequired,
+  addPosition: PropTypes.func.isRequired,
+  posNumber: PropTypes.number.isRequired,
+  // getting rid of below
+  previousPos: PropTypes.func.isRequired,
+  logTime: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
 };

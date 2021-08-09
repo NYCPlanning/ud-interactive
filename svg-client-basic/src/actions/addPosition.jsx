@@ -1,6 +1,6 @@
 const addPosition = (position, duration) => {
   return {
-    type: 'ADDMOVEMENT',
+    type: 'ADDPOSITION',
     payload: {
       position,
       duration,
