@@ -73,6 +73,12 @@ const mainReducer = (state = defaultState, action) => {
         isMovement: true,
       };
     case 'ADDPOSITION': {
+      console.log('adding position');
+      console.log({
+        movementPosition: action.payload.position,
+        movementDur: action.payload.duration,
+        isMovement: false,
+      });
       return {
         ...state,
         movementBeingAdded: true,

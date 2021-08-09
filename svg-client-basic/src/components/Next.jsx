@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 export default function Next(props) {
-  const { nextPos } = props;
+  const { nextPos, addPosition } = props;
   return (
     <div>
       <div>
-        <Button variant="primary" onClick={nextPos}>
+        <Button variant="primary" onClick={() => addPosition(nextPos, 2)}>
           Next!
         </Button>
       </div>
@@ -16,5 +16,7 @@ export default function Next(props) {
 }
 
 Next.propTypes = {
-  nextPos: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  nextPos: PropTypes.object.isRequired,
+  addPosition: PropTypes.func.isRequired,
 };
