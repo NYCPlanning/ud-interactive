@@ -6,7 +6,6 @@ const timePerReducer = 2;
 
 const defaultState = {
   posNumber: 0,
-  inReverse: false,
   elapsedTime: 0,
   animationsInProgress: [],
   currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
