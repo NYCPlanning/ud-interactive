@@ -1,3 +1,30 @@
+import camPositionsCalc from '../functions/camPositionsCalc';
+import Animation from '../classes/Animation';
+
+const camPositions = camPositionsCalc();
+const timePerReducer = 2;
+
+function positionsDiff(firstPos, secondPos) {
+  const error = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+  if (
+    firstPos > camPositions.length ||
+    firstPos < 0 ||
+    secondPos > camPositions.length ||
+    secondPos < 0
+  ) {
+    return error;
+  }
+  const firstPosition = camPositions[firstPos];
+  const secondPosition = camPositions[secondPos];
+  const x = secondPosition.x - firstPosition.x;
+  const y = secondPosition.y - firstPosition.y;
+  const z = secondPosition.z - firstPosition.z;
+  const lookX = secondPosition.lookAt.x - firstPosition.lookAt.x;
+  const lookY = secondPosition.lookAt.y - firstPosition.lookAt.y;
+  const lookZ = secondPosition.lookAt.z - firstPosition.lookAt.z;
+  return { x, y, z, lookAt: { x: lookX, y: lookY, z: lookZ } };
+}
+
 const defaultState = {
   posNumber: 0,
   animationStarted: false,
@@ -38,7 +65,19 @@ const mainReducer = (state = defaultState, action) => {
       tempAnimationsInProgress.push(action.payload.animation);
       return { ...state, animationsInProgress: tempAnimationsInProgress };
     case 'NEXT':
-      return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
+      tempAnimationsInProgress.push(
+        new Animation(
+          state.elapsedTime,
+          state.elapsedTime + timePerReducer,
+          positionsDiff(state.posNumber, state.posNumber + 1)
+        )
+      );
+      return {
+        ...state,
+        posNumber: state.posNumber + 1,
+        animationsInProgress: tempAnimationsInProgress,
+      };
+    // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
       if (state.posNumber === 0) {
         return state;

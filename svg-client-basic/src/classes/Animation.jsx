@@ -1,4 +1,4 @@
-class Animation {
+export default class Animation {
   constructor(startTime, endTime, movement) {
     this.startTime = startTime;
     this.endTime = endTime;
@@ -13,7 +13,7 @@ class Animation {
     return this.endTime;
   }
 
-  getRate() {
+  getRates() {
     const duration = this.getDuration();
     const x = this.movement.x / duration;
     const y = this.movement.y / duration;
