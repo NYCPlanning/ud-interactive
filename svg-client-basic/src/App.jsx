@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -25,18 +24,10 @@ function App(props) {
     animationTime,
     inReverse,
     logTime,
-    addAnimation,
-    addMovement,
-    newMovement,
-    newMovementDur,
   } = props;
   return (
     <div className="App">
       <AnimatedScene
-        addAnimation={addAnimation}
-        addMovement={addMovement}
-        newMovement={newMovement}
-        newMovementDur={newMovementDur}
         posNumber={posNumber}
         animationStarted={animationStarted}
         animationTime={animationTime}
