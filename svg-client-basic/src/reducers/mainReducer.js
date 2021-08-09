@@ -11,7 +11,6 @@ const defaultState = {
 const mainReducer = (state = defaultState, action) => {
   const tempAnimationsInProgress = [...state.animationsInProgress];
   const { currentRates } = defaultState;
-
   switch (action.type) {
     case 'LOG':
       // for: animations in progress, iterate + deal with + calculate rates / positions
@@ -35,6 +34,9 @@ const mainReducer = (state = defaultState, action) => {
         animationsInProgress: tempAnimationsInProgress,
         currentRates,
       };
+    case 'ADDANIM':
+      tempAnimationsInProgress.push(action.payload.animation);
+      return { ...state, animationsInProgress: tempAnimationsInProgress };
     case 'NEXT':
       return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
