@@ -61,6 +61,8 @@ const mainReducer = (state = defaultState, action) => {
         animationsInProgress: tempAnimationsInProgress,
         currentRates,
       };
+    case 'UPDATE_ANIMATIONS':
+      return { ...state, currAnimStartTime: action.payload.time, movementBeingAdded: false };
     case 'ADDMOVEMENT':
       return {
         ...state,
@@ -83,6 +85,7 @@ const mainReducer = (state = defaultState, action) => {
       return {
         ...state,
         posNumber: state.posNumber + 1,
+        movementBeingAdded: true,
         animationsInProgress: tempAnimationsInProgress,
       };
     // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
