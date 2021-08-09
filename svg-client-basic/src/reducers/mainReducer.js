@@ -11,6 +11,7 @@ const defaultState = {
   movementBeingAdded: false,
   movementPosition: null,
   movementDur: null,
+  isMovement: null,
   currAnimStartTime: 0,
 
   currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
@@ -69,7 +70,17 @@ const mainReducer = (state = defaultState, action) => {
         movementBeingAdded: true,
         movementPosition: action.payload.movement,
         movementDur: action.payload.time,
+        isMovement: true,
       };
+    case 'ADDPOSITION': {
+      return {
+        ...state,
+        movementBeingAdded: true,
+        movementPosition: action.payload.camPositions,
+        movementDur: action.payload.time,
+        isMovement: false,
+      };
+    }
     case 'ADDANIM':
       tempAnimationsInProgress.push(action.payload.animation);
       return { ...state, animationsInProgress: tempAnimationsInProgress };
