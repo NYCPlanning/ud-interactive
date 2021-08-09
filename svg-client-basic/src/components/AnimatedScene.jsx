@@ -56,7 +56,7 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
-  const { currentPosition, logTime, movementBeingAdded } = props;
+  const { currentPosition, logTime, movementBeingAdded, updateAnimations } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
   return (
@@ -74,6 +74,7 @@ export default function AnimatedScene(props) {
             currentPosition={currentPosition}
             logTime={logTime}
             movementBeingAdded={movementBeingAdded}
+            updateAnimations={updateAnimations}
           />
         </Canvas>
       </div>
@@ -84,6 +85,7 @@ export default function AnimatedScene(props) {
 AnimatedScene.propTypes = {
   logTime: PropTypes.func.isRequired,
   movementBeingAdded: PropTypes.bool.isRequired,
+  updateAnimations: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
 };

@@ -18,11 +18,20 @@ import Caption from './components/Caption';
 // movementDur: null,
 
 function App(props) {
-  const { previousPos, nextPos, currentPosition, posNumber, logTime, movementBeingAdded } = props;
+  const {
+    updateAnimations,
+    previousPos,
+    nextPos,
+    currentPosition,
+    posNumber,
+    logTime,
+    movementBeingAdded,
+  } = props;
   return (
     <div className="App">
       <AnimatedScene
         movementBeingAdded={movementBeingAdded}
+        updateAnimations={updateAnimations}
         posNumber={posNumber}
         logTime={logTime}
         currentPosition={currentPosition}
@@ -49,6 +58,7 @@ App.propTypes = {
   nextPos: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
   logTime: PropTypes.func.isRequired,
+  updateAnimations: PropTypes.func.isRequired,
   movementBeingAdded: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
