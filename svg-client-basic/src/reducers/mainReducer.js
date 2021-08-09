@@ -11,14 +11,12 @@ const defaultState = {
   addMovement: false,
   newMovement: {},
   newMovementDur: 0,
-  animationsInProgress: [
-    new Animation(Animation.calcMovement(camPositions[0], camPositions[1]), 0, 2),
-  ],
+  animationsInProgress: [],
   sortedEndTimes: [],
   currentAnimationStartTime: 0,
-  currentAnimationStartPosition: camPositions[0],
-  currentAnimationEndTime: 10,
-  currentAnimationEndPosition: camPositions[1],
+  currentAnimationStartPosition: {},
+  currentAnimationEndTime: 0,
+  currentAnimationEndPosition: {},
 };
 
 const mainReducer = (state = defaultState, action) => {
