@@ -56,15 +56,7 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
-  const {
-    currentPosition,
-    logTime,
-    posNumber,
-    animationStarted,
-    animationTime,
-    saveAnimationTime,
-    inReverse,
-  } = props;
+  const { currentPosition, logTime } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
   return (
@@ -86,16 +78,7 @@ export default function AnimatedScene(props) {
 }
 
 AnimatedScene.propTypes = {
-  posNumber: PropTypes.number.isRequired,
-  saveAnimationTime: PropTypes.func.isRequired,
-  animationStarted: PropTypes.bool.isRequired,
-  animationTime: PropTypes.number,
-  inReverse: PropTypes.bool.isRequired,
   logTime: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
-};
-
-AnimatedScene.defaultProps = {
-  animationTime: 0,
 };
