@@ -64,54 +64,16 @@ function getTimePer(inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const {
-    currentPosition,
-    logTime,
-    posNumber,
-    animationStarted,
-    animationTime,
-    saveAnimationTime,
-    inReverse,
-  } = props;
+  const { currentPosition, logTime } = props;
 
   useFrame(({ clock, camera }) => {
     // let currentAnimProgress =
     //   (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
-    // console.log(clock.getElapsedTime());
-    // console.log(animationTime); // null
-    // console.log(getTimePer(camPositions, inReverse, posNumber)); // null
     logTime(clock.getElapsedTime());
-
-    // if (animationStarted) {
-    //   // console.log('animation started in Dolly');
-    //   saveAnimationTime(clock.getElapsedTime());
-    //   currentAnimProgress = 0;
-    // }
-    // if (currentAnimProgress > 1) {
-    //   currentAnimProgress = 1;
-    // }
-    // // console.log(currentAnimProgress);
-
-    // const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
-    // const oldPositions = camPositions[oldPos];
-    // const newPositions = camPositions[newPos];
-
-    // const oldLookAt = camPositions[oldPos].lookAt;
-    // const newLookAt = camPositions[newPos].lookAt;
 
     // const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
     // const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
 
-    // const dollyDebugger = (
-    //   <DollyDebugger
-    //     oldPositions={oldPositions}
-    //     newPositions={newPositions}
-    //     oldLookAt={oldLookAt}
-    //     newLookAt={newLookAt}
-    //     currentPosition={currentPosition}
-    //     currentLookAt={currentLookAt}
-    //   />
-    // );
     // console.log(
     //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
     //     newPositions
@@ -121,17 +83,10 @@ export default function Dolly(props) {
     //     currentLookAt
     //   )} \n currentAnimProgress: ${currentAnimProgress}`
     // );
-    // camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.lookAt(
       new Vector3(currentPosition.lookAt.x, currentPosition.lookAt.y, currentPosition.lookAt.z)
     );
-
-    // eslint-disable-next-line no-param-reassign
-    // camera.fov = currentPosition.fov;
-    // camera.lookAt(currentLookAt);
-    // camera.updateProjectionMatrix();
-    // return dollyDebugger;
   });
   return null;
 }

@@ -14,28 +14,10 @@ import Caption from './components/Caption';
 // import Background from './components/Background';
 
 function App(props) {
-  const {
-    previousPos,
-    nextPos,
-    currentPosition,
-    saveAnimationTime,
-    posNumber,
-    animationStarted,
-    animationTime,
-    inReverse,
-    logTime,
-  } = props;
+  const { previousPos, nextPos, currentPosition, posNumber, logTime } = props;
   return (
     <div className="App">
-      <AnimatedScene
-        posNumber={posNumber}
-        animationStarted={animationStarted}
-        animationTime={animationTime}
-        saveAnimationTime={saveAnimationTime}
-        inReverse={inReverse}
-        logTime={logTime}
-        currentPosition={currentPosition}
-      />
+      <AnimatedScene posNumber={posNumber} logTime={logTime} currentPosition={currentPosition} />
       <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10} />
@@ -57,16 +39,9 @@ App.propTypes = {
   previousPos: PropTypes.func.isRequired,
   nextPos: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
-  animationStarted: PropTypes.bool.isRequired,
-  animationTime: PropTypes.number,
-  saveAnimationTime: PropTypes.func.isRequired,
-  inReverse: PropTypes.bool.isRequired,
   logTime: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
-};
-App.defaultProps = {
-  animationTime: 0,
 };
 
 export default App;
