@@ -30,6 +30,7 @@ function App(props) {
     currAnimStartPos,
     currAnimEndTime,
     currAnimEndPos,
+    addMovement,
     // gonna get rid of stuff below eventually
     logTimePos,
     previousPos,
@@ -37,6 +38,7 @@ function App(props) {
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
   // console.log(JSON.stringify(testObj));
   const nextPosition = camPositions[posNumber + 1];
+  const previousPosition = camPositions[posNumber - 1];
   return (
     <div className="App">
       <AnimatedScene
@@ -55,7 +57,7 @@ function App(props) {
         </Row>
         <Row>
           <Col sm={5} xs={5} md={5} lg={5}>
-            <Previous previousPos={previousPos} />
+            <Previous previousPos={previousPosition} addPosition={addPosition} />
             <Next nextPos={nextPosition} addPosition={addPosition} />
           </Col>
           <Col sm={5} xs={5} md={5} lg={5}>
@@ -70,6 +72,7 @@ App.propTypes = {
   updateAnimations: PropTypes.func.isRequired,
   movementBeingAdded: PropTypes.bool.isRequired,
   addPosition: PropTypes.func.isRequired,
+  addMovement: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
   currAnimStartTime: PropTypes.number.isRequired,
   logTimePos: PropTypes.func.isRequired,
