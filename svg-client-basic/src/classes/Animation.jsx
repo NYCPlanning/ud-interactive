@@ -12,6 +12,7 @@ export default class Animation {
         z: positionB.lookAt.z - positionA.lookAt.z,
       },
     };
+    console.log(this.movement);
   }
 
   getDuration() {
@@ -33,29 +34,21 @@ export default class Animation {
     return { x, y, z, lookX, lookY, lookZ };
   }
 
-  addMovement(otherMovement, duration) {
+  addPositionChanges(otherMovement, duration) {
     const movementFraction = duration / this.getDuration();
-    const x = otherMovement.x + this.movement.x * movementFraction;
-    const y = otherMovement.y + this.movement.y * movementFraction;
-    const z = otherMovement.z + this.movement.z * movementFraction;
-    const lookX = otherMovement.lookAt.x + this.movement.lookAt.x * movementFraction;
-    const lookY = otherMovement.lookAt.y + this.movement.lookAt.y * movementFraction;
-    const lookZ = otherMovement.lookAt.z + this.movement.lookAt.z * movementFraction;
     return {
-      x,
-      y,
-      z,
+      x: otherMovement.x + this.movement.x * movementFraction,
+      y: otherMovement.y + this.movement.y * movementFraction,
+      z: otherMovement.z + this.movement.z * movementFraction,
       lookAt: {
-        x: lookX,
-        y: lookY,
-        z: lookZ,
+        x: otherMovement.lookAt.x + this.movement.lookAt.x * movementFraction,
+        y: otherMovement.lookAt.y + this.movement.lookAt.y * movementFraction,
+        z: otherMovement.lookAt.z + this.movement.lookAt.z * movementFraction,
       },
     };
   }
 
   toJSON() {
-    return `startTime: ${this.startTime}, endTime: ${this.endTime}, movement: ${JSON.stringify(
-      this.movement
-    )}`;
+    return { startTime: this.startTime, endTime: this.endTime, movement: this.movement };
   }
 }

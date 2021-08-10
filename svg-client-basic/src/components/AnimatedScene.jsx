@@ -56,9 +56,20 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
-  const { currentPosition, logTime, movementBeingAdded, updateAnimations } = props;
+  const {
+    movementBeingAdded,
+    updateAnimations,
+    currAnimStartTime,
+    currAnimStartPos,
+    currAnimEndTime,
+    currAnimEndPos,
+    currentPosition,
+    logTime,
+  } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
+  const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
+  console.log(JSON.stringify(testObj));
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -71,10 +82,14 @@ export default function AnimatedScene(props) {
             <FromGLTF src={src} />
           </Suspense>
           <Dolly
-            currentPosition={currentPosition}
-            logTime={logTime}
             movementBeingAdded={movementBeingAdded}
             updateAnimations={updateAnimations}
+            currAnimStartTime={currAnimStartTime}
+            currAnimStartPos={currAnimStartPos}
+            currAnimEndTime={currAnimEndTime}
+            currAnimEndPos={currAnimEndPos}
+            currentPosition={currentPosition}
+            logTime={logTime}
           />
         </Canvas>
       </div>
@@ -83,9 +98,15 @@ export default function AnimatedScene(props) {
 }
 
 AnimatedScene.propTypes = {
-  logTime: PropTypes.func.isRequired,
   movementBeingAdded: PropTypes.bool.isRequired,
   updateAnimations: PropTypes.func.isRequired,
+  currAnimStartTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimStartPos: PropTypes.object.isRequired,
+  currAnimEndTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimEndPos: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currentPosition: PropTypes.object.isRequired,
+  logTime: PropTypes.func.isRequired,
 };

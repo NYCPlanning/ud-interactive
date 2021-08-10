@@ -26,17 +26,27 @@ function App(props) {
     movementBeingAdded,
     posNumber,
     addPosition,
+    currAnimStartTime,
+    currAnimStartPos,
+    currAnimEndTime,
+    currAnimEndPos,
     // gonna get rid of stuff below eventually
     previousPos,
     currentPosition,
     logTime,
   } = props;
+  const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
+  console.log(JSON.stringify(testObj));
   const nextPosition = camPositions[posNumber + 1];
   return (
     <div className="App">
       <AnimatedScene
         movementBeingAdded={movementBeingAdded}
         updateAnimations={updateAnimations}
+        currAnimStartTime={currAnimStartTime}
+        currAnimStartPos={currAnimStartPos}
+        currAnimEndTime={currAnimEndTime}
+        currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
         logTime={logTime}
         currentPosition={currentPosition}
@@ -63,6 +73,12 @@ App.propTypes = {
   movementBeingAdded: PropTypes.bool.isRequired,
   addPosition: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
+  currAnimStartTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimStartPos: PropTypes.object.isRequired,
+  currAnimEndTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimEndPos: PropTypes.object.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
   logTime: PropTypes.func.isRequired,

@@ -1,9 +1,9 @@
-export default function updateAnimations(time) {
-  console.log(time);
+export default function updateAnimations(time, currentPosition) {
   return {
     type: 'UPDATE_ANIMATIONS',
     payload: {
       time,
+      currentPosition,
     },
   };
 }

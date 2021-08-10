@@ -23,6 +23,10 @@ const mapStateToProps = (state, ownProps) => {
     posNumber: state.posNumber,
     currentPosition: state.currentPosition,
     movementBeingAdded: state.movementBeingAdded,
+    currAnimStartTime: state.currAnimStartTime,
+    currAnimStartPos: state.currAnimStartPos,
+    currAnimEndTime: state.currAnimEndTime,
+    currAnimEndPos: state.currAnimEndPos,
   };
 };
 
@@ -31,7 +35,7 @@ const mapDispatchToProps = (dispatch) => {
     previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
     logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
-    updateAnimations: (time) => dispatch(updateAnimations(time)),
+    updateAnimations: (time, currentPosition) => dispatch(updateAnimations(time, currentPosition)),
     addMovement: (movement, duration) => dispatch(addMovement(movement, duration)),
     addPosition: (position, duration) => dispatch(addPosition(position, duration)),
   };
