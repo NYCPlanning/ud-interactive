@@ -31,11 +31,11 @@ function getPositions(inReverse, posNumber, length) {
 }
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
-  //   console.log(
-  //     `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
-  //       newPositions
-  //     )} \n currentAnimProgress: ${currentAnimProgress}`
-  //   );
+  // console.log(
+  //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+  //     newPositions
+  //   )} \n currentAnimProgress: ${currentAnimProgress}`
+  // );
   // the issue is currentAnimProgress!!
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
@@ -64,33 +64,54 @@ function getTimePer(inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
-  const { updateAnimations, movementBeingAdded, currentPosition, logTime } = props;
+  const {
+    currAnimStartTime,
+    currAnimStartPos,
+    currAnimEndTime,
+    currAnimEndPos,
+    updateAnimations,
+    movementBeingAdded,
+    // currentPosition,
+    // logTime,
+  } = props;
 
   useFrame(({ clock, camera }) => {
     const elapsedTime = clock.getElapsedTime();
-    // let currentAnimProgress =
-    //   (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
-    if (movementBeingAdded) {
-      updateAnimations(elapsedTime);
+
+    const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
+    console.log(JSON.stringify(testObj));
+
+    // console.log(currAnimEndTime - currAnimStartTime);
+    let currentAnimProgress =
+      (elapsedTime - currAnimStartTime) / (currAnimEndTime - currAnimStartTime);
+    if (currentAnimProgress <= 0) {
+      currentAnimProgress = 0.001;
     }
-    logTime(clock.getElapsedTime());
-
-    // const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
-    // const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
-
-    // console.log(
-    //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
-    //     newPositions
-    //   )}\n current position: ${JSON.stringify(currentPosition)} \n old lookAt: ${JSON.stringify(
-    //     oldLookAt
-    //   )}\n new lookAt: ${JSON.stringify(newLookAt)}\n current lookAt: ${JSON.stringify(
-    //     currentLookAt
-    //   )} \n currentAnimProgress: ${currentAnimProgress}`
-    // );
-    camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
-    camera.lookAt(
-      new Vector3(currentPosition.lookAt.x, currentPosition.lookAt.y, currentPosition.lookAt.z)
+    // console.log(currentAnimProgress);
+    const currentPosition = positionCalc(currAnimStartPos, currAnimEndPos, currentAnimProgress);
+    const currentLookAt = positionCalc(
+      currAnimStartPos.lookAt,
+      currAnimEndPos.lookAt,
+      currentAnimProgress
     );
+
+    const positionWithLookAt = {
+      x: currentPosition.x,
+      y: currentPosition.y,
+      z: currentPosition.z,
+      lookAt: {
+        x: currentLookAt.x,
+        y: currentLookAt.y,
+        z: currentLookAt.z,
+      },
+    };
+
+    if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
+      updateAnimations(elapsedTime, positionWithLookAt);
+    }
+
+    camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    camera.lookAt(currentLookAt);
   });
   return null;
 }
