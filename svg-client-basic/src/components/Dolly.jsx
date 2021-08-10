@@ -1,6 +1,4 @@
 import React from 'react';
-import { Vector3 } from 'three';
-
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import DollyDebugger from './DollyDebugger';
@@ -64,6 +62,7 @@ function getTimePer(inReverse, posNumber) {
 }
 
 export default function Dolly(props) {
+<<<<<<< HEAD
   const {
     currAnimStartTime,
     currAnimStartPos,
@@ -116,6 +115,62 @@ export default function Dolly(props) {
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.lookAt(currentLookAt);
+=======
+  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
+    props;
+
+  useFrame(({ clock, camera }) => {
+    let currentAnimProgress =
+      (clock.getElapsedTime() - animationTime) / getTimePer(camPositions, inReverse, posNumber);
+    // console.log(clock.getElapsedTime());
+    // console.log(animationTime); // null
+    // console.log(getTimePer(camPositions, inReverse, posNumber)); // null
+    logTime(clock.getElapsedTime());
+    if (animationStarted) {
+      // console.log('animation started in Dolly');
+      saveAnimationTime(clock.getElapsedTime());
+      currentAnimProgress = 0;
+    }
+    if (currentAnimProgress > 1) {
+      currentAnimProgress = 1;
+    }
+    // console.log(currentAnimProgress);
+
+    const { oldPos, newPos } = getPositions(inReverse, posNumber, camPositions.length);
+    const oldPositions = camPositions[oldPos];
+    const newPositions = camPositions[newPos];
+
+    const oldLookAt = camPositions[oldPos].lookAt;
+    const newLookAt = camPositions[newPos].lookAt;
+
+    const currentPosition = positionCalc(oldPositions, newPositions, currentAnimProgress);
+    const currentLookAt = positionCalc(oldLookAt, newLookAt, currentAnimProgress);
+    // const dollyDebugger = (
+    //   <DollyDebugger
+    //     oldPositions={oldPositions}
+    //     newPositions={newPositions}
+    //     oldLookAt={oldLookAt}
+    //     newLookAt={newLookAt}
+    //     currentPosition={currentPosition}
+    //     currentLookAt={currentLookAt}
+    //   />
+    // );
+    // console.log(
+    //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+    //     newPositions
+    //   )}\n current position: ${JSON.stringify(currentPosition)} \n old lookAt: ${JSON.stringify(
+    //     oldLookAt
+    //   )}\n new lookAt: ${JSON.stringify(newLookAt)}\n current lookAt: ${JSON.stringify(
+    //     currentLookAt
+    //   )} \n currentAnimProgress: ${currentAnimProgress}`
+    // );
+    camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
+    // eslint-disable-next-line no-param-reassign
+    // camera.fov = currentPosition.fov;
+    camera.lookAt(currentLookAt);
+    // camera.updateProjectionMatrix();
+    // return dollyDebugger;
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
   });
   return null;
 }

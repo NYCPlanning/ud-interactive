@@ -37,6 +37,7 @@ export default class Animation {
     const lookZ = this.movement.lookAt.z / duration;
     return { x, y, z, lookX, lookY, lookZ };
   }
+<<<<<<< HEAD
 
   static addPositionChanges(
     currentPosition,
@@ -60,4 +61,6 @@ export default class Animation {
   toJSON() {
     return { startTime: this.startTime, endTime: this.endTime, movement: this.movement };
   }
+=======
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
 }

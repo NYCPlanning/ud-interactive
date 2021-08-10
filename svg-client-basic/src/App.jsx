@@ -22,8 +22,14 @@ const camPositions = camPositionsCalc();
 
 function App(props) {
   const {
+<<<<<<< HEAD
     updateAnimations,
     movementBeingAdded,
+=======
+    previousPos,
+    nextPos,
+    saveAnimationTime,
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
     posNumber,
     addPosition,
     currAnimStartTime,
@@ -46,6 +52,14 @@ function App(props) {
         currAnimEndTime={currAnimEndTime}
         currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
+<<<<<<< HEAD
+=======
+        animationStarted={animationStarted}
+        animationTime={animationTime}
+        saveAnimationTime={saveAnimationTime}
+        inReverse={inReverse}
+        logTime={logTime}
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
       />
       <Container>
         <Row>
@@ -69,6 +83,7 @@ App.propTypes = {
   movementBeingAdded: PropTypes.bool.isRequired,
   addPosition: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
+<<<<<<< HEAD
   currAnimStartTime: PropTypes.number.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currAnimStartPos: PropTypes.object.isRequired,
@@ -77,6 +92,16 @@ App.propTypes = {
   currAnimEndPos: PropTypes.object.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
+=======
+  animationStarted: PropTypes.bool.isRequired,
+  animationTime: PropTypes.number,
+  saveAnimationTime: PropTypes.func.isRequired,
+  inReverse: PropTypes.bool.isRequired,
+  logTime: PropTypes.func.isRequired,
+};
+App.defaultProps = {
+  animationTime: 0,
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
 };
 
 export default App;

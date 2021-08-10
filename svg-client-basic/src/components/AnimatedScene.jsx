@@ -56,6 +56,7 @@ const furnishings = [
 // };
 
 export default function AnimatedScene(props) {
+<<<<<<< HEAD
   const {
     movementBeingAdded,
     updateAnimations,
@@ -64,6 +65,10 @@ export default function AnimatedScene(props) {
     currAnimEndTime,
     currAnimEndPos,
   } = props;
+=======
+  const { logTime, posNumber, animationStarted, animationTime, saveAnimationTime, inReverse } =
+    props;
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
   const src = imports[0];
   const { height, width } = useWindowDimensions();
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
@@ -80,12 +85,21 @@ export default function AnimatedScene(props) {
             <FromGLTF src={src} />
           </Suspense>
           <Dolly
+<<<<<<< HEAD
             movementBeingAdded={movementBeingAdded}
             updateAnimations={updateAnimations}
             currAnimStartTime={currAnimStartTime}
             currAnimStartPos={currAnimStartPos}
             currAnimEndTime={currAnimEndTime}
             currAnimEndPos={currAnimEndPos}
+=======
+            posNumber={posNumber}
+            animationStarted={animationStarted}
+            animationTime={animationTime}
+            saveAnimationTime={saveAnimationTime}
+            inReverse={inReverse}
+            logTime={logTime}
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
           />
         </Canvas>
       </div>
@@ -94,6 +108,7 @@ export default function AnimatedScene(props) {
 }
 
 AnimatedScene.propTypes = {
+<<<<<<< HEAD
   movementBeingAdded: PropTypes.bool.isRequired,
   updateAnimations: PropTypes.func.isRequired,
   currAnimStartTime: PropTypes.number.isRequired,
@@ -103,4 +118,16 @@ AnimatedScene.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   currAnimEndPos: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
+=======
+  posNumber: PropTypes.number.isRequired,
+  saveAnimationTime: PropTypes.func.isRequired,
+  animationStarted: PropTypes.bool.isRequired,
+  animationTime: PropTypes.number,
+  inReverse: PropTypes.bool.isRequired,
+  logTime: PropTypes.func.isRequired,
+};
+
+AnimatedScene.defaultProps = {
+  animationTime: 0,
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
 };

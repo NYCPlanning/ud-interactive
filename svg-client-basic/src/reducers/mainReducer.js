@@ -7,6 +7,7 @@ const timePerReducer = 2;
 const defaultState = {
   posNumber: 1,
   elapsedTime: 0,
+<<<<<<< HEAD
   animationsInProgress: [new Animation(0, 2, camPositions[0], camPositions[1])],
   sortedEndTimes: [],
   movementBeingAdded: false,
@@ -17,10 +18,15 @@ const defaultState = {
   currAnimStartPos: camPositions[0],
   currAnimEndTime: 2,
   currAnimEndPos: camPositions[1],
+=======
+  animationsInProgress: [],
+  currentRates: { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } },
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
 };
 
 const mainReducer = (state = defaultState, action) => {
   const tempAnimationsInProgress = [...state.animationsInProgress];
+<<<<<<< HEAD
   let newAnimation = null;
 
   // eslint-disable-next-line prefer-const
@@ -56,6 +62,25 @@ const mainReducer = (state = defaultState, action) => {
             tempAnimationsInProgress.splice(i, 0);
             i -= 1;
           }
+=======
+  const { currentRates } = defaultState;
+  switch (action.type) {
+    case 'LOG':
+      // for: animations in progress, iterate + deal with + calculate rates / positions
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        const currentAnimation = tempAnimationsInProgress[i];
+        if (currentAnimation.getEnd() > state.elapsedTime) {
+          const { x, y, z, lookX, lookY, lookZ } = currentAnimation.getRates();
+          currentRates.x += x;
+          currentRates.y += y;
+          currentRates.z += z;
+          currentRates.lookAt.x += lookX;
+          currentRates.lookAt.y += lookY;
+          currentRates.lookAt.z += lookZ;
+        } else if (currentAnimation.getEnd() < state.elapsedTime) {
+          tempAnimationsInProgress.remove(i);
+          i -= 1;
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
         }
         return {
           ...state,
@@ -71,6 +96,7 @@ const mainReducer = (state = defaultState, action) => {
         };
         // console.log(newAnimation);
       }
+<<<<<<< HEAD
       // // console.log(action.payload.currentPosition);
       // // console.log(state.movementPosition);
       // // console.log(newAnimation.toJSON());
@@ -111,6 +137,12 @@ const mainReducer = (state = defaultState, action) => {
         movementBeingAdded: true,
         movementPosition: action.payload.position,
         movementDur: action.payload.duration,
+=======
+      return {
+        ...state,
+        animationsInProgress: tempAnimationsInProgress,
+        currentRates,
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
       };
     }
     case 'ADDANIM':
@@ -133,6 +165,7 @@ const mainReducer = (state = defaultState, action) => {
       };
     // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
     case 'PREVIOUS':
+<<<<<<< HEAD
       tempAnimationsInProgress.push(
         new Animation(
           state.elapsedTime,
@@ -141,10 +174,18 @@ const mainReducer = (state = defaultState, action) => {
           camPositions[state.posNumber - 1]
         )
       );
+=======
+      if (state.posNumber === 0) {
+        return state;
+      }
+      return { ...state, posNumber: state.posNumber - 1, animationStarted: true, inReverse: true };
+    case 'SAVEANIMATIONTIME':
+      // console.log('animation time: ' + action.payload.time);
+>>>>>>> parent of 725689e (previous / next implemented + positions updating)
       return {
         ...state,
-        posNumber: state.posNumber - 1,
-        animationsInProgress: tempAnimationsInProgress,
+        animationStarted: false,
+        animationTime: action.payload.time,
       };
     default:
       return state;
