@@ -79,7 +79,6 @@ export default function Dolly(props) {
     const elapsedTime = clock.getElapsedTime();
 
     const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
-    //
     console.log(JSON.stringify(testObj));
 
     // console.log(currAnimEndTime - currAnimStartTime);
@@ -88,7 +87,7 @@ export default function Dolly(props) {
     if (currentAnimProgress <= 0) {
       currentAnimProgress = 0.001;
     }
-    if (currentAnimProgress > 1) {
+    if (currentAnimProgress >= 1) {
       currentAnimProgress = 1;
     }
     // console.log(currentAnimProgress);
@@ -110,10 +109,9 @@ export default function Dolly(props) {
       },
     };
     logTimePos(elapsedTime, positionWithLookAt);
-
-    // if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
-    //   updateAnimations(elapsedTime, positionWithLookAt);
-    // }
+    if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
+      updateAnimations(elapsedTime, positionWithLookAt);
+    }
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.lookAt(currentLookAt);
