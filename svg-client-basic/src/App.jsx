@@ -31,6 +31,7 @@ function App(props) {
     currAnimEndTime,
     currAnimEndPos,
     // gonna get rid of stuff below eventually
+    logTimePos,
     previousPos,
   } = props;
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
@@ -46,6 +47,7 @@ function App(props) {
         currAnimEndTime={currAnimEndTime}
         currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
+        logTimePos={logTimePos}
       />
       <Container>
         <Row>
@@ -70,6 +72,7 @@ App.propTypes = {
   addPosition: PropTypes.func.isRequired,
   posNumber: PropTypes.number.isRequired,
   currAnimStartTime: PropTypes.number.isRequired,
+  logTimePos: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currAnimStartPos: PropTypes.object.isRequired,
   currAnimEndTime: PropTypes.number.isRequired,

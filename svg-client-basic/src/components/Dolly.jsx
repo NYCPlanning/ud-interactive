@@ -72,7 +72,7 @@ export default function Dolly(props) {
     updateAnimations,
     movementBeingAdded,
     // currentPosition,
-    // logTime,
+    logTimePos,
   } = props;
 
   useFrame(({ clock, camera }) => {
@@ -109,10 +109,11 @@ export default function Dolly(props) {
         z: currentLookAt.z,
       },
     };
+    logTimePos(elapsedTime, positionWithLookAt);
 
-    if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
-      updateAnimations(elapsedTime, positionWithLookAt);
-    }
+    // if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
+    //   updateAnimations(elapsedTime, positionWithLookAt);
+    // }
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.lookAt(currentLookAt);
