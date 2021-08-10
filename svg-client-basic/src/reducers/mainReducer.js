@@ -51,6 +51,12 @@ const mainReducer = (state = defaultState, action) => {
           newAnimation.getDuration()
         );
         console.log(newPosition);
+        for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+          if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
+            tempAnimationsInProgress.splice(i, 0);
+            i -= 1;
+          }
+        }
         return {
           ...state,
           currAnimStartTime: action.payload.time,
@@ -61,18 +67,14 @@ const mainReducer = (state = defaultState, action) => {
           movementDur: null,
           movementPosition: null,
           sortedEndTimes: endTimesTemp,
+          animationsInProgress: tempAnimationsInProgress,
         };
         // console.log(newAnimation);
       }
       // // console.log(action.payload.currentPosition);
       // // console.log(state.movementPosition);
       // // console.log(newAnimation.toJSON());
-      // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-      //   if (tempAnimationsInProgress[i].getEnd() < endTimesTemp[0]) {
-      //     tempAnimationsInProgress.splice(i, 0);
-      //     i -= 1;
-      //   }
-      // }
+
       // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
       //   console.log(newPosition);
       //   newPosition = tempAnimationsInProgress[i].addPositionChanges(
