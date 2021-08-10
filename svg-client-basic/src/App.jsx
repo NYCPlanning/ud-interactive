@@ -32,11 +32,9 @@ function App(props) {
     currAnimEndPos,
     // gonna get rid of stuff below eventually
     previousPos,
-    currentPosition,
-    logTime,
   } = props;
-  const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
-  console.log(JSON.stringify(testObj));
+  // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
+  // console.log(JSON.stringify(testObj));
   const nextPosition = camPositions[posNumber + 1];
   return (
     <div className="App">
@@ -48,8 +46,6 @@ function App(props) {
         currAnimEndTime={currAnimEndTime}
         currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
-        logTime={logTime}
-        currentPosition={currentPosition}
       />
       <Container>
         <Row>
@@ -81,9 +77,6 @@ App.propTypes = {
   currAnimEndPos: PropTypes.object.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
-  logTime: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  currentPosition: PropTypes.object.isRequired,
 };
 
 export default App;

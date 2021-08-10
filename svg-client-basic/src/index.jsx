@@ -21,7 +21,6 @@ const store = createStore(mainReducer);
 const mapStateToProps = (state, ownProps) => {
   return {
     posNumber: state.posNumber,
-    currentPosition: state.currentPosition,
     movementBeingAdded: state.movementBeingAdded,
     currAnimStartTime: state.currAnimStartTime,
     currAnimStartPos: state.currAnimStartPos,
@@ -34,7 +33,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
-    logTime: (elapsedTime) => dispatch(logTime(elapsedTime)),
     updateAnimations: (time, currentPosition) => dispatch(updateAnimations(time, currentPosition)),
     addMovement: (movement, duration) => dispatch(addMovement(movement, duration)),
     addPosition: (position, duration) => dispatch(addPosition(position, duration)),
