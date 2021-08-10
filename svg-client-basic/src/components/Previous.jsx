@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 export default function Previous(props) {
-  const { previousPos } = props;
+  const { previousPos, addPosition } = props;
   return (
     <div>
       <div>
-        <Button variant="primary" onClick={previousPos}>
+        <Button variant="primary" onClick={() => addPosition(previousPos, 5)}>
+          {' '}
           Previous!
         </Button>
       </div>
@@ -16,5 +17,7 @@ export default function Previous(props) {
 }
 
 Previous.propTypes = {
-  previousPos: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  previousPos: PropTypes.object.isRequired,
+  addPosition: PropTypes.func.isRequired,
 };
