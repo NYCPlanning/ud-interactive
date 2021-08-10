@@ -63,13 +63,11 @@ export default function AnimatedScene(props) {
     currAnimStartPos,
     currAnimEndTime,
     currAnimEndPos,
-    currentPosition,
-    logTime,
   } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
-  const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
-  console.log(JSON.stringify(testObj));
+  // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
+  // console.log(JSON.stringify(testObj));
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
@@ -88,8 +86,6 @@ export default function AnimatedScene(props) {
             currAnimStartPos={currAnimStartPos}
             currAnimEndTime={currAnimEndTime}
             currAnimEndPos={currAnimEndPos}
-            currentPosition={currentPosition}
-            logTime={logTime}
           />
         </Canvas>
       </div>
@@ -107,6 +103,4 @@ AnimatedScene.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   currAnimEndPos: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  currentPosition: PropTypes.object.isRequired,
-  logTime: PropTypes.func.isRequired,
 };

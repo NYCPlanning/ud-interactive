@@ -23,6 +23,10 @@ export default class Animation {
     return this.endTime;
   }
 
+  getMovement() {
+    return this.movement;
+  }
+
   getRates() {
     const duration = this.getDuration();
     const x = this.movement.x / duration;
@@ -34,16 +38,21 @@ export default class Animation {
     return { x, y, z, lookX, lookY, lookZ };
   }
 
-  addPositionChanges(otherMovement, duration) {
-    const movementFraction = duration / this.getDuration();
+  static addPositionChanges(
+    currentPosition,
+    positionToAdd,
+    currentAnimDuration,
+    toAddAnimDuration
+  ) {
+    const movementFraction = currentAnimDuration / toAddAnimDuration;
     return {
-      x: otherMovement.x + this.movement.x * movementFraction,
-      y: otherMovement.y + this.movement.y * movementFraction,
-      z: otherMovement.z + this.movement.z * movementFraction,
+      x: currentPosition.x + positionToAdd.x * movementFraction,
+      y: currentPosition.y + positionToAdd.y * movementFraction,
+      z: currentPosition.z + positionToAdd.z * movementFraction,
       lookAt: {
-        x: otherMovement.lookAt.x + this.movement.lookAt.x * movementFraction,
-        y: otherMovement.lookAt.y + this.movement.lookAt.y * movementFraction,
-        z: otherMovement.lookAt.z + this.movement.lookAt.z * movementFraction,
+        x: currentPosition.lookAt.x + positionToAdd.lookAt.x * movementFraction,
+        y: currentPosition.lookAt.y + positionToAdd.lookAt.y * movementFraction,
+        z: currentPosition.lookAt.z + positionToAdd.lookAt.z * movementFraction,
       },
     };
   }
