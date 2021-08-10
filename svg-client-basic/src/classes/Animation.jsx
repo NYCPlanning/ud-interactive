@@ -44,7 +44,8 @@ export default class Animation {
     currentAnimDuration,
     toAddAnimDuration
   ) {
-    const movementFraction = currentAnimDuration / toAddAnimDuration;
+    const movementFraction = toAddAnimDuration / currentAnimDuration;
+    // console.log(movementFraction);
     return {
       x: currentPosition.x + positionToAdd.x * movementFraction,
       y: currentPosition.y + positionToAdd.y * movementFraction,

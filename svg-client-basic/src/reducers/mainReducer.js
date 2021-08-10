@@ -31,7 +31,72 @@ const mainReducer = (state = defaultState, action) => {
   let nextEndTime = state.currAnimEndTime;
 
   switch (action.type) {
+    case 'LOG':
+      return {
+        ...state,
+        currentTime: action.payload.elapsedTime,
+        currentPos: action.payload.position,
+      };
+    case 'ADDPOSITION':
+      // console.log(state.currentPos);
+      // console.log(JSON.stringify(action.payload));
+      newAnimation = new Animation(
+        state.currentTime,
+        state.currentTime + action.payload.duration,
+        state.currentPos,
+        action.payload.position
+      );
+      console.log(state.currentPos);
+      console.log(JSON.stringify(newAnimation));
+      nextEndTime = newAnimation.getEnd();
+      console.log(nextEndTime);
+      tempAnimationsInProgress.push(newAnimation);
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        if (tempAnimationsInProgress[i].getEnd() < state.currentTime) {
+          const removedAnim = tempAnimationsInProgress.splice(i, 1);
+          console.log(`animation removed: ${() => removedAnim.toJSON()}`);
+          i -= 1;
+        }
+      }
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        if (
+          tempAnimationsInProgress[i].getEnd() < nextEndTime &&
+          tempAnimationsInProgress[i].getEnd() > state.currentTime
+        ) {
+          nextEndTime = tempAnimationsInProgress[i].getEnd();
+        }
+      }
+      console.log(nextEndTime);
+      newPosition = state.currentPos;
+
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        // console.log(nextEndTime - state.currentTime);
+        // console.log(tempAnimationsInProgress[i].getDuration());
+        newPosition = Animation.addPositionChanges(
+          newPosition,
+          tempAnimationsInProgress[i].getMovement(),
+          nextEndTime - state.currentTime,
+          tempAnimationsInProgress[i].getDuration()
+        );
+      }
+      // console.log(newPosition);
+      return {
+        ...state,
+        currAnimStartTime: state.currentTime,
+        currAnimStartPos: state.currentPos,
+        currAnimEndTime: nextEndTime,
+        currAnimEndPos: newPosition,
+        posNumber: state.posNumber + 1,
+        animationsInProgress: tempAnimationsInProgress,
+      };
     case 'UPDATE_ANIMATIONS':
+      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+        if (tempAnimationsInProgress[i].getEnd() < endTimesTemp[0]) {
+          const removedAnim = tempAnimationsInProgress.splice(i, 0);
+          console.log(`animation removed: ${removedAnim}`);
+          i -= 1;
+        }
+      }
       // // nextEndTime = state.movementDur + action.payload.time;
       // if (state.movementBeingAdded) {
       //   newAnimation = new Animation(
@@ -53,132 +118,44 @@ const mainReducer = (state = defaultState, action) => {
       //     newAnimation.getDuration()
       //   );
       //   console.log(newPosition);
-      //   return {
-      //     ...state,
-      //     currAnimStartTime: action.payload.time,
-      //     currAnimStartPos: action.payload.currentPosition,
-      //     currAnimEndTime: nextEndTime,
-      //     currAnimEndPos: newPosition,
-      //     movementBeingAdded: false,
-      //     movementDur: null,
-      //     movementPosition: null,
-      //     sortedEndTimes: endTimesTemp,
-      //   };
-      //   // console.log(newAnimation);
-      // }
-      // // console.log(action.payload.currentPosition);
-      // // console.log(state.movementPosition);
-      // // console.log(newAnimation.toJSON());
-      // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-      //   if (tempAnimationsInProgress[i].getEnd() < endTimesTemp[0]) {
-      //     tempAnimationsInProgress.splice(i, 0);
-      //     i -= 1;
-      //   }
-      // }
-      // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-      //   console.log(newPosition);
-      //   newPosition = tempAnimationsInProgress[i].addPositionChanges(
-      //     newPosition,
-      //     nextEndTime - action.payload.time
-      //   );
-      // }
-      // eslint-disable-next-line no-case-declarations
-
-      // if (nextEndTime != null && nextEndTime.length > 0) {
-      //   nextEndTime = endTimesTemp.shift();
-      // } else if (tempAnimationsInProgress != null && tempAnimationsInProgress.length > 0) {
-      //   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-      //     if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
-      //       nextEndTime = tempAnimationsInProgress[i].getEnd();
-      //     }
-      //   }
-      // } else {
-      //   console.log("couldn't find next endtime");
-      // }
-      return { ...state };
-    case 'LOG':
-      return {
-        ...state,
-        currentTime: action.payload.elapsedTime,
-        currentPos: action.payload.position,
-      };
-    case 'ADDMOVEMENT':
-      return {
-        ...state,
-        movementBeingAdded: true,
-        movementPosition: action.payload.movement,
-        movementDur: action.payload.time,
-        isMovement: true,
-      };
-    case 'ADDPOSITION':
-      console.log(state.currentPos);
-      console.log(JSON.stringify(action.payload));
-      newAnimation = new Animation(
-        state.currentTime,
-        state.currentTime + action.payload.duration,
-        state.currentPos,
-        action.payload.position
-      );
-      // endTimesTemp.push(newAnimation.getEnd());
-      // endTimesTemp.sort();
-      nextEndTime = newAnimation.getEnd();
-      // console.log(nextEndTime);
-      tempAnimationsInProgress.push(newAnimation);
-      // console.log(action.payload.currentPosition);
-      console.log(newPosition);
-      console.log(action.payload.position);
-      newPosition = Animation.addPositionChanges(
-        newPosition,
-        newAnimation.getMovement(),
-        nextEndTime - state.currentTime,
-        newAnimation.getDuration()
-      );
-      // console.log(newPosition);
       return {
         ...state,
         currAnimStartTime: state.currentTime,
         currAnimStartPos: state.currentPos,
-        currAnimEndTime: nextEndTime,
-        currAnimEndPos: newPosition,
+        currAnimEndTime: state.currentTime,
+        currAnimEndPos: state.currentPos,
         movementBeingAdded: false,
         movementDur: null,
         movementPosition: null,
         sortedEndTimes: endTimesTemp,
-        animationsInProgress: tempAnimationsInProgress,
       };
-    case 'ADDANIM':
-      tempAnimationsInProgress.push(action.payload.animation);
-      return { ...state, animationsInProgress: tempAnimationsInProgress };
-    case 'NEXT':
-      tempAnimationsInProgress.push(
-        new Animation(
-          state.elapsedTime,
-          state.elapsedTime + timePerReducer,
-          camPositions[state.posNumber],
-          camPositions[state.posNumber + 1]
-        )
-      );
-      return {
-        ...state,
-        posNumber: state.posNumber + 1,
-        movementBeingAdded: true,
-        animationsInProgress: tempAnimationsInProgress,
-      };
-    // return { ...state, posNumber: state.posNumber + 1, animationStarted: true, inReverse: false };
-    case 'PREVIOUS':
-      tempAnimationsInProgress.push(
-        new Animation(
-          state.elapsedTime,
-          state.elapsedTime + timePerReducer,
-          camPositions[state.posNumber],
-          camPositions[state.posNumber - 1]
-        )
-      );
-      return {
-        ...state,
-        posNumber: state.posNumber - 1,
-        animationsInProgress: tempAnimationsInProgress,
-      };
+    //   // console.log(newAnimation);
+    // }
+    // // console.log(action.payload.currentPosition);
+    // // console.log(state.movementPosition);
+    // // console.log(newAnimation.toJSON());
+
+    // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+    //   console.log(newPosition);
+    //   newPosition = tempAnimationsInProgress[i].addPositionChanges(
+    //     newPosition,
+    //     nextEndTime - action.payload.time
+    //   );
+    // }
+    // eslint-disable-next-line no-case-declarations
+
+    // if (nextEndTime != null && nextEndTime.length > 0) {
+    //   nextEndTime = endTimesTemp.shift();
+    // } else if (tempAnimationsInProgress != null && tempAnimationsInProgress.length > 0) {
+    //   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+    //     if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
+    //       nextEndTime = tempAnimationsInProgress[i].getEnd();
+    //     }
+    //   }
+    // } else {
+    //   console.log("couldn't find next endtime");
+    // }
+    // return { ...state };
     default:
       return state;
   }
