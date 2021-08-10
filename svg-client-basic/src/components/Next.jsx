@@ -7,7 +7,7 @@ export default function Next(props) {
   return (
     <div>
       <div>
-        <Button variant="primary" onClick={() => addPosition(nextPos, 2)}>
+        <Button variant="primary" onClick={() => addPosition(nextPos, 5)}>
           Next!
         </Button>
       </div>

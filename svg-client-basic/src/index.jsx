@@ -8,7 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import previousPos from './actions/previousPos';
 import nextPos from './actions/nextPos';
 import mainReducer from './reducers/mainReducer';
-import logTime from './actions/logTime';
+import logTimePos from './actions/logTimePos';
 import addMovement from './actions/addMovement';
 import addPosition from './actions/addPosition';
 import updateAnimations from './actions/updateAnimations';
@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     previousPos: () => dispatch(previousPos()),
     nextPos: () => dispatch(nextPos()),
+    logTimePos: (time, position) => dispatch(logTimePos(time, position)),
     updateAnimations: (time, currentPosition) => dispatch(updateAnimations(time, currentPosition)),
     addMovement: (movement, duration) => dispatch(addMovement(movement, duration)),
     addPosition: (position, duration) => dispatch(addPosition(position, duration)),

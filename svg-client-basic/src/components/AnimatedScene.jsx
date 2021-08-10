@@ -63,6 +63,7 @@ export default function AnimatedScene(props) {
     currAnimStartPos,
     currAnimEndTime,
     currAnimEndPos,
+    logTimePos,
   } = props;
   const src = imports[0];
   const { height, width } = useWindowDimensions();
@@ -86,6 +87,7 @@ export default function AnimatedScene(props) {
             currAnimStartPos={currAnimStartPos}
             currAnimEndTime={currAnimEndTime}
             currAnimEndPos={currAnimEndPos}
+            logTimePos={logTimePos}
           />
         </Canvas>
       </div>
@@ -97,6 +99,7 @@ AnimatedScene.propTypes = {
   movementBeingAdded: PropTypes.bool.isRequired,
   updateAnimations: PropTypes.func.isRequired,
   currAnimStartTime: PropTypes.number.isRequired,
+  logTimePos: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currAnimStartPos: PropTypes.object.isRequired,
   currAnimEndTime: PropTypes.number.isRequired,

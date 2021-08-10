@@ -13,10 +13,12 @@ const defaultState = {
   movementPosition: null,
   movementDur: null,
   isMovement: null,
+  currentTime: 0,
   currAnimStartTime: 0,
   currAnimStartPos: camPositions[0],
   currAnimEndTime: 2,
   currAnimEndPos: camPositions[1],
+  currentPos: {},
 };
 
 const mainReducer = (state = defaultState, action) => {
@@ -30,40 +32,40 @@ const mainReducer = (state = defaultState, action) => {
 
   switch (action.type) {
     case 'UPDATE_ANIMATIONS':
-      // nextEndTime = state.movementDur + action.payload.time;
-      if (state.movementBeingAdded) {
-        newAnimation = new Animation(
-          action.payload.time,
-          action.payload.time + state.movementDur,
-          action.payload.currentPosition,
-          state.movementPosition
-        );
-        // endTimesTemp.push(newAnimation.getEnd());
-        // endTimesTemp.sort();
-        nextEndTime = newAnimation.getEnd();
-        console.log(nextEndTime);
-        tempAnimationsInProgress.push(newAnimation);
-        console.log(action.payload.currentPosition);
-        newPosition = Animation.addPositionChanges(
-          newPosition,
-          newAnimation.getMovement(),
-          nextEndTime - action.payload.time,
-          newAnimation.getDuration()
-        );
-        console.log(newPosition);
-        return {
-          ...state,
-          currAnimStartTime: action.payload.time,
-          currAnimStartPos: action.payload.currentPosition,
-          currAnimEndTime: nextEndTime,
-          currAnimEndPos: newPosition,
-          movementBeingAdded: false,
-          movementDur: null,
-          movementPosition: null,
-          sortedEndTimes: endTimesTemp,
-        };
-        // console.log(newAnimation);
-      }
+      // // nextEndTime = state.movementDur + action.payload.time;
+      // if (state.movementBeingAdded) {
+      //   newAnimation = new Animation(
+      //     action.payload.time,
+      //     action.payload.time + state.movementDur,
+      //     action.payload.currentPosition,
+      //     state.movementPosition
+      //   );
+      //   // endTimesTemp.push(newAnimation.getEnd());
+      //   // endTimesTemp.sort();
+      //   nextEndTime = newAnimation.getEnd();
+      //   console.log(nextEndTime);
+      //   tempAnimationsInProgress.push(newAnimation);
+      //   console.log(action.payload.currentPosition);
+      //   newPosition = Animation.addPositionChanges(
+      //     newPosition,
+      //     newAnimation.getMovement(),
+      //     nextEndTime - action.payload.time,
+      //     newAnimation.getDuration()
+      //   );
+      //   console.log(newPosition);
+      //   return {
+      //     ...state,
+      //     currAnimStartTime: action.payload.time,
+      //     currAnimStartPos: action.payload.currentPosition,
+      //     currAnimEndTime: nextEndTime,
+      //     currAnimEndPos: newPosition,
+      //     movementBeingAdded: false,
+      //     movementDur: null,
+      //     movementPosition: null,
+      //     sortedEndTimes: endTimesTemp,
+      //   };
+      //   // console.log(newAnimation);
+      // }
       // // console.log(action.payload.currentPosition);
       // // console.log(state.movementPosition);
       // // console.log(newAnimation.toJSON());
@@ -94,6 +96,12 @@ const mainReducer = (state = defaultState, action) => {
       //   console.log("couldn't find next endtime");
       // }
       return { ...state };
+    case 'LOG':
+      return {
+        ...state,
+        currentTime: action.payload.elapsedTime,
+        currentPos: action.payload.position,
+      };
     case 'ADDMOVEMENT':
       return {
         ...state,
@@ -102,15 +110,42 @@ const mainReducer = (state = defaultState, action) => {
         movementDur: action.payload.time,
         isMovement: true,
       };
-    case 'ADDPOSITION': {
+    case 'ADDPOSITION':
+      console.log(state.currentPos);
       console.log(JSON.stringify(action.payload));
+      newAnimation = new Animation(
+        state.currentTime,
+        state.currentTime + action.payload.duration,
+        state.currentPos,
+        action.payload.position
+      );
+      // endTimesTemp.push(newAnimation.getEnd());
+      // endTimesTemp.sort();
+      nextEndTime = newAnimation.getEnd();
+      // console.log(nextEndTime);
+      tempAnimationsInProgress.push(newAnimation);
+      // console.log(action.payload.currentPosition);
+      console.log(newPosition);
+      console.log(action.payload.position);
+      newPosition = Animation.addPositionChanges(
+        newPosition,
+        newAnimation.getMovement(),
+        nextEndTime - state.currentTime,
+        newAnimation.getDuration()
+      );
+      // console.log(newPosition);
       return {
         ...state,
-        movementBeingAdded: true,
-        movementPosition: action.payload.position,
-        movementDur: action.payload.duration,
+        currAnimStartTime: state.currentTime,
+        currAnimStartPos: state.currentPos,
+        currAnimEndTime: nextEndTime,
+        currAnimEndPos: newPosition,
+        movementBeingAdded: false,
+        movementDur: null,
+        movementPosition: null,
+        sortedEndTimes: endTimesTemp,
+        animationsInProgress: tempAnimationsInProgress,
       };
-    }
     case 'ADDANIM':
       tempAnimationsInProgress.push(action.payload.animation);
       return { ...state, animationsInProgress: tempAnimationsInProgress };
