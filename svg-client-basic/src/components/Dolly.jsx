@@ -3,7 +3,6 @@ import { Vector3 } from 'three';
 
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import DollyDebugger from './DollyDebugger';
 import camPositionsCalc from '../functions/camPositionsCalc';
 
 const camPositions = camPositionsCalc();

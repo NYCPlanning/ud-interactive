@@ -35,6 +35,7 @@ function App(props) {
     // gonna get rid of stuff below eventually
     logTimePos,
     previousPos,
+    savePositions,
   } = props;
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
   // console.log(JSON.stringify(testObj));
@@ -43,6 +44,7 @@ function App(props) {
   return (
     <div className="App">
       <AnimatedScene
+        savePositions={savePositions}
         movementBeingAdded={movementBeingAdded}
         updateAnimations={updateAnimations}
         currAnimStartTime={currAnimStartTime}
@@ -86,6 +88,7 @@ App.propTypes = {
   currAnimEndPos: PropTypes.object.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
+  savePositions: PropTypes.func.isRequired,
 };
 
 export default App;

@@ -5,6 +5,7 @@ const camPositions = camPositionsCalc();
 const timePerReducer = 2;
 
 const defaultState = {
+  camPositions: {},
   posNumber: 1,
   elapsedTime: 0,
   animationsInProgress: [new Animation(0, 2, camPositions[0], camPositions[1])],
@@ -31,6 +32,9 @@ const mainReducer = (state = defaultState, action) => {
   let nextEndTime = state.currAnimEndTime;
 
   switch (action.type) {
+    case 'SAVEPOSITIONS':
+      console.log(action.payload.camPositions);
+      return { ...state, camPositions: action.payload.camPositions };
     case 'LOG':
       return {
         ...state,
