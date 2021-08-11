@@ -27,17 +27,6 @@ export default class Animation {
     return this.movement;
   }
 
-  getRates() {
-    const duration = this.getDuration();
-    const x = this.movement.x / duration;
-    const y = this.movement.y / duration;
-    const z = this.movement.z / duration;
-    const lookX = this.movement.lookAt.x / duration;
-    const lookY = this.movement.lookAt.y / duration;
-    const lookZ = this.movement.lookAt.z / duration;
-    return { x, y, z, lookX, lookY, lookZ };
-  }
-
   static addPositionChanges(
     currentPosition,
     positionToAdd,

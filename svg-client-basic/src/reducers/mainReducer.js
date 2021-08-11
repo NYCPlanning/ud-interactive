@@ -110,27 +110,7 @@ const mainReducer = (state = defaultState, action) => {
           i -= 1;
         }
       }
-      // // nextEndTime = state.movementDur + action.payload.time;
-      // if (state.movementBeingAdded) {
-      //   newAnimation = new Animation(
-      //     action.payload.time,
-      //     action.payload.time + state.movementDur,
-      //     action.payload.currentPosition,
-      //     state.movementPosition
-      //   );
-      //   // endTimesTemp.push(newAnimation.getEnd());
-      //   // endTimesTemp.sort();
-      //   nextEndTime = newAnimation.getEnd();
-      //   console.log(nextEndTime);
-      //   tempAnimationsInProgress.push(newAnimation);
-      //   console.log(action.payload.currentPosition);
-      //   newPosition = Animation.addPositionChanges(
-      //     newPosition,
-      //     newAnimation.getMovement(),
-      //     nextEndTime - action.payload.time,
-      //     newAnimation.getDuration()
-      //   );
-      //   console.log(newPosition);
+
       return {
         ...state,
         currAnimStartTime: state.currentTime,
@@ -142,36 +122,58 @@ const mainReducer = (state = defaultState, action) => {
         movementPosition: null,
         sortedEndTimes: endTimesTemp,
       };
-    //   // console.log(newAnimation);
-    // }
-    // // console.log(action.payload.currentPosition);
-    // // console.log(state.movementPosition);
-    // // console.log(newAnimation.toJSON());
-
-    // for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-    //   console.log(newPosition);
-    //   newPosition = tempAnimationsInProgress[i].addPositionChanges(
-    //     newPosition,
-    //     nextEndTime - action.payload.time
-    //   );
-    // }
-    // eslint-disable-next-line no-case-declarations
-
-    // if (nextEndTime != null && nextEndTime.length > 0) {
-    //   nextEndTime = endTimesTemp.shift();
-    // } else if (tempAnimationsInProgress != null && tempAnimationsInProgress.length > 0) {
-    //   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-    //     if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
-    //       nextEndTime = tempAnimationsInProgress[i].getEnd();
-    //     }
-    //   }
-    // } else {
-    //   console.log("couldn't find next endtime");
-    // }
-    // return { ...state };
     default:
       return state;
   }
 };
 
 export default mainReducer;
+
+// // nextEndTime = state.movementDur + action.payload.time;
+// if (state.movementBeingAdded) {
+//   newAnimation = new Animation(
+//     action.payload.time,
+//     action.payload.time + state.movementDur,
+//     action.payload.currentPosition,
+//     state.movementPosition
+//   );
+//   // endTimesTemp.push(newAnimation.getEnd());
+//   // endTimesTemp.sort();
+//   nextEndTime = newAnimation.getEnd();
+//   console.log(nextEndTime);
+//   tempAnimationsInProgress.push(newAnimation);
+//   console.log(action.payload.currentPosition);
+//   newPosition = Animation.addPositionChanges(
+//     newPosition,
+//     newAnimation.getMovement(),
+//     nextEndTime - action.payload.time,
+//     newAnimation.getDuration()
+//   );
+//   console.log(newPosition);
+//   // console.log(newAnimation);
+// }
+// // console.log(action.payload.currentPosition);
+// // console.log(state.movementPosition);
+// // console.log(newAnimation.toJSON());
+
+// for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+//   console.log(newPosition);
+//   newPosition = tempAnimationsInProgress[i].addPositionChanges(
+//     newPosition,
+//     nextEndTime - action.payload.time
+//   );
+// }
+// eslint-disable-next-line no-case-declarations
+
+// if (nextEndTime != null && nextEndTime.length > 0) {
+//   nextEndTime = endTimesTemp.shift();
+// } else if (tempAnimationsInProgress != null && tempAnimationsInProgress.length > 0) {
+//   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+//     if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
+//       nextEndTime = tempAnimationsInProgress[i].getEnd();
+//     }
+//   }
+// } else {
+//   console.log("couldn't find next endtime");
+// }
+// return { ...state };
