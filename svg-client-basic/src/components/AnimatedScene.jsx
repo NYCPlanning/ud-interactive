@@ -65,6 +65,7 @@ export default function AnimatedScene(props) {
     currAnimEndTime,
     currAnimEndPos,
     logTimePos,
+    savePositions,
   } = props;
   const src = imports[1];
   const { height, width } = useWindowDimensions();
@@ -82,7 +83,7 @@ export default function AnimatedScene(props) {
           <axesHelper args={[1000]} />
 
           <Suspense fallback={null}>
-            <FromGLTF src={src} />
+            <FromGLTF savePositions={savePositions} src={src} />
           </Suspense>
           <Dolly
             movementBeingAdded={movementBeingAdded}
@@ -110,4 +111,5 @@ AnimatedScene.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   currAnimEndPos: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
+  savePositions: PropTypes.func.isRequired,
 };

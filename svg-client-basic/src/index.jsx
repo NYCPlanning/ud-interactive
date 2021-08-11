@@ -12,6 +12,7 @@ import logTimePos from './actions/logTimePos';
 import addMovement from './actions/addMovement';
 import addPosition from './actions/addPosition';
 import updateAnimations from './actions/updateAnimations';
+import savePositions from './actions/savePositions';
 
 // addMovement: false,
 // movementPosition: null,
@@ -37,6 +38,7 @@ const mapDispatchToProps = (dispatch) => {
     updateAnimations: (time, currentPosition) => dispatch(updateAnimations(time, currentPosition)),
     addMovement: (movement, duration) => dispatch(addMovement(movement, duration)),
     addPosition: (position, duration) => dispatch(addPosition(position, duration)),
+    savePositions: (cameras) => dispatch(savePositions(cameras)),
   };
 };
 
