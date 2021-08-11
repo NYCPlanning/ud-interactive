@@ -7,28 +7,6 @@ import camPositionsCalc from '../functions/camPositionsCalc';
 
 const camPositions = camPositionsCalc();
 
-function getPositions(inReverse, posNumber, length) {
-  let oldPos = 0;
-  let newPos = 0;
-  if ((inReverse && posNumber === length - 1) || (!inReverse && posNumber === 0)) {
-    oldPos = posNumber;
-    newPos = posNumber;
-  } else if (posNumber < 0) {
-    oldPos = 0;
-    newPos = 0;
-  } else if (posNumber >= length) {
-    oldPos = camPositions.length - 1;
-    newPos = camPositions.length - 1;
-  } else if (inReverse) {
-    oldPos = posNumber + 1;
-    newPos = posNumber;
-  } else {
-    oldPos = posNumber - 1;
-    newPos = posNumber;
-  }
-  return { oldPos, newPos };
-}
-
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   // console.log(
   //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
@@ -45,22 +23,6 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
 }
 
 const timePer = 10;
-
-function getTimePer(inReverse, posNumber) {
-  // console.log(JSON.stringify(camPositions));
-  // console.log(inReverse);
-  // console.log(posNumber);
-  // if (posNumber < camPositions.length && posNumber >= 0) {
-  //   if (!inReverse) {
-  //     return camPositions[posNumber].timePer;
-  //   }
-  //   if (posNumber > 0) {
-  //     return camPositions[posNumber - 1].timePer;
-  //   }
-  // }
-  // console.log('uh oh, timePer not working');
-  return timePer;
-}
 
 export default function Dolly(props) {
   const {

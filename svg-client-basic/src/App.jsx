@@ -86,6 +86,8 @@ App.propTypes = {
   currAnimEndTime: PropTypes.number.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   currAnimEndPos: PropTypes.object.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  // camPositions: PropTypes.object.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
   savePositions: PropTypes.func.isRequired,
