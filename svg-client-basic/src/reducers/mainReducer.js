@@ -4,11 +4,52 @@ import Animation from '../classes/Animation';
 const camPositions = camPositionsCalc();
 const timePerReducer = 2;
 
+const fromCamerasCamPositions = [
+  {
+    x: 266.9136657714844,
+    y: 12.793675422668457,
+    z: -1009.4786987304688,
+    rotate: { x: -1.5707962925663537, y: 0, z: 0 },
+    fov: 36.24371890583853,
+    near: 27.477083206176758,
+    far: 55509.2578125,
+  },
+  {
+    x: 881.731201171875,
+    y: 1.7312639951705933,
+    z: -210.66162109375,
+    rotate: { x: -1.5707962925663537, y: 0, z: 0 },
+    fov: 40.78413978575626,
+    near: 0.8360379934310913,
+    far: 1688.9661865234375,
+  },
+  {
+    x: 198.42999267578125,
+    y: 1.9811999797821045,
+    z: -162.68356323242188,
+    rotate: { x: -1.5707962925663537, y: 0, z: 0 },
+    fov: 23.164209411993422,
+    near: 20.85152816772461,
+    far: 42124.296875,
+  },
+  {
+    x: 420.8624267578125,
+    y: 1.676400065422058,
+    z: -1126.4952392578125,
+    rotate: { x: -1.5707962925663537, y: 0, z: 0 },
+    fov: 43.03876917856519,
+    near: 7.1851630210876465,
+    far: 14515.48046875,
+  },
+];
+
 const defaultState = {
-  camPositions: {},
+  camPositions: fromCamerasCamPositions,
   posNumber: 1,
   elapsedTime: 0,
-  animationsInProgress: [new Animation(0, 2, camPositions[0], camPositions[1])],
+  animationsInProgress: [
+    new Animation(0, 2, fromCamerasCamPositions[0], fromCamerasCamPositions[1]),
+  ],
   sortedEndTimes: [],
   movementBeingAdded: false,
   movementPosition: null,
@@ -16,9 +57,9 @@ const defaultState = {
   isMovement: null,
   currentTime: 0,
   currAnimStartTime: 0,
-  currAnimStartPos: camPositions[0],
+  currAnimStartPos: fromCamerasCamPositions[0],
   currAnimEndTime: 2,
-  currAnimEndPos: camPositions[1],
+  currAnimEndPos: fromCamerasCamPositions[1],
   currentPos: {},
 };
 
@@ -174,6 +215,6 @@ export default mainReducer;
 //     }
 //   }
 // } else {
-//   console.log("couldn't find next endtime");
+//   console.log( couldn't find next endtime");
 // }
 // return { ...state };

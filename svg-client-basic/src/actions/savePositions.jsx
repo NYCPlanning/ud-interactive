@@ -26,7 +26,7 @@ function convertCameras(cameras) {
 }
 
 export default function savePositions(cameras) {
-  console.log(JSON.stringify(convertCameras(cameras)));
+  //   console.log(JSON.stringify(convertCameras(cameras)));
   return {
     type: 'SAVE_POSITIONS',
     payload: {

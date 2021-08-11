@@ -8,7 +8,7 @@ import Previous from './components/Previous';
 import Next from './components/Next';
 import Caption from './components/Caption';
 import Navigation from './components/Navigation/index';
-import camPositionsCalc from './functions/camPositionsCalc';
+// import camPositionsCalc from './functions/camPositionsCalc';
 
 // import TestView from './components/TestView';
 // import Streetscapes from './components/Streetscapes';
@@ -19,7 +19,7 @@ import camPositionsCalc from './functions/camPositionsCalc';
 // movementPosition: null,
 // movementDur: null,
 
-const camPositions = camPositionsCalc();
+// const camPositions = camPositionsCalc();
 
 function App(props) {
   const {
@@ -32,6 +32,7 @@ function App(props) {
     currAnimEndTime,
     currAnimEndPos,
     addMovement,
+    camPositions,
     // gonna get rid of stuff below eventually
     logTimePos,
     previousPos,
@@ -87,7 +88,7 @@ App.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   currAnimEndPos: PropTypes.object.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  // camPositions: PropTypes.object.isRequired,
+  camPositions: PropTypes.array.isRequired,
   // getting rid of below
   previousPos: PropTypes.func.isRequired,
   savePositions: PropTypes.func.isRequired,
