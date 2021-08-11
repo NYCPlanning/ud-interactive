@@ -79,7 +79,7 @@ export default function Dolly(props) {
     const elapsedTime = clock.getElapsedTime();
 
     const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
-    console.log(JSON.stringify(testObj));
+    // console.log(JSON.stringify(testObj));
 
     // console.log(currAnimEndTime - currAnimStartTime);
     let currentAnimProgress =

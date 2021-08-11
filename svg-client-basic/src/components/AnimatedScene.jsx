@@ -21,6 +21,7 @@ import highlights from '../assets/furnishings/furnishings_highlights.json';
 import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
 
 import streetscapeGltf from '../assets/background/rescaled-edges.glb';
+import august10Gltf from '../assets/background/2021-08-10.glb';
 import buggy from '../assets/testglb/Buggy.glb';
 
 /*
@@ -29,7 +30,7 @@ import buggy from '../assets/testglb/Buggy.glb';
  * put a cube into the scene / make it work with pointer - pointer-based interactivity
  */
 
-const imports = [streetscapeGltf];
+const imports = [streetscapeGltf, august10Gltf];
 
 const furnishings = [
   // threedfurnishings,
@@ -65,14 +66,14 @@ export default function AnimatedScene(props) {
     currAnimEndPos,
     logTimePos,
   } = props;
-  const src = imports[0];
+  const src = imports[1];
   const { height, width } = useWindowDimensions();
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
   // console.log(JSON.stringify(testObj));
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height, width }} camera={{ fov: 70, near: 10, far: 7500 }}>
+        <Canvas style={{ height: height / 2, width }} camera={{ fov: 70, near: 10, far: 7500 }}>
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <axesHelper args={[1000]} />

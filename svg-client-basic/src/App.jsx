@@ -7,6 +7,7 @@ import AnimatedScene from './components/AnimatedScene';
 import Previous from './components/Previous';
 import Next from './components/Next';
 import Caption from './components/Caption';
+import Navigation from './components/Navigation/index';
 import camPositionsCalc from './functions/camPositionsCalc';
 
 // import TestView from './components/TestView';
@@ -41,7 +42,7 @@ function App(props) {
   const previousPosition = camPositions[posNumber - 1];
   return (
     <div className="App">
-      <AnimatedScene
+      {/* <AnimatedScene
         movementBeingAdded={movementBeingAdded}
         updateAnimations={updateAnimations}
         currAnimStartTime={currAnimStartTime}
@@ -50,11 +51,13 @@ function App(props) {
         currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
         logTimePos={logTimePos}
-      />
-      <Container>
+      /> */}
+      <Navigation />
+      {/* <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10} />
         </Row>
+
         <Row>
           <Col sm={5} xs={5} md={5} lg={5}>
             <Previous previousPos={previousPosition} addPosition={addPosition} />
@@ -64,7 +67,7 @@ function App(props) {
             <Caption posNumber={posNumber} />
           </Col>
         </Row>
-      </Container>
+      </Container> */}
     </div>
   );
 }
