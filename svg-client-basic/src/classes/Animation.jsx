@@ -12,6 +12,19 @@ export default class Animation {
         z: positionB.lookAt.z - positionA.lookAt.z,
       },
     };
+    // this.movement = {
+    //   x: positionB.x - positionA.x,
+    //   y: positionB.y - positionA.y,
+    //   z: positionB.z - positionA.z,
+    //   rotate: {
+    //     x: positionB.rotate.x - positionA.rotate.x,
+    //     y: positionB.rotate.y - positionA.rotate.y,
+    //     z: positionB.rotate.z - positionA.rotate.z,
+    //   },
+    //   fov: positionB.fov - positionA.fov,
+    //   near: positionB.near - positionA.near,
+    //   far: positionB.far - positionA.far,
+    // };
     console.log(this.movement);
   }
 
@@ -34,7 +47,7 @@ export default class Animation {
     toAddAnimDuration
   ) {
     const movementFraction = toAddAnimDuration / currentAnimDuration;
-    // console.log(movementFraction);
+    console.log(movementFraction);
     return {
       x: currentPosition.x + positionToAdd.x * movementFraction,
       y: currentPosition.y + positionToAdd.y * movementFraction,
@@ -45,6 +58,19 @@ export default class Animation {
         z: currentPosition.lookAt.z + positionToAdd.lookAt.z * movementFraction,
       },
     };
+    // return {
+    //   x: currentPosition.x + positionToAdd.x * movementFraction,
+    //   y: currentPosition.y + positionToAdd.y * movementFraction,
+    //   z: currentPosition.z + positionToAdd.z * movementFraction,
+    //   rotate: {
+    //     x: currentPosition.rotate.x + positionToAdd.rotate.x * movementFraction,
+    //     y: currentPosition.rotate.y + positionToAdd.rotate.y * movementFraction,
+    //     z: currentPosition.rotate.z + positionToAdd.rotate.z * movementFraction,
+    //   },
+    //   fov: currentPosition.fov + positionToAdd.fov * movementFraction,
+    //   near: currentPosition.near + positionToAdd.near * movementFraction,
+    //   far: currentPosition.far + positionToAdd.far * movementFraction,
+    // };
   }
 
   toJSON() {

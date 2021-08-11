@@ -1,11 +1,9 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { Vector3 } from 'three';
 
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-import camPositionsCalc from '../functions/camPositionsCalc';
-
-const camPositions = camPositionsCalc();
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   // console.log(
@@ -58,8 +56,26 @@ export default function Dolly(props) {
       currAnimEndPos.lookAt,
       currentAnimProgress
     );
+    // const currentRotate = positionCalc(
+    //   currAnimStartPos.rotate,
+    //   currAnimEndPos.rotate,
+    //   currentAnimProgress
+    // );
 
-    const positionWithLookAt = {
+    // const fullPosition = {
+    //   x: currentPosition.x,
+    //   y: currentPosition.y,
+    //   z: currentPosition.z,
+    //   rotate: {
+    //     x: currentRotate.x,
+    //     y: currentRotate.y,
+    //     z: currentRotate.z,
+    //   },
+    //   fov: THREE.MathUtils.lerp(currAnimStartPos.fov, currAnimEndPos.fov, currentAnimProgress),
+    //   near: THREE.MathUtils.lerp(currAnimStartPos.near, currAnimEndPos.near, currentAnimProgress),
+    //   far: THREE.MathUtils.lerp(currAnimStartPos.far, currAnimEndPos.far, currentAnimProgress),
+    // };
+    const fullPosition = {
       x: currentPosition.x,
       y: currentPosition.y,
       z: currentPosition.z,
@@ -69,13 +85,20 @@ export default function Dolly(props) {
         z: currentLookAt.z,
       },
     };
-    logTimePos(elapsedTime, positionWithLookAt);
+
+    logTimePos(elapsedTime, fullPosition);
     if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
-      updateAnimations(elapsedTime, positionWithLookAt);
+      updateAnimations(elapsedTime, fullPosition);
     }
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
     camera.lookAt(currentLookAt);
+    // camera.rotate.x = currentRotate.x;
+    // camera.rotate.y = currentRotate.y;
+    // camera.rotate.z = currentRotate.z;
+    // camera.fov = fullPosition.fov;
+    // camera.near = fullPosition.near;
+    // camera.far = fullPosition.far;
   });
   return null;
 }
