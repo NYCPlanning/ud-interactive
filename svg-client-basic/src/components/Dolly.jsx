@@ -37,7 +37,7 @@ export default function Dolly(props) {
   useFrame(({ clock, camera }) => {
     const elapsedTime = clock.getElapsedTime();
 
-    const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
+    // const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
     // console.log(JSON.stringify(testObj));
 
     // console.log(currAnimEndTime - currAnimStartTime);
@@ -51,40 +51,42 @@ export default function Dolly(props) {
     }
     // console.log(currentAnimProgress);
     const currentPosition = positionCalc(currAnimStartPos, currAnimEndPos, currentAnimProgress);
-    const currentLookAt = positionCalc(
-      currAnimStartPos.lookAt,
-      currAnimEndPos.lookAt,
-      currentAnimProgress
-    );
-    // const currentRotate = positionCalc(
-    //   currAnimStartPos.rotate,
-    //   currAnimEndPos.rotate,
+    // const currentLookAt = positionCalc(
+    //   currAnimStartPos.lookAt,
+    //   currAnimEndPos.lookAt,
     //   currentAnimProgress
     // );
+    const currentRotate = positionCalc(
+      currAnimStartPos.rotate,
+      currAnimEndPos.rotate,
+      currentAnimProgress
+    );
+    // console.log(currentRotate);
 
-    // const fullPosition = {
-    //   x: currentPosition.x,
-    //   y: currentPosition.y,
-    //   z: currentPosition.z,
-    //   rotate: {
-    //     x: currentRotate.x,
-    //     y: currentRotate.y,
-    //     z: currentRotate.z,
-    //   },
-    //   fov: THREE.MathUtils.lerp(currAnimStartPos.fov, currAnimEndPos.fov, currentAnimProgress),
-    //   near: THREE.MathUtils.lerp(currAnimStartPos.near, currAnimEndPos.near, currentAnimProgress),
-    //   far: THREE.MathUtils.lerp(currAnimStartPos.far, currAnimEndPos.far, currentAnimProgress),
-    // };
     const fullPosition = {
       x: currentPosition.x,
       y: currentPosition.y,
       z: currentPosition.z,
-      lookAt: {
-        x: currentLookAt.x,
-        y: currentLookAt.y,
-        z: currentLookAt.z,
+      rotate: {
+        x: currentRotate.x,
+        y: currentRotate.y,
+        z: currentRotate.z,
       },
+      fov: THREE.MathUtils.lerp(currAnimStartPos.fov, currAnimEndPos.fov, currentAnimProgress),
+      near: THREE.MathUtils.lerp(currAnimStartPos.near, currAnimEndPos.near, currentAnimProgress),
+      far: THREE.MathUtils.lerp(currAnimStartPos.far, currAnimEndPos.far, currentAnimProgress),
     };
+    console.log(JSON.stringify(fullPosition));
+    // const fullPosition = {
+    //   x: currentPosition.x,
+    //   y: currentPosition.y,
+    //   z: currentPosition.z,
+    //   lookAt: {
+    //     x: currentLookAt.x,
+    //     y: currentLookAt.y,
+    //     z: currentLookAt.z,
+    //   },
+    // };
 
     logTimePos(elapsedTime, fullPosition);
     if (movementBeingAdded || elapsedTime >= currAnimEndTime) {
@@ -92,13 +94,13 @@ export default function Dolly(props) {
     }
 
     camera.position.set(currentPosition.x, currentPosition.y, currentPosition.z);
-    camera.lookAt(currentLookAt);
-    // camera.rotate.x = currentRotate.x;
-    // camera.rotate.y = currentRotate.y;
-    // camera.rotate.z = currentRotate.z;
-    // camera.fov = fullPosition.fov;
-    // camera.near = fullPosition.near;
-    // camera.far = fullPosition.far;
+    // camera.lookAt(currentLookAt);
+    camera.rotation.x = currentRotate.x;
+    camera.rotation.y = currentRotate.y;
+    camera.rotation.z = currentRotate.z;
+    camera.fov = fullPosition.fov;
+    camera.near = fullPosition.near;
+    camera.far = fullPosition.far;
   });
   return null;
 }

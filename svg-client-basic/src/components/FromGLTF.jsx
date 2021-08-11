@@ -6,6 +6,7 @@ export default function FromGLTF(props) {
   const { src, savePositions } = props;
   const { scene, cameras } = useGLTF(src);
   savePositions(cameras);
+  console.log('loaded GLTF');
   return (
     <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
   );

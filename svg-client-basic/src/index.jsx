@@ -27,6 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     currAnimStartPos: state.currAnimStartPos,
     currAnimEndTime: state.currAnimEndTime,
     currAnimEndPos: state.currAnimEndPos,
+    camPositions: state.camPositions,
   };
 };
 
