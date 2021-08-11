@@ -73,7 +73,10 @@ export default function AnimatedScene(props) {
   return (
     <div className="w-screen h-screen pointer-events-none overflow-y-hidden">
       <div className="w-full h-full three-canvas pointer-events-auto">
-        <Canvas style={{ height: height / 2, width }} camera={{ fov: 70, near: 10, far: 7500 }}>
+        <Canvas
+          style={{ height: (height * 3) / 4, width }}
+          camera={{ fov: 70, near: 10, far: 7500 }}
+        >
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           <axesHelper args={[1000]} />

@@ -1,13 +1,14 @@
 import React from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import information from './subcomponents/ViewControl/assets/information.svg';
 
 import ViewControl from './subcomponents/ViewControl';
 
-export default function Navigation() {
+export default function Navigation(props) {
+  const { nextPos, addPosition } = props;
   return (
     <div id="toolbar" className="d-inline-block navigation">
       <Dropdown className="noSelect buttonElement d-inline-block bar-padding shadow-none">
@@ -31,6 +32,7 @@ export default function Navigation() {
         </Dropdown.Menu>
       </Dropdown>
       <Button
+        onClick={() => addPosition(nextPos, 10)}
         id="next"
         className="buttonElement d-inline-block bar-padding noSelect shadow-none"
         type="button"
@@ -48,3 +50,9 @@ export default function Navigation() {
     </div>
   );
 }
+
+Navigation.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  nextPos: PropTypes.object.isRequired,
+  addPosition: PropTypes.func.isRequired,
+};

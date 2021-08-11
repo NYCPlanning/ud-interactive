@@ -42,7 +42,7 @@ function App(props) {
   const previousPosition = camPositions[posNumber - 1];
   return (
     <div className="App">
-      {/* <AnimatedScene
+      <AnimatedScene
         movementBeingAdded={movementBeingAdded}
         updateAnimations={updateAnimations}
         currAnimStartTime={currAnimStartTime}
@@ -51,8 +51,8 @@ function App(props) {
         currAnimEndPos={currAnimEndPos}
         posNumber={posNumber}
         logTimePos={logTimePos}
-      /> */}
-      <Navigation />
+      />
+      <Navigation addPosition={addPosition} nextPos={nextPosition} />
       {/* <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10} />
