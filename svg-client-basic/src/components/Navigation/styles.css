@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+#toolbar {
+  width: 100%;
+  height: 50px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: black;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.buttonElement {
+  height: 60px;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: black;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 30px;
+  background-color: white;
+  color: black;
+}
+
+#next {
+  width: 180px;
+  height: 60px;
+}

@@ -40,12 +40,21 @@ const mainReducer = (state = defaultState, action) => {
     case 'ADDPOSITION':
       // console.log(state.currentPos);
       // console.log(JSON.stringify(action.payload));
-      newAnimation = new Animation(
-        state.currentTime,
-        state.currentTime + action.payload.duration,
-        state.currentPos,
-        action.payload.position
-      );
+      if (action.payload.isMovement) {
+        newAnimation = new Animation(
+          state.currentTime,
+          state.currentTime + action.payload.duration,
+          newPosition,
+          action.payload.position
+        );
+      } else {
+        newAnimation = new Animation(
+          state.currentTime,
+          state.currentTime + action.payload.duration,
+          state.currentPos,
+          action.payload.position
+        );
+      }
       console.log(state.currentPos);
       console.log(JSON.stringify(newAnimation));
       nextEndTime = newAnimation.getEnd();
