@@ -63,7 +63,7 @@ const defaultState = {
   currentPos: {},
 };
 
-const newPosition = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+const newPosition = { x: 0, y: 0, z: 0, rotate: { x: 0, y: 0, z: 0 } };
 
 function addAnimation(state, newAnimation) {
   const tempAnimationsInProgress = [...state.animationsInProgress];
@@ -71,14 +71,13 @@ function addAnimation(state, newAnimation) {
   const endTimesTemp = [...state.sortedEndTimes];
   let nextEndTime = newAnimation.getEnd();
   // console.log(state.currentPos);
-  // console.log(JSON.stringify(newAnimation));
+  console.log(`new Animation: ${JSON.stringify(newAnimation)}`);
   // console.log(nextEndTime);
   tempAnimationsInProgress.push(newAnimation);
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     if (tempAnimationsInProgress[i].getEnd() < state.currentTime) {
-      // const removedAnim =
-      tempAnimationsInProgress.splice(i, 1);
-      // console.log(`animation removed: ${() => removedAnim.toJSON()}`);
+      const removedAnim = tempAnimationsInProgress.splice(i, 1);
+      console.log(`animation removed: ${() => removedAnim.toJSON()}`);
       i -= 1;
     }
   }
@@ -149,7 +148,7 @@ const mainReducer = (state = defaultState, action) => {
           state.currentTime,
           state.currentTime + action.payload.duration,
           newPosition,
-          action.payload.position
+          action.payload.movement
         )
       );
       return newState;
