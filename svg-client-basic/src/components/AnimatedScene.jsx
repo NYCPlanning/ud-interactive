@@ -2,15 +2,8 @@
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import PropTypes from 'prop-types';
-import * as THREE from 'three';
-import { AxesHelper, SrcColorFactor } from 'three';
-import { useLoader } from 'react-three-fiber';
-// eslint-disable-next-line import/extensions
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-import FromJSON from './FromJSON';
 import FromGLTF from './FromGLTF';
-import VisualDebugger from './VisualDebugger';
 import Dolly from './Dolly';
 import useWindowDimensions from '../useWindowDimensions';
 
@@ -56,17 +49,7 @@ const furnishings = [
 //   // posNumber: PropTypes.number.isRequired,
 // };
 
-export default function AnimatedScene(props) {
-  const {
-    movementBeingAdded,
-    updateAnimations,
-    currAnimStartTime,
-    currAnimStartPos,
-    currAnimEndTime,
-    currAnimEndPos,
-    logTimePos,
-    savePositions,
-  } = props;
+export default function AnimatedScene() {
   const src = imports[1];
   const { height, width } = useWindowDimensions();
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
@@ -83,33 +66,11 @@ export default function AnimatedScene(props) {
           {/* <axesHelper args={[1000]} /> */}
 
           <Suspense fallback={null}>
-            <FromGLTF savePositions={savePositions} src={src} />
+            <FromGLTF src={src} />
           </Suspense>
-          <Dolly
-            movementBeingAdded={movementBeingAdded}
-            updateAnimations={updateAnimations}
-            currAnimStartTime={currAnimStartTime}
-            currAnimStartPos={currAnimStartPos}
-            currAnimEndTime={currAnimEndTime}
-            currAnimEndPos={currAnimEndPos}
-            logTimePos={logTimePos}
-          />
+          <Dolly />
         </Canvas>
       </div>
     </div>
   );
 }
-
-AnimatedScene.propTypes = {
-  movementBeingAdded: PropTypes.bool.isRequired,
-  updateAnimations: PropTypes.func.isRequired,
-  currAnimStartTime: PropTypes.number.isRequired,
-  logTimePos: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  currAnimStartPos: PropTypes.object.isRequired,
-  currAnimEndTime: PropTypes.number.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  currAnimEndPos: PropTypes.object.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  savePositions: PropTypes.func.isRequired,
-};
