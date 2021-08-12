@@ -80,7 +80,7 @@ export default function AnimatedScene(props) {
         >
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
-          <axesHelper args={[1000]} />
+          {/* <axesHelper args={[1000]} /> */}
 
           <Suspense fallback={null}>
             <FromGLTF savePositions={savePositions} src={src} />
