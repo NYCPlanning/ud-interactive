@@ -8,7 +8,7 @@ import information from './subcomponents/ViewControl/assets/information.svg';
 import ViewControl from './subcomponents/ViewControl';
 
 export default function Navigation(props) {
-  const { nextPos, addPosition } = props;
+  const { nextPos, addPosition, addMovement } = props;
   return (
     <div id="toolbar" className="d-inline-block navigation">
       <Dropdown className="noSelect buttonElement d-inline-block bar-padding shadow-none">
@@ -40,10 +40,26 @@ export default function Navigation(props) {
         Next
       </Button>
       <div id="control-group" className="d-inline-block">
-        <ViewControl control="left" className="d-inline-block view-control" />
-        <ViewControl control="right" className="d-inline-block view-control" />
-        <ViewControl control="up" className="d-inline-block view-control" />
-        <ViewControl control="down" className="d-inline-block view-control" />
+        <ViewControl
+          addMovement={addMovement}
+          control="left"
+          className="d-inline-block view-control"
+        />
+        <ViewControl
+          addMovement={addMovement}
+          control="right"
+          className="d-inline-block view-control"
+        />
+        <ViewControl
+          addMovement={addMovement}
+          control="up"
+          className="d-inline-block view-control"
+        />
+        <ViewControl
+          addMovement={addMovement}
+          control="down"
+          className="d-inline-block view-control"
+        />
       </div>
       <h1 id="streetscapes-text">STREETSCAPES FOR WELLNESS</h1>
       <img id="information" className="d-inline-block" src={information} alt="information" />
@@ -55,4 +71,5 @@ Navigation.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   nextPos: PropTypes.object.isRequired,
   addPosition: PropTypes.func.isRequired,
+  addMovement: PropTypes.func.isRequired,
 };

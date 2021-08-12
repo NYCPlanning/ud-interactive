@@ -55,7 +55,7 @@ function App(props) {
         posNumber={posNumber}
         logTimePos={logTimePos}
       />
-      <Navigation addPosition={addPosition} nextPos={nextPosition} />
+      <Navigation addPosition={addPosition} addMovement={addMovement} nextPos={nextPosition} />
       {/* <Container>
         <Row>
           <Col sm={10} xs={10} md={10} lg={10} />
