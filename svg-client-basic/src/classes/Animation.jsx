@@ -13,19 +13,26 @@ export default class Animation {
     //   },
     // };
     this.movement = {
-      x: positionB.x - positionA.x,
-      y: positionB.y - positionA.y,
-      z: positionB.z - positionA.z,
+      x: Animation.dealWithNull(positionA.x, positionB.x),
+      y: Animation.dealWithNull(positionA.y, positionB.y),
+      z: Animation.dealWithNull(positionA.z, positionB.z),
       rotate: {
-        x: positionB.rotate.x - positionA.rotate.x,
-        y: positionB.rotate.y - positionA.rotate.y,
-        z: positionB.rotate.z - positionA.rotate.z,
+        x: Animation.dealWithNull(positionA.rotate.x, positionB.rotate.x),
+        y: Animation.dealWithNull(positionA.rotate.y, positionB.rotate.y),
+        z: Animation.dealWithNull(positionA.rotate.z, positionB.rotate.z),
       },
-      fov: positionB.fov - positionA.fov,
-      near: positionB.near - positionA.near,
-      far: positionB.far - positionA.far,
+      fov: Animation.dealWithNull(positionA.fov, positionB.fov),
+      near: Animation.dealWithNull(positionA.near, positionB.near),
+      far: Animation.dealWithNull(positionA.far, positionB.far),
     };
     console.log(this.movement);
+  }
+
+  static dealWithNull(attributeA, attributeB) {
+    if (attributeA != null && attributeB != null) {
+      return attributeB - attributeA;
+    }
+    return 0;
   }
 
   getDuration() {
