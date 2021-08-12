@@ -10,11 +10,11 @@ function convertCameras(cameras) {
       z: currentCamera.parent.position.z,
       rotate: {
         // eslint-disable-next-line no-underscore-dangle
-        x: currentCamera.rotation._x,
+        x: currentCamera.rotation._x + currentCamera.parent.rotation._x,
         // eslint-disable-next-line no-underscore-dangle
-        y: currentCamera.rotation._y,
+        y: currentCamera.rotation._y + currentCamera.parent.rotation._y,
         // eslint-disable-next-line no-underscore-dangle
-        z: currentCamera.rotation._z,
+        z: currentCamera.rotation._z + currentCamera.parent.rotation._z,
       },
       fov: currentCamera.fov,
       near: currentCamera.near,
@@ -22,6 +22,7 @@ function convertCameras(cameras) {
     };
     camPositions.push(currentCameraPosition);
   }
+  // console.log(JSON.stringify(camPositions));
   return camPositions;
 }
 
