@@ -63,14 +63,60 @@ const defaultState = {
   currentPos: {},
 };
 
+const newPosition = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
+
+function addAnimation(state, newAnimation) {
+  const tempAnimationsInProgress = [...state.animationsInProgress];
+  let positionToModify = { ...newPosition };
+  const endTimesTemp = [...state.sortedEndTimes];
+  let nextEndTime = newAnimation.getEnd();
+  // console.log(state.currentPos);
+  // console.log(JSON.stringify(newAnimation));
+  // console.log(nextEndTime);
+  tempAnimationsInProgress.push(newAnimation);
+  for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+    if (tempAnimationsInProgress[i].getEnd() < state.currentTime) {
+      // const removedAnim =
+      tempAnimationsInProgress.splice(i, 1);
+      // console.log(`animation removed: ${() => removedAnim.toJSON()}`);
+      i -= 1;
+    }
+  }
+  for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+    if (
+      tempAnimationsInProgress[i].getEnd() < nextEndTime &&
+      tempAnimationsInProgress[i].getEnd() > state.currentTime
+    ) {
+      nextEndTime = tempAnimationsInProgress[i].getEnd();
+    }
+  }
+  // console.log(nextEndTime);
+  positionToModify = state.currentPos;
+  for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
+    // console.log(nextEndTime - state.currentTime);
+    // console.log(tempAnimationsInProgress[i].getDuration());
+    positionToModify = Animation.addPositionChanges(
+      positionToModify,
+      tempAnimationsInProgress[i].getMovement(),
+      nextEndTime - state.currentTime,
+      tempAnimationsInProgress[i].getDuration()
+    );
+  }
+  return {
+    ...state,
+    currAnimStartTime: state.currentTime,
+    currAnimStartPos: state.currentPos,
+    currAnimEndTime: nextEndTime,
+    currAnimEndPos: positionToModify,
+    posNumber: state.posNumber + 1,
+    animationsInProgress: tempAnimationsInProgress,
+  };
+}
+
 const mainReducer = (state = defaultState, action) => {
   const tempAnimationsInProgress = [...state.animationsInProgress];
-  let newAnimation = null;
-
-  // eslint-disable-next-line prefer-const
-  let newPosition = { x: 0, y: 0, z: 0, lookAt: { x: 0, y: 0, z: 0 } };
   const endTimesTemp = [...state.sortedEndTimes];
-  let nextEndTime = state.currAnimEndTime;
+  let newState = null;
 
   switch (action.type) {
     case 'SAVEPOSITIONS':
@@ -83,66 +129,30 @@ const mainReducer = (state = defaultState, action) => {
         currentPos: action.payload.position,
       };
     case 'ADDPOSITION':
-      // console.log(state.currentPos);
-      // console.log(JSON.stringify(action.payload));
-      if (action.payload.isMovement) {
-        newAnimation = new Animation(
-          state.currentTime,
-          state.currentTime + action.payload.duration,
-          newPosition,
-          action.payload.position
-        );
-      } else {
-        newAnimation = new Animation(
+      newState = addAnimation(
+        state,
+        new Animation(
           state.currentTime,
           state.currentTime + action.payload.duration,
           state.currentPos,
           action.payload.position
-        );
-      }
-      console.log(state.currentPos);
-      console.log(JSON.stringify(newAnimation));
-      nextEndTime = newAnimation.getEnd();
-      console.log(nextEndTime);
-      tempAnimationsInProgress.push(newAnimation);
-      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-        if (tempAnimationsInProgress[i].getEnd() < state.currentTime) {
-          const removedAnim = tempAnimationsInProgress.splice(i, 1);
-          console.log(`animation removed: ${() => removedAnim.toJSON()}`);
-          i -= 1;
-        }
-      }
-      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-        if (
-          tempAnimationsInProgress[i].getEnd() < nextEndTime &&
-          tempAnimationsInProgress[i].getEnd() > state.currentTime
-        ) {
-          nextEndTime = tempAnimationsInProgress[i].getEnd();
-        }
-      }
-      console.log(nextEndTime);
-      newPosition = state.currentPos;
-
-      for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-        // console.log(nextEndTime - state.currentTime);
-        // console.log(tempAnimationsInProgress[i].getDuration());
-        newPosition = Animation.addPositionChanges(
-          newPosition,
-          tempAnimationsInProgress[i].getMovement(),
-          nextEndTime - state.currentTime,
-          tempAnimationsInProgress[i].getDuration()
-        );
-      }
+        )
+      );
+      // console.log(state.currentPos);
+      // console.log(JSON.stringify(action.payload));
       // console.log(newPosition);
-      return {
-        ...state,
-        currAnimStartTime: state.currentTime,
-        currAnimStartPos: state.currentPos,
-        currAnimEndTime: nextEndTime,
-        currAnimEndPos: newPosition,
-        posNumber: state.posNumber + 1,
-        animationsInProgress: tempAnimationsInProgress,
-      };
+      return newState;
+    case 'ADDMOVEMENT':
+      newState = addAnimation(
+        state,
+        new Animation(
+          state.currentTime,
+          state.currentTime + action.payload.duration,
+          newPosition,
+          action.payload.position
+        )
+      );
+      return newState;
     case 'UPDATE_ANIMATIONS':
       for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
         if (tempAnimationsInProgress[i].getEnd() < endTimesTemp[0]) {
