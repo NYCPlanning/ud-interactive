@@ -49,9 +49,20 @@ const furnishings = [
 //   // posNumber: PropTypes.number.isRequired,
 // };
 
-export default function AnimatedScene() {
+export default function AnimatedScene(props) {
   const src = imports[1];
   const { height, width } = useWindowDimensions();
+  const {
+    untimedAnimation,
+    setUntimedAnimation,
+    setAnimationStack,
+    currAnimStartTime,
+    currAnimStartPos,
+    currAnimEndTime,
+    currAnimEndPos,
+    setCurrentTime,
+    setCurrentPos,
+  } = props;
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
   // console.log(JSON.stringify(testObj));
   return (
@@ -68,9 +79,33 @@ export default function AnimatedScene() {
           <Suspense fallback={null}>
             <FromGLTF src={src} />
           </Suspense>
-          <Dolly />
+          <Dolly
+            setCurrentTime={setCurrentTime}
+            setCurrentPos={setCurrentPos}
+            currAnimStartTime={currAnimStartTime}
+            currAnimStartPos={currAnimStartPos}
+            currAnimEndTime={currAnimEndTime}
+            currAnimEndPos={currAnimEndPos}
+          />
         </Canvas>
       </div>
     </div>
   );
 }
+
+AnimatedScene.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  untimedAnimation: PropTypes.object.isRequired,
+  setUntimedAnimation: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  // animationStack: PropTypes.object.isRequired,
+  setAnimationStack: PropTypes.func.isRequired,
+  currAnimStartTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimStartPos: PropTypes.object.isRequired,
+  currAnimEndTime: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  currAnimEndPos: PropTypes.object.isRequired,
+  setCurrentTime: PropTypes.func.isRequired,
+  setCurrentPos: PropTypes.func.isRequired,
+};

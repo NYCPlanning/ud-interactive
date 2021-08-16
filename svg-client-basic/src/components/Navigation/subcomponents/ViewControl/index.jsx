@@ -42,7 +42,7 @@ const movementObject = [
 export default function ViewControl(props) {
   const arrows = [left, right, up, down];
   let movement = null;
-  const { control, addMovement } = props;
+  const { control } = props;
   let image = null;
   switch (control) {
     case 'left':
@@ -64,8 +64,9 @@ export default function ViewControl(props) {
     default:
       image = null;
   }
+  // onClick={() => addMovement(movement, 2)}
   return (
-    <Button className="viewcontrol-button shadow-none" onClick={() => addMovement(movement, 2)}>
+    <Button className="viewcontrol-button shadow-none">
       <img src={image} alt={`arrow pointing ${control}`} />
     </Button>
   );
@@ -73,5 +74,5 @@ export default function ViewControl(props) {
 
 ViewControl.propTypes = {
   control: PropTypes.string.isRequired,
-  addMovement: PropTypes.func.isRequired,
+  // addMovement: PropTypes.func.isRequired,
 };

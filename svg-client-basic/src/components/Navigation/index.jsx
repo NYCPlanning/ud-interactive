@@ -8,7 +8,7 @@ import information from './subcomponents/ViewControl/assets/information.svg';
 import ViewControl from './subcomponents/ViewControl';
 
 export default function Navigation(props) {
-  const { nextPos, addPosition, addMovement } = props;
+  const { setUntimedAnimation, stepNum, setStepNum, fromCamerasCamPositions } = props;
   return (
     <div id="toolbar" className="d-inline-block navigation">
       <Dropdown className="noSelect buttonElement d-inline-block bar-padding shadow-none">
@@ -32,7 +32,16 @@ export default function Navigation(props) {
         </Dropdown.Menu>
       </Dropdown>
       <Button
-        onClick={() => addPosition(nextPos, 10)}
+        onClick={
+          () =>
+            setUntimedAnimation({
+              isPosition: true,
+              duration: 5,
+              position: fromCamerasCamPositions[stepNum + 1],
+            })
+          // eslint-disable-next-line react/jsx-curly-newline
+        }
+        // eslint-disable-next-line prettier/prettier
         id="next"
         className="buttonElement d-inline-block bar-padding noSelect shadow-none"
         type="button"
@@ -41,22 +50,22 @@ export default function Navigation(props) {
       </Button>
       <div id="control-group" className="d-inline-block">
         <ViewControl
-          addMovement={addMovement}
+          // addMovement={addMovement}
           control="left"
           className="d-inline-block view-control"
         />
         <ViewControl
-          addMovement={addMovement}
+          // addMovement={addMovement}
           control="right"
           className="d-inline-block view-control"
         />
         <ViewControl
-          addMovement={addMovement}
+          // addMovement={addMovement}
           control="up"
           className="d-inline-block view-control"
         />
         <ViewControl
-          addMovement={addMovement}
+          // addMovement={addMovement}
           control="down"
           className="d-inline-block view-control"
         />
@@ -68,8 +77,13 @@ export default function Navigation(props) {
 }
 
 Navigation.propTypes = {
+  // // eslint-disable-next-line react/forbid-prop-types
+  setUntimedAnimation: PropTypes.func.isRequired,
+  stepNum: PropTypes.number.isRequired,
+  // // eslint-disable-next-line react/forbid-prop-types
+  // nextPos: PropTypes.object.isRequired,
+  setStepNum: PropTypes.func.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
-  nextPos: PropTypes.object.isRequired,
-  addPosition: PropTypes.func.isRequired,
-  addMovement: PropTypes.func.isRequired,
+  fromCamerasCamPositions: PropTypes.object.isRequired,
+  // previousPos: PropTypes.object.isRequired,
 };
