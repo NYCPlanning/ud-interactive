@@ -26,11 +26,10 @@ function positionCalc(oldPositions, newPositions, currentAnimProgress) {
 const timePer = 10;
 
 export default function Dolly(props) {
-  const { stepNum } = props;
+  const snapshot = useSnapshot(state);
 
   useFrame(({ clock, camera }) => {
     const elapsedTime = clock.getElapsedTime();
-    const snapshot = useSnapshot(state);
     const { currAnimStartPos, currAnimEndTime, currAnimStartTime, currAnimEndPos } = snapshot;
 
     const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };

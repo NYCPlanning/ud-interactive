@@ -42,7 +42,7 @@ const fromCamerasCamPositions = [
 
 export const state = proxy({
   currAnimStartTime: 0,
-  currAninStartPos: fromCamerasCamPositions[0],
+  currAnimStartPos: fromCamerasCamPositions[0],
   currAnimEndTime: 0,
   currAnimEndPos: fromCamerasCamPositions[1],
   animationsInProgress: [
@@ -57,13 +57,12 @@ export const state = proxy({
 const newPosition = { x: 0, y: 0, z: 0, rotate: { x: 0, y: 0, z: 0 } };
 
 export const addAnimation = (newAnimation) => {
-  const snapshot = useSnapshot(state);
-  const tempAnimationsInProgress = [...snapshot.animationsInProgress];
+  const tempAnimationsInProgress = [...state.animationsInProgress];
   let positionToModify = { ...newPosition };
   let nextEndTime = newAnimation.getEnd();
   tempAnimationsInProgress.push(newAnimation);
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-    if (tempAnimationsInProgress[i].getEnd() < state.currentTime) {
+    if (tempAnimationsInProgress[i].getEnd() < state.elapsedTime) {
       const removedAnim = tempAnimationsInProgress.splice(i, 1);
       console.log(`animation removed: ${() => removedAnim.toJSON()}`);
       i -= 1;
@@ -72,24 +71,24 @@ export const addAnimation = (newAnimation) => {
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     if (
       tempAnimationsInProgress[i].getEnd() < nextEndTime &&
-      tempAnimationsInProgress[i].getEnd() > state.currentTime
+      tempAnimationsInProgress[i].getEnd() > state.elapsedTime
     ) {
       nextEndTime = tempAnimationsInProgress[i].getEnd();
     }
   }
-  positionToModify = snapshot.currentPos;
+  positionToModify = state.currentPos;
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     // console.log(nextEndTime - state.currentTime);
     // console.log(tempAnimationsInProgress[i].getDuration());
     positionToModify = Animation.addPositionChanges(
       positionToModify,
       tempAnimationsInProgress[i].getMovement(),
-      nextEndTime - state.currentTime,
+      nextEndTime - state.elapsedTime,
       tempAnimationsInProgress[i].getDuration()
     );
   }
-  state.currAnimStartTime = snapshot.elapsedTime;
-  state.currAnimStartPos = snapshot.currentPos;
+  state.currAnimStartTime = state.elapsedTime;
+  state.currAnimStartPos = state.currentPos;
   state.currAnimEndTime = nextEndTime;
   state.currAnimEndPos = positionToModify;
   state.animationsInProgress = tempAnimationsInProgress;
@@ -102,55 +101,53 @@ export const updateTimePos = (time, pos) => {
 };
 
 export const addPosition = (position, duration) => {
-  const snapshot = useSnapshot(state);
   addAnimation(
-    new Animation(
-      snapshot.elapsedTime,
-      snapshot.elapsedTime + duration,
-      snapshot.currentPos,
-      position
-    )
+    new Animation(state.elapsedTime, state.elapsedTime + duration, state.currentPos, position)
   );
 };
 
 export const addMovement = (movement, duration) => {
-  const snapshot = useSnapshot(state);
   addAnimation(
-    new Animation(snapshot.elapsedTime, snapshot.elapsedTime + duration, newPosition, movement)
+    new Animation(state.elapsedTime, state.elapsedTime + duration, newPosition, movement)
   );
 };
 
-export const updateAnimations = () => {
-  const snapshot = useSnapshot(state);
-  let { nextEndTime } = snapshot;
-  const tempAnimationsInProgress = [...snapshot.animationsInProgress];
+export const updateAnimations = (time, position) => {
+  let { nextEndTime } = state;
+  const tempAnimationsInProgress = [...state.animationsInProgress];
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     if (
       tempAnimationsInProgress[i].getEnd() < nextEndTime &&
-      tempAnimationsInProgress[i].getEnd() > state.currentTime
+      tempAnimationsInProgress[i].getEnd() > time
     ) {
       nextEndTime = tempAnimationsInProgress[i].getEnd();
     }
   }
-  for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
-    if (tempAnimationsInProgress[i].getEnd() < nextEndTime) {
-      const removedAnim = tempAnimationsInProgress.splice(i, 0);
+  for (
+    let i = 0;
+    i < tempAnimationsInProgress.length || tempAnimationsInProgress.length === 0;
+    i += 1
+  ) {
+    if (
+      tempAnimationsInProgress.length !== 0 &&
+      tempAnimationsInProgress[i].getEnd() < nextEndTime
+    ) {
+      const removedAnim = tempAnimationsInProgress.splice(i, 1);
       console.log(`animation removed: ${removedAnim}`);
       i -= 1;
     }
   }
+  state.currentPos = position;
   state.nextEndTime = nextEndTime;
   state.animationsInProgress = tempAnimationsInProgress;
 };
 
 export const nextPos = () => {
-  const snapshot = useSnapshot(state);
-  state.stepNum = snapshot.stepNum + 1;
-  return fromCamerasCamPositions[snapshot.stepNum + 1];
+  state.stepNum += 1;
+  return fromCamerasCamPositions[state.stepNum + 1];
 };
 
 export const previousPos = () => {
-  const snapshot = useSnapshot(state);
-  state.stepNum = snapshot.stepNum - 1;
-  return fromCamerasCamPositions[snapshot.stepNum - 1];
+  state.stepNum -= 1;
+  return fromCamerasCamPositions[state.stepNum - 1];
 };
