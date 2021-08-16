@@ -12,18 +12,66 @@ export default class Animation {
     //     z: positionB.lookAt.z - positionA.lookAt.z,
     //   },
     // };
+    let x = 0;
+    let y = 0;
+    let z = 0;
+    if (
+      'x' in positionA &&
+      'x' in positionB &&
+      'y' in positionA &&
+      'y' in positionB &&
+      'z' in positionA &&
+      'z' in positionB
+    ) {
+      x = Animation.dealWithNull(positionA.x, positionB.x);
+      y = Animation.dealWithNull(positionA.y, positionB.y);
+      z = Animation.dealWithNull(positionA.z, positionB.z);
+    }
+
+    let rotateX = 0;
+    let rotateY = 0;
+    let rotateZ = 0;
+
+    if (
+      'rotate' in positionA &&
+      'rotate' in positionB &&
+      'x' in positionA.rotate &&
+      'x' in positionB.rotate &&
+      'y' in positionA.rotate &&
+      'y' in positionB.rotate &&
+      'z' in positionA.rotate &&
+      'z' in positionB.rotate
+    ) {
+      rotateX = Animation.dealWithNull(positionA.rotate.x, positionB.rotate.x);
+      rotateY = Animation.dealWithNull(positionA.rotate.y, positionB.rotate.y);
+      rotateZ = Animation.dealWithNull(positionA.rotate.z, positionB.rotate.z);
+    }
+
+    let fov = 30;
+    let near = 1;
+    let far = 500;
+    if ('fov' in positionA && 'fov' in positionB) {
+      fov = Animation.dealWithNull(positionA.fov, positionB.fov);
+    }
+    if ('near' in positionA && 'near' in positionB) {
+      near = Animation.dealWithNull(positionA.near, positionB.near);
+    }
+    if ('far' in positionA && 'far' in positionB) {
+      far = Animation.dealWithNull(positionA.far, positionB.far);
+    }
+
     this.movement = {
-      x: Animation.dealWithNull(positionA.x, positionB.x),
-      y: Animation.dealWithNull(positionA.y, positionB.y),
-      z: Animation.dealWithNull(positionA.z, positionB.z),
+      x,
+      y,
+      z,
       rotate: {
-        x: Animation.dealWithNull(positionA.rotate.x, positionB.rotate.x),
-        y: Animation.dealWithNull(positionA.rotate.y, positionB.rotate.y),
-        z: Animation.dealWithNull(positionA.rotate.z, positionB.rotate.z),
+        x: rotateX,
+        y: rotateY,
+        z: rotateZ,
       },
-      fov: Animation.dealWithNull(positionA.fov, positionB.fov),
-      near: Animation.dealWithNull(positionA.near, positionB.near),
-      far: Animation.dealWithNull(positionA.far, positionB.far),
+      fov,
+      near,
+      far,
     };
     console.log(this.movement);
   }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import { addMovement } from '../../../state';
 
 import left from './assets/left.png';
 import right from './assets/right.png';
@@ -40,9 +41,8 @@ const movementObject = [
 // need to come up with way in reducer to deal with movements that don't have all of the info! maybe this is just separate
 
 export default function ViewControl(props) {
-  const arrows = [left, right, up, down];
   let movement = null;
-  const { control, addMovement } = props;
+  const { control } = props;
   let image = null;
   switch (control) {
     case 'left':
@@ -73,5 +73,4 @@ export default function ViewControl(props) {
 
 ViewControl.propTypes = {
   control: PropTypes.string.isRequired,
-  addMovement: PropTypes.func.isRequired,
 };
