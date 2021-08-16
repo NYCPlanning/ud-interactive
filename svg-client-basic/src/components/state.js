@@ -142,3 +142,15 @@ export const updateAnimations = () => {
   state.nextEndTime = nextEndTime;
   state.animationsInProgress = tempAnimationsInProgress;
 };
+
+export const nextPos = () => {
+  const snapshot = useSnapshot(state);
+  state.stepNum = snapshot.stepNum + 1;
+  return fromCamerasCamPositions[snapshot.stepNum + 1];
+};
+
+export const previousPos = () => {
+  const snapshot = useSnapshot(state);
+  state.stepNum = snapshot.stepNum - 1;
+  return fromCamerasCamPositions[snapshot.stepNum - 1];
+};
