@@ -137,6 +137,7 @@ export const updateAnimations = (time, position) => {
       i -= 1;
     }
   }
+  // calc start/end pos for next animation
   state.currentPos = position;
   state.nextEndTime = nextEndTime;
   state.animationsInProgress = tempAnimationsInProgress;
