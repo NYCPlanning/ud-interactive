@@ -202,3 +202,16 @@ What would be most exciting to see?
 [The National Museum of Computing](https://mpembed.com/show/?details=1&ga=UA-32443811-1&hdir=2&m=pq6v8gMmxMw&mdir=3&minimap=2&minimaptags=0)
 
 [NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)
+
+### Precedents for Future Tone
+- [AR View Exploration](https://dribbble.com/shots/7852325-AR-View-Exploration): expanded scene, navigation directly to call out points (with the option of keeping on path), but feels sort of commercial
+
+- [AR Landscape](https://dribbble.com/shots/4591167-AR-Landscape): video-game like feel, clear directionality in navigation - more playful in tone
+
+- [High Line Augmented Reality Tour AR Walking Tour](https://dribbble.com/shots/5932457-High-Line-Augmented-Reality-AR-Walking-Tour): tour map at the top, google map-like real images, bright but professional color palette
+
+- [Plant Care AR](https://dribbble.com/shots/14433590-Plant-Care-AR): Multiple information pop ups, graph information - informative tone
+
+- **[Git v.2](https://dribbble.com/shots/15182785-Git-v-2)**: probably best precedent for the future, reads like Rhino model, bit of an in-between the video game and realistic renderings, very clean style with very clear highlighted points to navigate to, one color highlight
+
+- [City Visualization x FUI](https://dribbble.com/shots/15804115-City-Visualization-x-FUI): materialization of model (potentially making this a toggle?), clear association between point of interest and data highlights
