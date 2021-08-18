@@ -1,40 +1,30 @@
 /* eslint-disable no-param-reassign */
-import React from 'react';
-import { Vector3 } from 'three';
 
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
-
-import { proxy, useSnapshot } from 'valtio';
+import { useSnapshot } from 'valtio';
 import { state, updateTimePos, updateAnimations } from './state';
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
-  console.log(
-    `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
-      newPositions
-    )} \n currentAnimProgress: ${currentAnimProgress}`
-  );
-  // the issue is currentAnimProgress!!)
+  // console.log(
+  //   `old positions: ${JSON.stringify(oldPositions)}\n new positions: ${JSON.stringify(
+  //     newPositions
+  //   )} \n currentAnimProgress: ${currentAnimProgress}`
+  // );
   const x = THREE.MathUtils.lerp(oldPositions.x, newPositions.x, currentAnimProgress);
   const y = THREE.MathUtils.lerp(oldPositions.y, newPositions.y, currentAnimProgress);
   const z = THREE.MathUtils.lerp(oldPositions.z, newPositions.z, currentAnimProgress);
   return new THREE.Vector3(x, y, z);
-  //   return new THREE.Vector3(newPositions.x, newPositions.y, newPositions.z);
-  // return { x, y, z };
 }
 
-const timePer = 10;
-
-export default function Dolly(props) {
+export default function Dolly() {
   const snapshot = useSnapshot(state);
 
   useFrame(({ clock, camera }) => {
     const elapsedTime = clock.getElapsedTime();
     const { currAnimStartPos, currAnimEndTime, currAnimStartTime, currAnimEndPos } = snapshot;
-
-    const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
-    console.log(JSON.stringify(testObj));
-
+    // const testObj = { currAnimStartTime, currAnimEndTime, currAnimStartPos, currAnimEndPos };
+    // console.log(JSON.stringify(testObj));
     // console.log(currAnimEndTime - currAnimStartTime);
     let currentAnimProgress =
       (elapsedTime - currAnimStartTime) / (currAnimEndTime - currAnimStartTime);

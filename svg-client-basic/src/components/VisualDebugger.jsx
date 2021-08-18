@@ -5,9 +5,6 @@ import commercialView from '../assets/rhino-views/commercial-elevated.png';
 import industrialView from '../assets/rhino-views/industrial.png';
 import parkView from '../assets/rhino-views/park.png';
 import residentialView from '../assets/rhino-views/residential.png';
-import camPositionsCalc from '../functions/camPositionsCalc';
-
-const camPositions = camPositionsCalc();
 
 const rhinoViews = [commercialView, industrialView, parkView, residentialView];
 

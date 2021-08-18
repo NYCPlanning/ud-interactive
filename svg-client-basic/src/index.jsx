@@ -4,10 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// addMovement: false,
-// movementPosition: null,
-// movementDur: null,
-
 ReactDOM.render(
   <React.StrictMode>
     <App />

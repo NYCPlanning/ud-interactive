@@ -1,4 +1,4 @@
-import { proxy, useSnapshot } from 'valtio';
+import { proxy } from 'valtio';
 import Animation from '../classes/Animation';
 
 const fromCamerasCamPositions = [
@@ -63,8 +63,9 @@ export const addAnimation = (newAnimation) => {
   tempAnimationsInProgress.push(newAnimation);
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     if (tempAnimationsInProgress[i].getEnd() < state.elapsedTime) {
+      // eslint-disable-next-line no-unused-vars
       const removedAnim = tempAnimationsInProgress.splice(i, 1);
-      console.log(`animation removed: ${() => removedAnim.toJSON()}`);
+      // console.log(`animation removed: ${() => removedAnim.toJSON()}`);
       i -= 1;
     }
   }
@@ -132,8 +133,9 @@ export const updateAnimations = (time, position) => {
       tempAnimationsInProgress.length !== 0 &&
       tempAnimationsInProgress[i].getEnd() < nextEndTime
     ) {
+      // eslint-disable-next-line no-unused-vars
       const removedAnim = tempAnimationsInProgress.splice(i, 1);
-      console.log(`animation removed: ${removedAnim}`);
+      // console.log(`animation removed: ${removedAnim}`);
       i -= 1;
     }
   }
