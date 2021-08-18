@@ -1,53 +1,20 @@
-/* eslint-disable no-nested-ternary */
-import React, { Suspense, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import PropTypes from 'prop-types';
-
+import React, { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
 import FromGLTF from './FromGLTF';
 import Dolly from './Dolly';
 import useWindowDimensions from '../useWindowDimensions';
 
-import facadedetails from '../assets/furnishings/furnishings_facadedetail.json';
-import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
-import greenery from '../assets/furnishings/furnishings_greenery.json';
-import highlights from '../assets/furnishings/furnishings_highlights.json';
-import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
+// import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
+// import greenery from '../assets/furnishings/furnishings_greenery.json';
+// import highlights from '../assets/furnishings/furnishings_highlights.json';
+// import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
 
 import streetscapeGltf from '../assets/background/rescaled-edges.glb';
 import august10Gltf from '../assets/background/2021-08-10.glb';
-import buggy from '../assets/testglb/Buggy.glb';
 
-/*
- * responsiveness to window size changing
- * regaining controls / free navigation
- * put a cube into the scene / make it work with pointer - pointer-based interactivity
- */
+// const furnishings = [glassfacade, greenery, highlights, vehicleglass];
 
 const imports = [streetscapeGltf, august10Gltf];
-
-const furnishings = [
-  // threedfurnishings,
-  // facadedetails,
-  glassfacade,
-  greenery,
-  highlights,
-  vehicleglass,
-];
-
-// function Box({ url }) {
-//   const { scene } = useLoader(GLTFLoader, url);
-//   const copiedScene = useMemo(() => scene.clone(), [scene]);
-//   const prim = useRef();
-//   const [hover, setHover] = useState(false);
-
-//   return <primitive ref={prim} object={copiedScene} />;
-// }
-
-// Box.propTypes = {
-//   // eslint-disable-next-line react/forbid-prop-types
-//   url: PropTypes.object.isRequired,
-//   // posNumber: PropTypes.number.isRequired,
-// };
 
 export default function AnimatedScene() {
   const src = imports[1];
@@ -64,7 +31,6 @@ export default function AnimatedScene() {
           <pointLight position={[10, 10, 10]} />
           <ambientLight intensity={0.5} />
           {/* <axesHelper args={[1000]} /> */}
-
           <Suspense fallback={null}>
             <FromGLTF src={src} />
           </Suspense>

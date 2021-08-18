@@ -73,7 +73,7 @@ export default class Animation {
       near,
       far,
     };
-    console.log(this.movement);
+    // console.log(this.movement);
   }
 
   static dealWithNull(attributeA, attributeB) {
@@ -102,7 +102,7 @@ export default class Animation {
     toAddAnimDuration
   ) {
     const movementFraction = toAddAnimDuration / currentAnimDuration;
-    console.log(movementFraction);
+    // console.log(movementFraction);
     // return {
     //   x: currentPosition.x + positionToAdd.x * movementFraction,
     //   y: currentPosition.y + positionToAdd.y * movementFraction,

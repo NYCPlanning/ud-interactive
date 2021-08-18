@@ -1,6 +1,5 @@
 import React from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import information from './subcomponents/ViewControl/assets/information.svg';
