@@ -51,6 +51,12 @@ What characteristics do we want visible? From an urban design perspective, what 
 
 - [Bus Simulation](https://setosa.io/bus/)
 
+- [Marseille](https://marseille.laphase5.com/en) - 3d home page, 2d elements
+
+- [Microsoft Datacenter Tour](https://news.microsoft.com/stories/microsoft-datacenter-tour/)
+
+- [The Biggest Change Daylight Street](https://www.thebiggestchange.com/velux-road)
+
 2D / Line Drawing
 
 - [NYTimes 3D Tour of Senate During Impeachment Trial](https://www.nytimes.com/interactive/2020/01/23/us/politics/impeachment-senate-chamber-diagram.html)
@@ -130,6 +136,9 @@ How do we make these drawings/the website more democratic? Who can contribute? H
 - **highlighting points of interest in the 3D space**
 	- [Tomas Bata University](https://jenamdvacet.cz/) 
 	- [Eurovision](https://www.eurovisionvillage.com/)
+	- [Marseille](https://marseille.laphase5.com/en)
+	- [Microsoft Datacenter Tour](https://news.microsoft.com/stories/microsoft-datacenter-tour/)
+	- [The Biggest Change Daylight Street](https://www.thebiggestchange.com/velux-road)
 
 - **video/text/audio annotation in 3D space**
 	- [HIGHRISE One Millionth Tower Documentary](http://highrise.nfb.ca/onemillionthtower/1mt_webgl.php)
@@ -194,3 +203,17 @@ What would be most exciting to see?
 [The National Museum of Computing](https://mpembed.com/show/?details=1&ga=UA-32443811-1&hdir=2&m=pq6v8gMmxMw&mdir=3&minimap=2&minimaptags=0)
 
 [NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)
+[NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)
+
+### Precedents for Future Tone
+- [AR View Exploration](https://dribbble.com/shots/7852325-AR-View-Exploration): expanded scene, navigation directly to call out points (with the option of keeping on path), but feels sort of commercial
+
+- [AR Landscape](https://dribbble.com/shots/4591167-AR-Landscape): video-game like feel, clear directionality in navigation - more playful in tone
+
+- [High Line Augmented Reality Tour AR Walking Tour](https://dribbble.com/shots/5932457-High-Line-Augmented-Reality-AR-Walking-Tour): tour map at the top, google map-like real images, bright but professional color palette
+
+- [Plant Care AR](https://dribbble.com/shots/14433590-Plant-Care-AR): Multiple information pop ups, graph information - informative tone
+
+- **[Git v.2](https://dribbble.com/shots/15182785-Git-v-2)**: probably best precedent for the future, reads like Rhino model, bit of an in-between the video game and realistic renderings, very clean style with very clear highlighted points to navigate to, one color highlight
+
+- [City Visualization x FUI](https://dribbble.com/shots/15804115-City-Visualization-x-FUI): materialization of model (potentially making this a toggle?), clear association between point of interest and data highlights
