@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useSnapshot } from 'valtio';
-import { state, updateTimePos, updateAnimations } from './state';
+import { state, updateTimePos, updateAnimations } from '../state';
 
 function positionCalc(oldPositions, newPositions, currentAnimProgress) {
   // console.log(

@@ -5,7 +5,7 @@ import './styles.css';
 import information from './subcomponents/ViewControl/assets/information.svg';
 
 import ViewControl from './subcomponents/ViewControl';
-import { addPosition, nextPos } from '../state';
+import { addPosition, nextPos } from '../../state';
 
 export default function Navigation() {
   return (
