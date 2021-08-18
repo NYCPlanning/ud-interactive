@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import { addMovement } from '../../../state';
+import { addMovement } from '../../../../state';
 
 import left from './assets/left.png';
 import right from './assets/right.png';

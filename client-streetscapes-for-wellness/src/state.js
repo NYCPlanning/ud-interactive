@@ -1,5 +1,5 @@
 import { proxy } from 'valtio';
-import Animation from '../classes/Animation';
+import Animation from './classes/Animation';
 
 const fromCamerasCamPositions = [
   {
