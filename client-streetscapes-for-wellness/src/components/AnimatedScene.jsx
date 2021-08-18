@@ -4,20 +4,10 @@ import FromGLTF from './FromGLTF';
 import Dolly from './Dolly';
 import useWindowDimensions from '../useWindowDimensions';
 
-// import glassfacade from '../assets/furnishings/furnishings_glassfacade.json';
-// import greenery from '../assets/furnishings/furnishings_greenery.json';
-// import highlights from '../assets/furnishings/furnishings_highlights.json';
-// import vehicleglass from '../assets/furnishings/furnishings_vehicleglass.json';
-
-import streetscapeGltf from '../assets/background/rescaled-edges.glb';
-import august10Gltf from '../assets/background/2021-08-10.glb';
-
-// const furnishings = [glassfacade, greenery, highlights, vehicleglass];
-
-const imports = [streetscapeGltf, august10Gltf];
+import model from '../assets/model.glb';
 
 export default function AnimatedScene() {
-  const src = imports[1];
+  const src = model;
   const { height, width } = useWindowDimensions();
   // const testObj = { currAnimStartTime, currAnimStartPos, currAnimEndTime, currAnimEndPos };
   // console.log(JSON.stringify(testObj));

@@ -1,12 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import PropTypes from 'prop-types';
-import commercialView from '../assets/rhino-views/commercial-elevated.png';
-import industrialView from '../assets/rhino-views/industrial.png';
-import parkView from '../assets/rhino-views/park.png';
-import residentialView from '../assets/rhino-views/residential.png';
+// import commercialView from '../assets/rhino-views/commercial-elevated.png';
+// import industrialView from '../assets/rhino-views/industrial.png';
+// import parkView from '../assets/rhino-views/park.png';
+// import residentialView from '../assets/rhino-views/residential.png';
 
-const rhinoViews = [commercialView, industrialView, parkView, residentialView];
+// const rhinoViews = [commercialView, industrialView, parkView, residentialView];
+const rhinoViews = [];
 
 function getViewSRC(posNumber) {
   return rhinoViews[posNumber];
