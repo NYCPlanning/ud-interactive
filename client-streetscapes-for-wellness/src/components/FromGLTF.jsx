@@ -1,13 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useGLTF } from '@react-three/drei';
+import { ref } from 'valtio';
 
-export default function FromGLTF(props) {
-  const { src } = props;
-  const { scene } = useGLTF(src); // could add cameras and copy to state
-  // console.log('loaded GLTF');
+import { state } from '../state';
+
+
+const FromGLTF = ({ src }) => {
+  const { scene, cameras } = useGLTF(src);
+
+  // pass loaded cameras to state for navigation
+  state.cameras = ref(cameras)
+
+  // traverse the scene and adjust settings
+  scene.traverse((o) => {
+    if ( o.type === 'Mesh' && o.name === 'buildings') {
+      o.castShadow = true;
+    }
+  });
+
   return (
-    <primitive object={scene} dispose={null} scale={[3.2, 3.2, 3.2]} rotation={[0, Math.PI, 0]} />
+    <primitive
+      object={scene}
+      dispose={null}
+      // onClick={handleClick}
+    />
   );
 }
 
@@ -15,3 +32,5 @@ FromGLTF.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   src: PropTypes.string.isRequired,
 };
+
+export default FromGLTF
