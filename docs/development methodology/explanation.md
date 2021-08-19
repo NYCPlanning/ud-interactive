@@ -14,6 +14,8 @@ The motivation for this problem came from the fact that we would have to "layer"
 
 We could, instead, combine the animations. In the above example of moving from Point A to Point B and looking upwards, we could simply adjust Point B to be slightly upwards, meaning that, at the end, the viewport would be looking more up. However, this is also not how users are used to navigation; users would want to more immediately look upwards. For example, if the transition from Point A to Point B is 10 seconds long, they might expect a transition looking upwards to take a second or two. Essentially, we need some way of handling animations that occur simultaneously, but not in perfectly overlapping ways. See diagram animations-diagram-1 for explanation.
 
+![animation-diagram-1](https://raw.githubusercontent.com/NYCPlanning/ud-interactive/public-drawings-2021/docs/development%20methodology/animations-diagram-1.png)
+
 The initial thought here was to calculate the rates of change for each animated transition. For example, we would, for x, y, z, and lookAt dimensions, find the difference between Point A and Point B. We would call the difference between these two points the **movement** of the animation. From the movement, we could divide each of these coordinates by the duration of the animation to find the rate of change on each. For example, in this transition between Point A and Point B, perhaps x is moving at 1 unit / second, y is moving at - 5 units / sec, z is moving at 0 units / sec, and the same for the lookAt position.
 
 Essentially, every animation could be moving to a position (an actual place the model needs to be) or a movement (just a relative change, i.e. looking up or down). By looking at where things overlap, we could calcualte the rates at each time. Each time we log the time and position to the state, we would:
@@ -24,11 +26,15 @@ Essentially, every animation could be moving to a position (an actual place the 
 
 Given the timeline in animations-diagram-1, I've worked out the rate calculations in animations-diagram-2. 
 
+![animation-diagram-2](https://raw.githubusercontent.com/NYCPlanning/ud-interactive/public-drawings-2021/docs/development%20methodology/animations-diagram-2.png)
+
 This was a bad approach because of a few things I didn't realize initially:
 - This is extremely computationally costly; we are recalculating rates multiple times per second when they are rarely changing.
 - State is not meant to be used like this/this frequently. State updates do not work this instantaneously/are not evenly timed, so the animations that resulted from this approach were super jittery. 
 
 I realized in doing this that we could, instead, only calculate the "endpoints" of animations in state. Essentially, we could still use an array to keep track of the animations in progress, but could update it only when (a) an animation had ended and (b) when an animation was added. Essentially, we know all of the periods that have different overlaps (whenever animations start and end) and so, using the duration in between them and knowledge of the duration of each animation, we could calculate what percentage of each animation should be applied in each interval. See animations-diagram-3 for this. 
+
+![animation-diagram-3](https://raw.githubusercontent.com/NYCPlanning/ud-interactive/public-drawings-2021/docs/development%20methodology/animations-diagram-3.png)
 
 Essentially, when adding animations, there are ranges where the rates will be exactly the same (when the same animations are overlapping). In the diagram above, the time between A and B, time between B and C, etc are all moving at the same speed. By knowing the start position, start time, end time, and end position of these overlaps, we can just use linear interpolation and the current time to calculate position outside of state. 
 
@@ -44,7 +50,7 @@ A few notes on implementation:
 
 The first implementation of something resembling the current would log the time to Redux state every time it changed. 
 
-![Diagram of stuff in state](docs/development methodology/all-in-state.svg)
+![Diagram of stuff in state](https://raw.githubusercontent.com/NYCPlanning/ud-interactive/public-drawings-2021/docs/development%20methodology/all-in-state.svg)
 
 This is a diagram of how the first version of this worked; changes to the state would actually take place within the reducer, but I am showing them this way because I think it is more logical.
 
@@ -73,5 +79,5 @@ These do everything! With this stack working, we can just have the next button o
 
 Valtio allows us to modify state much more easily so the code should be mostly self-explanatory, but this diagram may help:
 
-[!Explanation of using Valtio state](docs/development methodology/use-valtio.svg)
+![Explanation of using Valtio state](https://raw.githubusercontent.com/NYCPlanning/ud-interactive/e8a1072d231913e4d90e20ce67b473ace72779d3/docs/development%20methodology/use-valtio.svg)
 
