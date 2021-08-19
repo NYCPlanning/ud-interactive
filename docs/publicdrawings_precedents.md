@@ -214,6 +214,17 @@ What would be most exciting to see?
 
 - [Plant Care AR](https://dribbble.com/shots/14433590-Plant-Care-AR): Multiple information pop ups, graph information - informative tone
 
-- **[Git v.2](https://dribbble.com/shots/15182785-Git-v-2)**: probably best precedent for the future, reads like Rhino model, bit of an in-between the video game and realistic renderings, very clean style with very clear highlighted points to navigate to, one color highlight
+- **[Git v.2](https://dribbble.com/shots/15182785-Git-v-2): probably best precedent for the future, reads like Rhino model, bit of an in-between the video game and realistic renderings, very clean style with very clear highlighted points to navigate to, one color highlight**
 
 - [City Visualization x FUI](https://dribbble.com/shots/15804115-City-Visualization-x-FUI): materialization of model (potentially making this a toggle?), clear association between point of interest and data highlights
+
+### Precedents for Environmental Info
+- [The Biggest Change Daylight Street](https://www.thebiggestchange.com/house/row/room/bed): toggle for skylights, slider for time of day at the top, changes in real time
+
+- [Volta Solar](https://www.nmore.co/voltasolar): slider to show sun position over model with iconography
+
+### Precedents for Engagement
+- [Kaspersky](https://www.kaspersky.com/int_portfolio/transportation): questions overlayed onto scene - clicking on questions leads to a quiz/survey page 
+
+### Precedents for Accessibility
+- [Volta Solar](https://volta.solar/): toggles for a whole range of accessibility adjustments - seizure safe, vision impaired, cognitive disability, adhd, font size, color palette, etc.
