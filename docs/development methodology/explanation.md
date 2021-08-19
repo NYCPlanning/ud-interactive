@@ -4,6 +4,44 @@ All of the front end is in React, using JavaScript. Everything 3D is handled by 
 
 Animations are handled within Dolly.jsx. By being in the same react-three-fiber <canvas> element as our loaded GLTF, Dolly has access to the camera object. We use useFrame() within Dolly to change the camera position. useFrame gives us a camera object and a clock; various implementations have used each differently.
 
+## Animations
+
+(Note: for one implenentation here, using Rhino positions, we were using lookAt, which is a property of the camera that has x, y, and z components. When we swapped to Blender for camera positions, we started using rotation, which also has x, y, and z components. They obviously modify different parts of the camera, but I use them interchangeably because there is virtually zero difference in technical implementation versus setting camera.rotation versus camera.lookAt in useFrame). 
+
+Animation implementation was by far the most complex portion of this project. 
+
+The motivation for this problem came from the fact that we would have to "layer" multiple animations on top of one another. For example, if the user is moving from Point A to Point B and clicks the button to move the viewport upwards, we would not want them to occur sequentially; while the user wanted to look upwards while flying over the model, they would only look upwards after they had already gotten to Point B. As such, we needed some way of "layering" two animations. 
+
+We could, instead, combine the animations. In the above example of moving from Point A to Point B and looking upwards, we could simply adjust Point B to be slightly upwards, meaning that, at the end, the viewport would be looking more up. However, this is also not how users are used to navigation; users would want to more immediately look upwards. For example, if the transition from Point A to Point B is 10 seconds long, they might expect a transition looking upwards to take a second or two. Essentially, we need some way of handling animations that occur simultaneously, but not in perfectly overlapping ways. See diagram animations-diagram-1 for explanation.
+
+The initial thought here was to calculate the rates of change for each animated transition. For example, we would, for x, y, z, and lookAt dimensions, find the difference between Point A and Point B. We would call the difference between these two points the **movement** of the animation. From the movement, we could divide each of these coordinates by the duration of the animation to find the rate of change on each. For example, in this transition between Point A and Point B, perhaps x is moving at 1 unit / second, y is moving at - 5 units / sec, z is moving at 0 units / sec, and the same for the lookAt position.
+
+Essentially, every animation could be moving to a position (an actual place the model needs to be) or a movement (just a relative change, i.e. looking up or down). By looking at where things overlap, we could calcualte the rates at each time. Each time we log the time and position to the state, we would:
+- Iterate through the list of animations to see if any had ended. If so, we would remove them.
+- Add up the rates in each direction (x, y, z, lookAt x, lookAt y, lookAt z) to find the total rates at the current time.
+- Subtract the old time that was in state from the current time. Because state updates with time whenever useFrame runs. The difference in time will be very small, in practice something like 0.01 seconds. Multiply this time difference by the current rates and change current position by this amount. 
+- Access currentPosition from state within useFrame and update camera position.
+
+Given the timeline in animations-diagram-1, I've worked out the rate calculations in animations-diagram-2. 
+
+This was a bad approach because of a few things I didn't realize initially:
+- This is extremely computationally costly; we are recalculating rates multiple times per second when they are rarely changing.
+- State is not meant to be used like this/this frequently. State updates do not work this instantaneously/are not evenly timed, so the animations that resulted from this approach were super jittery. 
+
+I realized in doing this that we could, instead, only calculate the "endpoints" of animations in state. Essentially, we could still use an array to keep track of the animations in progress, but could update it only when (a) an animation had ended and (b) when an animation was added. Essentially, we know all of the periods that have different overlaps (whenever animations start and end) and so, using the duration in between them and knowledge of the duration of each animation, we could calculate what percentage of each animation should be applied in each interval. See animations-diagram-3 for this. 
+
+Essentially, when adding animations, there are ranges where the rates will be exactly the same (when the same animations are overlapping). In the diagram above, the time between A and B, time between B and C, etc are all moving at the same speed. By knowing the start position, start time, end time, and end position of these overlaps, we can just use linear interpolation and the current time to calculate position outside of state. 
+
+Basically, we know where it stars and where it ends, by using Three.js's built in LERP, we can calculate the percentage we are through the current animation and from here calculate position, completely in useFrame with just the start/end pairs. This is far more efficient. 
+
+A few notes on implementation:
+- Animation takes in two positions and calculates the relative movement from here, regardless of what is passed in. This makes sense because, if we are moving to Point B we can pass in the current position as the first position and Point B as the second position and easily find how much we need to move from where we are to get to the desired point. If we are moving in a relative sense (i.e. just looking) we can pass in all zeros for the first object to have the relative position still work.
+- The Animation class has a static method called "addPositionChanges." This just does the math above of using the duration of the current interval and the amount of the animation to calculate how much of the movement to apply. 
+- We are still updating time and position in state really frequently using Valtio. This may be inefficient but we have not currently seen performance issues for this. The reason we are doing this because there is no great other way to get the current time and position of the camera from useFrame when we add a new animation. In a previous implementation I kept a variable essentially called animationAdded that would be turned to true when an animation was added, prompting useFrame to add a currentPosition and currentTime to it, then turning animationAdded to false. This is a more efficient implementation but I did not get the chance to finish it up.
+
+
+## State Management
+
 The first implementation of something resembling the current would log the time to Redux state every time it changed. 
 
 ![Diagram of stuff in state](docs/development methodology/all-in-state.svg)
@@ -36,3 +74,4 @@ These do everything! With this stack working, we can just have the next button o
 Valtio allows us to modify state much more easily so the code should be mostly self-explanatory, but this diagram may help:
 
 [!Explanation of using Valtio state](docs/development methodology/use-valtio.svg)
+
