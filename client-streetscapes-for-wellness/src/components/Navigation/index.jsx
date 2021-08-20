@@ -31,7 +31,7 @@ export default function Navigation() {
         </Dropdown.Menu>
       </Dropdown>
       <Button
-        onClick={() => addPosition(nextPos(), 10)}
+        onClick={() => nextPos()}
         id="next"
         className="buttonElement d-inline-block bar-padding noSelect shadow-none"
         type="button"
