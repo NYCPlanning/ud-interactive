@@ -1,12 +1,22 @@
-FROM python:3.8
+# runs server on Docker Container
 
-WORKDIR /sunposition
+FROM python:3.7.6-slim
 
-COPY requirements.txt .
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install --upgrade pip setuptools wheel \
+    && pip install cryptography \
+    && apt-get purge -y --auto-remove gcc
+    
+WORKDIR /app
 
-RUN pip install -r requirements.txt
+COPY . /app
 
-COPY app/ .
+RUN pip3 --no-cache-dir install -r requirements.txt
 
-CMD ["python", "-m", "serve"]
+EXPOSE 5000
+
+ENTRYPOINT ["python3"]
+CMD ["code/setupSunPosFlask.py"]
 
