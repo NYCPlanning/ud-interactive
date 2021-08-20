@@ -1,51 +1,9 @@
+import * as THREE from 'three';
+
 export default class Animation {
   constructor(startTime, endTime, positionA, positionB) {
     this.startTime = startTime;
     this.endTime = endTime;
-    // this.movement = {
-    //   x: positionB.x - positionA.x,
-    //   y: positionB.y - positionA.y,
-    //   z: positionB.z - positionA.z,
-    //   lookAt: {
-    //     x: positionB.lookAt.x - positionA.lookAt.x,
-    //     y: positionB.lookAt.y - positionA.lookAt.y,
-    //     z: positionB.lookAt.z - positionA.lookAt.z,
-    //   },
-    // };
-    let x = 0;
-    let y = 0;
-    let z = 0;
-    if (
-      'x' in positionA &&
-      'x' in positionB &&
-      'y' in positionA &&
-      'y' in positionB &&
-      'z' in positionA &&
-      'z' in positionB
-    ) {
-      x = Animation.dealWithNull(positionA.x, positionB.x);
-      y = Animation.dealWithNull(positionA.y, positionB.y);
-      z = Animation.dealWithNull(positionA.z, positionB.z);
-    }
-
-    let rotateX = 0;
-    let rotateY = 0;
-    let rotateZ = 0;
-
-    if (
-      'rotate' in positionA &&
-      'rotate' in positionB &&
-      'x' in positionA.rotate &&
-      'x' in positionB.rotate &&
-      'y' in positionA.rotate &&
-      'y' in positionB.rotate &&
-      'z' in positionA.rotate &&
-      'z' in positionB.rotate
-    ) {
-      rotateX = Animation.dealWithNull(positionA.rotate.x, positionB.rotate.x);
-      rotateY = Animation.dealWithNull(positionA.rotate.y, positionB.rotate.y);
-      rotateZ = Animation.dealWithNull(positionA.rotate.z, positionB.rotate.z);
-    }
 
     let fov = 30;
     let near = 1;
@@ -60,15 +18,8 @@ export default class Animation {
       far = Animation.dealWithNull(positionA.far, positionB.far);
     }
 
+
     this.movement = {
-      x,
-      y,
-      z,
-      rotate: {
-        x: rotateX,
-        y: rotateY,
-        z: rotateZ,
-      },
       fov,
       near,
       far,
@@ -95,6 +46,19 @@ export default class Animation {
     return this.movement;
   }
 
+  static matrixDiff(matrixA, matrixB, currentAnimDuration) {
+    const mw = new Array(16);
+    console.log(matrixB);
+    console.log(matrixA);
+    for(let i = 0; i < 16; i++) {
+      mw[i] = matrixB.elements[i] - matrixA.elements[i];
+    }
+    const matrixWorld = new THREE.Matrix4();
+    matrixWorld.set(...mw);
+    return matrixWorld;
+  }
+
+
   static addPositionChanges(
     currentPosition,
     positionToAdd,
@@ -102,26 +66,10 @@ export default class Animation {
     toAddAnimDuration
   ) {
     const movementFraction = toAddAnimDuration / currentAnimDuration;
-    // console.log(movementFraction);
-    // return {
-    //   x: currentPosition.x + positionToAdd.x * movementFraction,
-    //   y: currentPosition.y + positionToAdd.y * movementFraction,
-    //   z: currentPosition.z + positionToAdd.z * movementFraction,
-    //   lookAt: {
-    //     x: currentPosition.lookAt.x + positionToAdd.lookAt.x * movementFraction,
-    //     y: currentPosition.lookAt.y + positionToAdd.lookAt.y * movementFraction,
-    //     z: currentPosition.lookAt.z + positionToAdd.lookAt.z * movementFraction,
-    //   },
-    // };
+    const matrixWorld = matrixDiff(currentPosition.matrixWorld, positionToAdd.matrixWorld, movementFraction);
+
     return {
-      x: currentPosition.x + positionToAdd.x * movementFraction,
-      y: currentPosition.y + positionToAdd.y * movementFraction,
-      z: currentPosition.z + positionToAdd.z * movementFraction,
-      rotate: {
-        x: currentPosition.rotate.x + positionToAdd.rotate.x * movementFraction,
-        y: currentPosition.rotate.y + positionToAdd.rotate.y * movementFraction,
-        z: currentPosition.rotate.z + positionToAdd.rotate.z * movementFraction,
-      },
+      matrixWorld,
       fov: currentPosition.fov + positionToAdd.fov * movementFraction,
       near: currentPosition.near + positionToAdd.near * movementFraction,
       far: currentPosition.far + positionToAdd.far * movementFraction,

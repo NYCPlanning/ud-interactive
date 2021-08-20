@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { useGLTF } from '@react-three/drei';
 import { ref } from 'valtio';
 
-import { state } from '../state';
+import { state, addCameras } from '../state';
+
 
 
 const FromGLTF = ({ src }) => {
@@ -11,6 +12,7 @@ const FromGLTF = ({ src }) => {
 
   // pass loaded cameras to state for navigation
   state.cameras = ref(cameras)
+  addCameras(cameras);
 
   // traverse the scene and adjust settings
   scene.traverse((o) => {

@@ -1,5 +1,5 @@
 import { proxy } from 'valtio';
-// import Animation from './classes/Animation';
+import Animation from './classes/Animation';
 
 export const state = proxy({
   index: 0,
@@ -21,6 +21,11 @@ export const state = proxy({
 export const nextPos = () => {
   increment(1)
 };
+
+export const getNextPos = () => {
+  state.stepNum += 1;
+  return state.cameras[state.stepNum + 1];
+}
 
 export const previousPos = () => {
   increment(-1)
@@ -98,7 +103,13 @@ export const addMovement = (movement, duration) => {
 
 export const updateAnimations = (time, position) => {
   let { nextEndTime } = state;
-  const tempAnimationsInProgress = [...state.animationsInProgress];
+  let tempAnimationsInProgress;
+  if(state.animationsInProgress == []) {
+    tempAnimationsInProgress = [...state.animationsInProgress];
+  }
+  else {
+    tempAnimationsInProgress = [];
+  }
   for (let i = 0; i < tempAnimationsInProgress.length; i += 1) {
     if (
       tempAnimationsInProgress[i].getEnd() < nextEndTime &&
@@ -129,24 +140,14 @@ export const updateAnimations = (time, position) => {
 };
 
 
-const addCameras = (cameras) => {
+export const addCameras = (cameras) => {
   const camPositions = [];
   let currentCameraPosition = null;
   let currentCamera = null;
   for (let i = 0; i < cameras.length; i += 1) {
     currentCamera = cameras[i];
     currentCameraPosition = {
-      x: currentCamera.parent.position.x,
-      y: currentCamera.parent.position.y,
-      z: currentCamera.parent.position.z,
-      rotate: {
-        // eslint-disable-next-line no-underscore-dangle
-        x: currentCamera.rotation._x,
-        // eslint-disable-next-line no-underscore-dangle
-        y: currentCamera.rotation._y,
-        // eslint-disable-next-line no-underscore-dangle
-        z: currentCamera.rotation._z,
-      },
+      matrixWorld: currentCamera.matrixWorld,
       fov: currentCamera.fov,
       near: currentCamera.near,
       far: currentCamera.far,

@@ -5,7 +5,7 @@ import './styles.css';
 import information from './subcomponents/ViewControl/assets/information.svg';
 
 import ViewControl from './subcomponents/ViewControl';
-import { addPosition, nextPos } from '../../state';
+import { addPosition, nextPos, getNextPos } from '../../state';
 
 export default function Navigation() {
   return (
@@ -31,7 +31,7 @@ export default function Navigation() {
         </Dropdown.Menu>
       </Dropdown>
       <Button
-        onClick={() => nextPos()}
+        onClick={() => addPosition(getNextPos())}
         id="next"
         className="buttonElement d-inline-block bar-padding noSelect shadow-none"
         type="button"
