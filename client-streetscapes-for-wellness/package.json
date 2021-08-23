@@ -1,5 +1,5 @@
 {
-  "name": "svg-client-basic",
+  "name": "streetscapes-for-wellness",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,9 +8,6 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@react-three/drei": "^7.0.6",
     "@react-three/fiber": "^7.0.3",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
     "bootstrap": "^5.0.2",
     "drei": "^2.2.21",
     "prop-types": "^15.7.2",
@@ -51,19 +48,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.29.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-config-wesbos": "^1.0.1",
-    "eslint-plugin-html": "^6.1.2",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "^2.3.1"
   }
 }
