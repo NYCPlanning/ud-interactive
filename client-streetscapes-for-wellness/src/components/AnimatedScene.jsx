@@ -1,23 +1,24 @@
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import FromGLTF from './FromGLTF';
-// import Dolly from './Dolly';
-import AltDolly from './AltDolly';
+import React, { Suspense } from 'react'
+import { Canvas } from '@react-three/fiber'
 
-import model from '../assets/model.glb';
+import FromGLTF from './FromGLTF'
+import Dolly from './AltDolly'
+import Sun from './Sun'
+import Annotations from './Annotations'
 
+import model from '../assets/model.glb'
 
 const AnimatedScene = () => (
-  <Canvas id='r3f-root' >
-    <pointLight position={[0, 1000, 0]} />
-    <Suspense fallback={null}>
-      <ambientLight intensity={5} position={[0, 100, 0]} />
+  <Canvas shadows id='r3f-root'>
+    <Sun />
+    <ambientLight intensity={0.66} color={0xebf2ff}/>
+    <Suspense fallback={null} >
       <FromGLTF src={model} />
     </Suspense>
-    {/* <Dolly /> */}
-    <AltDolly />
+    <Annotations />
+    <Dolly />
+    <fog attach='fog' args={['#cecfd1', 500, 2500]} />
   </Canvas>
-);
+)
 
-
-export default AnimatedScene;
+export default AnimatedScene
