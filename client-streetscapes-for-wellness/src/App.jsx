@@ -1,20 +1,16 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'
 
-import AnimatedScene from './components/AnimatedScene';
+import Scene from './components/AnimatedScene'
 // import Navigation from './components/Navigation/index';
-import AltNavigation from './components/AltNavigation';
+import Navigation from './components/AltNavigation'
 
 
 const App = () => (
   <>
-    <AnimatedScene />
-    <AltNavigation />
+    <Scene />
+    <Navigation />
   </>
 );
 
 
-App.propTypes = {};
-
-
-export default App;
+export default App
