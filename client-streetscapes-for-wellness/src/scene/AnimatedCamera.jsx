@@ -6,7 +6,7 @@ in response to changes in state.
 
 */
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import * as THREE from 'three'
 import { useThree } from '@react-three/fiber'
 import { useSpring, a, config } from '@react-spring/three'
@@ -29,6 +29,7 @@ const springConfig = config.molasses // or an object with custom params
 const AnimatedCamera = () => {
   const ref = useRef()
   const set = useThree((threeState) => threeState.set)
+  const size = useThree(({ size }) => size)
   const { cameras: exportedCameras, index } = useSnapshot(state)
   const [ current, setCurrent ] = useState(init)
   const spring = useSpring({
@@ -50,6 +51,15 @@ const AnimatedCamera = () => {
     const m = nextView.matrixWorld.toArray()
     setCurrent({matrix: m})
   }, [exportedCameras, index])
+
+  // set camera size?
+  useLayoutEffect(() => {
+    const { current: c } = ref
+    if (c) {
+      c.aspect = size.width / size.height
+      c.updateProjectionMatrix()
+    }
+  }, [size])
 
   return (
     <a.perspectiveCamera ref={ref} matrixAutoUpdate={false} matrix={spring.matrix} />
