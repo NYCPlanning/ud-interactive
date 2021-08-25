@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { meshBounds, useGLTF } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 import { ref, useSnapshot } from 'valtio';
 
 import { state } from '../state';
 
 const neutralColor = new THREE.Color(1, 1, 1);
-const highlightColor = new THREE.Color(0xe0a254);
+// const highlightColor = new THREE.Color(0xe0a254);
 
 
 const FromGLTF = ({ src }) => {
@@ -41,7 +41,7 @@ const FromGLTF = ({ src }) => {
     if ( dematerialize ) {
       // console.log('dematerializing')
       scene.traverse((o) => {
-        if ( o.type === 'Mesh' && o.material.name != 'HIGHLIGHT_COLOR') {
+        if ( o.type === 'Mesh' && o.material.name !== 'HIGHLIGHT_COLOR') {
           o.material.color = neutralColor;
           o.material.needsUpdate = true
         }
@@ -66,7 +66,7 @@ const FromGLTF = ({ src }) => {
     //     }
     //   })
     // }
-  }, [dematerialize]);
+  }, [scene, dematerialize]);
 
   return (
     <primitive

@@ -15,8 +15,8 @@ import { useSnapshot } from 'valtio'
 import { state } from '../state'
 
 
-const initCamera = {
-  matrix: new THREE.Matrix4(),
+const init = {
+  matrix: new THREE.Matrix4().toArray(),
   fov: 50
 }
 
@@ -30,18 +30,17 @@ const AnimatedCamera = () => {
   const ref = useRef()
   const set = useThree((threeState) => threeState.set)
   const { cameras: exportedCameras, index } = useSnapshot(state)
-  const [ current, setCurrent ] = useState(initCamera)
-  const [ cached, setCached ] = useState(initCamera)
+  const [ current, setCurrent ] = useState(init)
   const spring = useSpring({
     config: springConfig,
     matrix: current.matrix,
     from: {
-      matrix: cached.matrix,
+      matrix: init.matrix,
     },
   })
 
   // sets the scene default camera to this one
-  useEffect(() => { void set({ camera: ref.current }) }, [ref])
+  useEffect(() => { void set({ camera: ref.current }) }, [set, ref])
 
   // when scene index changes, set the current camera parameters
   // this triggers the camera animation
