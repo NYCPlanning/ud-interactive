@@ -9,7 +9,9 @@ export const state = proxy({
   scene: null,
   sunPosition: [50, 100, 50],
   dematerialize: false,
-  showAnnotations: true,
+  showAnnotations: false,
+  showDebugger: false,
+  showCaptions: false,
   isLoaded: false,
 })
 
@@ -29,4 +31,3 @@ export const nextPos = () => {
 export const previousPos = () => {
   increment(-1)
 }
-
