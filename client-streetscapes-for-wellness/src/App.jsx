@@ -1,8 +1,7 @@
 import React from 'react'
 
-import Scene from './components/AnimatedScene'
-// import Navigation from './components/Navigation/index';
-import Navigation from './components/AltNavigation'
+import Scene from './scene/Scene'
+import Navigation from './ui/Navigation'
 
 
 const App = () => (
@@ -10,7 +9,7 @@ const App = () => (
     <Scene />
     <Navigation />
   </>
-);
+)
 
 
 export default App
