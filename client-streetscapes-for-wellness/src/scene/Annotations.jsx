@@ -17,7 +17,7 @@ const Annotation = ({ text, ...props }) => (
 const Annotations = () => {
   const { scene, showAnnotations } = useSnapshot(state)
   const annos = scene ? scene.children.filter((o) => o.name.startsWith('anno')) : []
-  const annoComponents = annos.map((a) => <Annotation position={a.position} text={a.userData.text} /> )
+  const annoComponents = annos.map((a) => <Annotation key={a.uuid} position={a.position} text={a.userData.text} /> )
   
   return (
     <>
