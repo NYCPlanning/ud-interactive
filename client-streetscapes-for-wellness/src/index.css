@@ -12,10 +12,6 @@ html, body, #root {
 }
 
 #r3f-root {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
   background: linear-gradient(#96bceb, #e7eff8, #cecfd1);
 }
 
