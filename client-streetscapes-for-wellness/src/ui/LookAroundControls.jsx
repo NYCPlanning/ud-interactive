@@ -1,7 +1,5 @@
 import { useGesture } from 'react-use-gesture'
 
-import icon from '../assets/eye.svg'
-
 const LookAroundControls = () => {
   console.log('lookaround controls loaded')
 
