@@ -11,7 +11,7 @@ html, body, #root {
   -moz-osx-font-smoothing: grayscale;
 }
 
-#r3f-root {
+.sky {
   background: linear-gradient(#96bceb, #e7eff8, #cecfd1);
 }
 

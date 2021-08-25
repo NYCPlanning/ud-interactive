@@ -10,7 +10,7 @@ import model from '../assets/model.glb'
 
 
 const Scene = () => (
-  <Canvas shadows >
+  <Canvas shadows className='sky' >
     {/* <Sun /> */}
     <ambientLight intensity={0.66} color={0xebf2ff}/>
     <AnimatedCamera />
