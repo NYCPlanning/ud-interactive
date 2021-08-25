@@ -25,3 +25,11 @@ html, body, #root {
   left: 0;
   z-index: 20;
 }
+
+.debug {
+  font-family:'Courier New', Courier, monospace;
+  font-size: 0.66rem;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.5rem;
+  margin: 1rem;
+}
