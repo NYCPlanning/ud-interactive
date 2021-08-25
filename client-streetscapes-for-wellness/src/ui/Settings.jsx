@@ -65,12 +65,12 @@ const SettingsWrapper = () => {
 
   const toggleShow = () => setShow(!show)
   
-  const showLabel = show ? 'Hide' : 'Show'
+  const showLabel = show ? 'Hide ' : ''
 
   return (
     <div className='fixed bottom-0 right-0 m-2 flex flex-col items-end bg-white p-1'>
       { show && <SettingsList /> }
-      <button onClick={toggleShow}>{showLabel} Options</button>
+      <button onClick={toggleShow}>{showLabel}Options</button>
     </div>
   )
 }
