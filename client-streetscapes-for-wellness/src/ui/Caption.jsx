@@ -8,7 +8,7 @@ const Caption = () => {
   const captions = cameras.map((c) => c.parent.userData.caption)
 
   return (
-    <div>
+    <div className='caption p-1'>
       <span>{captions[index]}</span>
     </div>
   )
