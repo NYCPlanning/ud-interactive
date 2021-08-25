@@ -1,24 +1,22 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useSnapshot } from 'valtio';
+// import { useSnapshot } from 'valtio';
 
-import { state } from '../state';
+// import { state } from '../state';
 
 const Sun = () => {
-  const { sunPosition: pos } = useSnapshot(state);
-  const lightRef = useRef(null)
-  const [helperCamera, setHelperCamera] = useState(null)
+  // const { sunPosition: pos } = useSnapshot(state);
+  // const lightRef = useRef(null)
+  // const [helperCamera, setHelperCamera] = useState(null)
 
-  useEffect(() => {
-    if (lightRef.current) setHelperCamera(lightRef.current.shadow.camera)
-    console.log(helperCamera)
-  }, [lightRef])
+  // useEffect(() => {
+  //   if (lightRef.current) setHelperCamera(lightRef.current.shadow.camera)
+  // }, [lightRef])
 
   return (
     <>
       {/* {helperCamera && <cameraHelper args={helperCamera} /> } */}
       <spotLight
-        ref={lightRef}
-        position={pos}
+        position={[0, 100, 30]}
         intensity={1.5} 
         castShadow
         shadow-mapSize-height={1028}
