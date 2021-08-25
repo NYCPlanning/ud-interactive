@@ -5,6 +5,7 @@ import { nextPos, previousPos, state } from '../state'
 import Caption from './Caption'
 import Debugger from './Debugger'
 import Settings from './Settings'
+import LookAroundControls from './LookAroundControls'
 
 
 const Navigation = () => {
@@ -30,6 +31,7 @@ const Navigation = () => {
       </div>
       <Settings />
       { showDebugger && <Debugger /> }
+      <LookAroundControls />
     </div>
   )
 }
