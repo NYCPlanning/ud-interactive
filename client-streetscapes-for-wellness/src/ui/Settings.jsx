@@ -75,5 +75,4 @@ const SettingsWrapper = () => {
   )
 }
 
-
 export default SettingsWrapper

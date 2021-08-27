@@ -5,11 +5,11 @@ import { state } from '../state'
 
 const Caption = () => {
   const { index, cameras } = useSnapshot(state)
-  const captions = cameras.map((c) => c.parent.userData.caption)
-
+  const { userData: { caption }} = cameras[index]
+  
   return (
     <div className='caption p-1'>
-      <span>{captions[index]}</span>
+      <span>{caption}</span>
     </div>
   )
 }
