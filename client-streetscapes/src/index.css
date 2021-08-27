@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.sky {
+  background: linear-gradient(#96bceb, #e7eff8, #cecfd1);
+}
+
+#nav-root {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.caption {
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.5);
+  color: gray;
+  padding: 0.5rem;
+}

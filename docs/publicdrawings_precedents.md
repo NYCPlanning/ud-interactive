@@ -187,7 +187,6 @@ How have past drawings been used for public engagement purposes?
 
 What would be most exciting to see?
 
-
 ### Lucas Additional Precedents
 
 [Museum Guggenheim Bilbao, Bilbao, Spain — Google Arts & Culture](https://artsandculture.google.com/streetview/museum-guggenheim-bilbao/6gGSw-L3-Xukfg?sv_lng=-2.934576581688561&sv_lat=43.26868278007137&sv_h=268.1713716329163&sv_p=10.954786703250448&sv_pid=YxeAeodjEbnIMX9nzBlARQ&sv_z=1.212106801078394&sv_lid=17242884745795414371)
@@ -202,7 +201,6 @@ What would be most exciting to see?
 
 [The National Museum of Computing](https://mpembed.com/show/?details=1&ga=UA-32443811-1&hdir=2&m=pq6v8gMmxMw&mdir=3&minimap=2&minimaptags=0)
 
-[NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)
 [NCMNS Terror of the South](https://my.matterport.com/show/?m=7f7dLG3jXQa)
 
 ### Precedents for Future Tone
