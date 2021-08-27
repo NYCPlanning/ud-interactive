@@ -1,85 +1,64 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useGLTF } from '@react-three/drei';
-import * as THREE from 'three';
-import { ref, useSnapshot } from 'valtio';
+import React, { useEffect } from 'react'
+import { useGLTF } from '@react-three/drei'
+import * as THREE from 'three'
+import { ref, useSnapshot } from 'valtio'
 
-import { state } from '../state';
-
-const neutralColor = new THREE.Color(1, 1, 1);
-// const highlightColor = new THREE.Color(0xe0a254);
+import { neutralColor } from '../config.json'
+import { state } from '../state'
 
 
 const FromGLTF = ({ src }) => {
-  let { scene, cameras } = useGLTF(src);
-  const { dematerialize } = useSnapshot(state);
-  let origMaterials = [];
-
-  // pass loaded cameras to state for navigation
-  state.cameras = ref(cameras)
-  state.scene = ref(scene)
-
-  // apply shadows
-  scene.traverse((o) => {
-    if ( o.name === 'buildings' || o.name === 'ekevated' || o.name === 'bench' ) {
-      // console.log(o)
-      o.castShadow = true;
-    }
-
-    if ( o.name === 'sidewalk' || o.name === 'hardscape' ) {
-      // console.log(o)
-      o.receiveShadow = true;
-    }
-
-    //note original materials
-    if ( o.type === 'Mesh') {
-      origMaterials.push({'uuid': o.uuid, 'color': o.material.color});
-    }
-  });
+  let { scene, cameras } = useGLTF(src)
+  const { index, dematerialize } = useSnapshot(state)
 
   useEffect(() => {
-    if ( dematerialize ) {
-      // console.log('dematerializing')
-      scene.traverse((o) => {
-        if ( o.type === 'Mesh' && o.material.name !== 'HIGHLIGHT_COLOR') {
-          o.material.color = neutralColor;
-          o.material.needsUpdate = true
-        }
+    const { userData: { title }} = scene
+    const { userData: { viewName }} = cameras[index]
 
-        // if ( o.type === 'Mesh' &&  ) {
-        //   o.material.color = highlightColor;
-        //   o.material.needsUpdate = true
-        // }
-      })
-    }
-    // } else {
-    //   scene.traverse((o) => {
-    //     if ( o.type === 'Mesh') {
-    //       o.material.color = o.material.originalColor;
-    //       o.material.needsUpdate = true
-    //     }
+    if ( scene ) state.title = title
+    state.cameras = ref(cameras)
+    state.scene = ref(scene)
+    state.currentViewName = viewName
 
-    //     if ( o.type === 'Mesh' && o.material.name === 'HIGHLIGHT_COLOR' ) {
-    //       o.material.color = o.material.originalColor;
-    //       console.log(o.material.originalColor)
-    //       o.material.needsUpdate = true
-    //     }
-    //   })
-    // }
-  }, [scene, dematerialize]);
+    scene.traverse((o) => {
+      // stash original colors in material userData for dematerialize feature
+      if ( o.material ) {
+        o.material.userData.originalColor = new THREE.Color()
+        o.material.userData.originalColor.copy(o.material.color)
+      }
+
+      // cast and receive shadows
+      // if ( o.name === 'buildings' || o.name === 'ekevated' || o.name === 'bench' ) {
+      //   o.castShadow = true;
+      // }
+  
+      // if ( o.name === 'sidewalk' || o.name === 'hardscape' ) {
+      //   o.receiveShadow = true;
+      // }
+
+      // adjust scene lights
+      // if ( o.type.includes('Light') ) console.log(o)
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // dematerialize/rematerialize colors
+  useEffect(() => {
+    scene.traverse((o) => {
+      if ( o.material && dematerialize ) {
+        o.material.color.set(neutralColor)
+      } else if ( o.material && !dematerialize ) {
+        o.material.color.copy(o.material.userData.originalColor)
+      }
+    })
+  }, [scene, dematerialize])
 
   return (
     <primitive
       object={scene}
       dispose={null}
-      // onClick={handleClick}
     />
-  );
+  )
 }
-
-FromGLTF.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  src: PropTypes.string.isRequired,
-};
 
 export default FromGLTF

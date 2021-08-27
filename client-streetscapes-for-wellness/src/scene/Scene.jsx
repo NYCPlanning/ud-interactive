@@ -1,26 +1,26 @@
 import React, { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 
-import FromGLTF from './FromGLTF'
 import AnimatedCamera from './AnimatedCamera'
-// import Sun from './Sun'
 import Annotations from './Annotations'
+import FromGLTF from './FromGLTF'
+import Loading from './Loading'
+// import Sun from './Sun'
 
-import model from '../assets/model.glb'
+import model from '../assets/example.glb'
 
 
 const Scene = () => (
-  <Canvas shadows className='sky' >
-    {/* <Sun /> */}
-    <ambientLight intensity={0.66} color={0xebf2ff}/>
-    <AnimatedCamera />
-    <Suspense fallback={null} >
+  <Suspense fallback={<Loading />} >
+    <Canvas shadows className='sky' >
+      {/* <Sun /> */}
+      <ambientLight intensity={0.66} color={0xebf2ff}/>
+      <AnimatedCamera />
       <FromGLTF src={model} />
-    </Suspense>
-    <Annotations />
-    <fog attach='fog' args={['#cecfd1', 500, 2500]} />
-  </Canvas>
+      <Annotations />
+      <fog attach='fog' args={['#cecfd1', 500, 2500]} />
+    </Canvas>
+  </Suspense>
 )
-
 
 export default Scene
