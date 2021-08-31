@@ -13,5 +13,6 @@ When exporting GLTF files from Blender, make sure the following settings are use
 These can all be set as custom properties on individual scene objects.
 
 - Title: set as custom property `title` on scene object
-- Caption: set as custom property `name` on each camera object. Be sure to assign this to the camera object itself, not its parent empty if using Blender.
+- Caption: set as custom property `caption` on each camera object. Be sure to assign this to the camera object itself, not its parent empty if using Blender.
+- View Name: same as above but `viewName`
 - Annotations: set as custom property `text` on individual points or empties parented to each camera object.
