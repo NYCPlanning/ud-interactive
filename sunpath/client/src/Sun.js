@@ -31,7 +31,7 @@ const Sun = () => {
   } = useSnapshot(state)
 
   useEffect(async () => {
-    const url = "http://localhost:51051/v1/sun"
+    const url = "http://127.0.0.1:51051/v1/sun"
     const body = {
       "date_time": getISODateTime(),
       "location": {
@@ -45,7 +45,7 @@ const Sun = () => {
   }, [date, time, center])
 
   useEffect(async () => {
-    const url = "http://localhost:51051/v1/system/version"
+    const url = "http://127.0.0.1:51051/v1/system/version"
     const result = await axios.get(url)
     state.serverVersion = result.data.version
   }, [])
