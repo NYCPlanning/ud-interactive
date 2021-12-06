@@ -1,5 +1,7 @@
 # Sun Path
 
+![](./screenshot.png)
+
 Simple web app using sun position microservice.
 
 To run:
@@ -11,7 +13,6 @@ To run:
   - `export FLASK_APP=serve`
   - `export FLASK_RUN_PORT=51051`
   - `flask run`
-- future: `docker-compose up`
 - from `client`: `npm start` (you may need to `npm install` first)
 
 ## Credits
