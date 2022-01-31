@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root, .App {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-y: scroll;
+}
+
+button {
+    border: 1px solid black;
+    padding: 0.25rem;
+    margin-right: 0.5rem;
+}
