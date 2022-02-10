@@ -78,13 +78,13 @@ const Scene = () => {
       shadows
       camera={cameraParams}
     >
-      {/* <axesHelper scale={[20,20,20]} /> */}
+      {/*<axesHelper scale={[20,20,20]} />*/}
       <OrbitControls />
       <ambientLight intensity={0.5} />
       <Sun />
       <Suspense fallback={null}>
         {/* <Windmill position={[1, 9, 12]} rotation={[0, 0.1, 0]} /> */}
-        <Model rotation={[0, Math.PI, 0]} />
+        <Model rotation={[0, Math.PI - 0.505, 0]} />
       </Suspense>
       {/* <Cube />
       <GroundPlane /> */}

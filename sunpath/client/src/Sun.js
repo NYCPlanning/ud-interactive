@@ -17,7 +17,8 @@ import { useSnapshot } from 'valtio'
 
 import state, { getISODateTime } from './state'
 
-const url = "http://localhost:51051/v1/sun"
+const apiEndpoint = process.env.REACT_APP_API_ENDPOINT
+const url = `http://localhost:51051/v1/sun`
 const sunColor = 0xe9d900;
 
 const Sun = () => {
@@ -31,13 +32,13 @@ const Sun = () => {
   } = useSnapshot(state)
 
   useEffect(async () => {
-    const url = "http://127.0.0.1:51051/v1/sun"
+    const url = `${apiEndpoint}/sun`
     const body = {
       "date_time": getISODateTime(),
-      "location": {
-          "lat": center[0],
-          "lon": center[1],
-      }
+      "location": [
+          center[0],
+          center[1],
+      ]
     }
     const result = await axios.post(url, body)
     setData(result.data)
@@ -45,7 +46,7 @@ const Sun = () => {
   }, [date, time, center])
 
   useEffect(async () => {
-    const url = "http://127.0.0.1:51051/v1/system/version"
+    const url = `${apiEndpoint}/version`
     const result = await axios.get(url)
     state.serverVersion = result.data.version
   }, [])
