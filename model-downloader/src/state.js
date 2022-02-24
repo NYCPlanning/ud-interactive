@@ -8,18 +8,30 @@ const state = proxy({
     boundary: null,
 })
 
-export const downloadModel = () => {
+export const downloadModel = (format) => {
+    const formats = {
+	'rhino': {
+	    'ext': '3dm',
+	    'mime': 'model/3dm;base64'
+	},
+	'collada': {
+	    'ext': 'dae',
+	    'mime': 'application/collada+xml'
+	}
+    };
+    const requestUrl = `${endpoint}?format=${format}`;
     const body = {
         bounds: `SRID=2263;${state.boundary}`,
         exclude: '',
 	flatten: 'false',
-    }
-    axios.post(endpoint, body).then((response) => {
-	const { data: { data }} = response
-	const fileBody = `data:model/3dm;base64,${data}`;
+    };
+    axios.post(requestUrl, body).then((response) => {
+	let { data: { data }} = response
+	if (format === 'collada') data = escape(data);
+	const fileBody = `data:${formats[format].mime},${data}`;
 	const link = document.createElement('a');
 	link.href = fileBody;
-	link.download = `${+new Date()}.3dm`;
+	link.download = `${+new Date()}.${formats[format].ext}`;
 	link.click();
     })
     return null

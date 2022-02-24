@@ -14,8 +14,27 @@
   overflow-y: scroll;
 }
 
+button, h1, p {
+    margin-bottom: 0.5rem;
+}
+
 button {
     border: 1px solid black;
     padding: 0.25rem;
     margin-right: 0.5rem;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+button:disabled {
+    color: gray;
+    border: 1px solid gray;
+}
+
+.controls {
+    padding: 0.5rem;
+    border-bottom: 2px solid black;
 }

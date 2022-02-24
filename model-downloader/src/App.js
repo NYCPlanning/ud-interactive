@@ -1,15 +1,22 @@
-//import logo from './logo.svg';
-//import './App.css';
 import MapPanel from './MapPanel';
-import state, { downloadModel } from './state';
+import { downloadModel } from './state';
 
 function App() {    
     return (
         <div className="App">
-	    <h1>NYC 3D Model Downloader</h1>
-	    <p>Draw an area of interest on the map below then choose either Download or View.</p>
-            <button onClick={downloadModel}>Download Rhino .3dm</button>
-	    <button>View</button>
+	    <div className="controls">
+		<h1>NYC 3D Model Download</h1>
+		<p>
+		    Draw an area of interest on the map and choose an option below:
+		</p>
+		<button onClick={() => downloadModel('rhino')}>
+		    Download Rhino (.3dm)
+		</button>
+		<button onClick={() => downloadModel('collada')}>
+		    Download COLLADA (.dae)
+		</button>
+		<button disabled>View</button>
+	    </div>
 	    <MapPanel />
 	</div>
     );
